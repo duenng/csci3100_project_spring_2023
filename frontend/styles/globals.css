@@ -159,6 +159,13 @@ button {
 .flex-none {
   flex: none;
 }
+
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
 /* --------------- text styling ---------------*/
 
 /* use this to make text bold */
@@ -174,14 +181,17 @@ button {
   color: #4a5568;
 }
 
+.rounded-full {
+  border-radius: 45px;
+}
 /* use this to hide elements on small screens */
 .inline-onlarge{
   display: none;
 }
-
-.rounded-full {
-  border-radius: 45px;
+.justify-start-onlarge{
+  justify-content: unset;
 }
+
 
 /*-------------- background color-----------------*/
 
@@ -244,5 +254,9 @@ button {
   .inline-onlarge{
     display: inline;
   }
+
+  .justify-start-onlarge{
+    justify-content: start;
+  }  
 }
 

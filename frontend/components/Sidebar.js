@@ -8,7 +8,7 @@ function Sidebar() {
     <div>
       {/* Tertwit Logo */}
       {/* to be added, hover effect to the logo */}
-      <div className="hoverElement">
+      <div style={{display:'flex'}} className="hoverElement">
         <Image src="/tertwit_logo.svg"
         alt="Logo"
         width={75}
@@ -26,7 +26,7 @@ function Sidebar() {
         <SideBarMenuItem text="Messages" Icon={InboxIcon}/>
         <SideBarMenuItem text="Profile" Icon={UserIcon}/>
         <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon}/>
-      </div>
+      </div>  
 
 
       {/* Tertwit Button */}
@@ -36,13 +36,15 @@ function Sidebar() {
        
       {/* User Profile */}
 
-      <div className="hoverElement ">
+      <div style={{display:'flex'}} className="items-center justify-center text-gray-700 hoverElement justify-start-onlarge" >
         {/* User Profile Picture, Need to import from database*/}
-        <img className="rounded-full " src="/usericon.jpg" alt="Profile Picture" width={75} height={75} />
+        <img src="/usericon.jpg" alt="Profile Picture" width={100} height={100} 
+        className="rounded-full"
+        />
         <div className="">
         {/* User Name, Need to import from database*/}
-          <h4>Username</h4>
-          <p>@username</p>
+          <h4 style={{padding:0, margin:0}}>Username</h4>
+          <p style={{padding:0, margin:0}}>@username</p>
         </div>
         <DotsHorizontalIcon className="h-5"/>
       </div>
