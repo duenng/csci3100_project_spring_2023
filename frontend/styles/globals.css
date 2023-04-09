@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
@@ -105,3 +105,144 @@ a {
     color-scheme: dark;
   }
 }
+ */
+
+ /*
+  above is the default css file
+ */
+
+html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+}
+
+/* Remove default button styles */
+button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+
+/* Customize button appearance */
+/* styling for the whole page */
+/* -------------- adjust height ------------------*/
+.h-5 {
+  height: 1.25rem;
+}
+
+.h-7 {
+  height: 1.75rem;
+}
+
+.h-8 {
+  height: 2rem;
+}
+
+/* use this to adjust margin */
+.space-x-3 > * + * {
+  margin-left: 0.75rem;
+}
+
+/* use this to adjust padding */
+.p-3{
+  padding: 0.75rem;
+}
+
+/* use this to make elements flox and none-flex */
+.flex{
+  flex: 1;
+}
+
+.flex-none {
+  flex: none;
+}
+/* --------------- text styling ---------------*/
+
+/* use this to make text bold */
+.font-bold{
+  font-weight: bold;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.text-gray-700 {
+  color: #4a5568;
+}
+
+/* use this to hide elements on small screens */
+.inline-onlarge{
+  display: none;
+}
+
+.rounded-full {
+  border-radius: 45px;
+}
+
+/*-------------- background color-----------------*/
+
+/* button background color */
+.button-bg-theme {
+  background-color: #ad46fbef;
+}
+
+.button-bg-theme:hover{
+  background-color: #ad46fb;
+}
+
+.bg-theme{
+  background-color: #ad46fbef;
+}
+
+/* CSS */
+/* Define the default styles for the hoverelement */
+.hoverElement {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 10px;
+  width: 50px; 
+  height: 50px;
+  transition: background-color 0.3s ease-in-out; /* Add transition for smooth effect */
+}
+
+/* Define the styles for the hoverelement on hover */
+.hoverElement:hover {
+  background-color: #e0e0e0;
+  /* Add any other styles you want to apply on hover */
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Styles for small screens */
+.navbar {
+  display: flex;
+  font-size: 1.125rem;
+  color: #4a5568;
+  align-items: center;   
+  justify-content: center;
+}
+
+/* ---------- Styles for extra-large screens ---------*/
+@media (min-width: 1200px) {
+  .hoverElement {
+    width: auto; /* Set width to auto for extra-large screens */
+    height: auto;
+    /* Additional styles for extra-large screens */
+  }
+  /* Styles for large screens */
+  .navbar{ 
+    justify-content: start;
+    padding: 0.75rem;
+  }
+  /* Styles for large screens */
+  .inline-onlarge{
+    display: inline;
+  }
+}
+
