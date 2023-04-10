@@ -15,6 +15,7 @@ const Login = () => {
         const result = await signInWithEmailAndPassword(auth, email.value, password.value);
         router.push('/'); // Use the router.push method instead of history.push
       } catch (error) {
+		console.log(error);
         alert("Wrong email or password.", error);
       }
     },
