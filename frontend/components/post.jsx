@@ -1,11 +1,15 @@
 import { DotsHorizontalIcon, ArrowLeftIcon} from "@heroicons/react/outline";
 import { Content } from "next/font/google";
+import PostImage from "./PostImage";
 
 // shd use post id to fetch
 let username = "test"
 let tag = "@test"
 let text = "here is the testing content."
 const date = new Date(2023, 3, 10, 13, 0, 20);
+const testImages = ["corgi.jpeg","doll.jpeg","golden.png","munchkin.png","persian.png","samoyed.png","shiba.jpeg"]
+
+
 export default function Post(){
 
       const hour = date.getHours() % 12;
@@ -36,11 +40,15 @@ export default function Post(){
               <DotsHorizontalIcon className="h-5 ml-auto" />
             </div>
             <div className="text-l my-4 mx-3">
-              {text}
+              <p>{text}</p>
+            </div>
+            <div className="my-4 mx-3">
+              <PostImage ids={testImages}/>
             </div>
             <div className=" text-gray-500 text-sm my-4 mx-3">
               {formattedDate}
             </div>
+            <hr className="mx-2"></hr>
             
          
       </> 
