@@ -1,9 +1,9 @@
 import { DotsHorizontalIcon, ArrowLeftIcon} from "@heroicons/react/outline";
-import { Content } from "next/font/google";
 import PostImage from "./PostImage";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from 'date-fns';
 import { Icon } from '@iconify/react';
+import Comment from "./Comment";
 
 // shd use post id to fetch
 let current = 1
@@ -15,6 +15,22 @@ const images = ["corgi.jpeg","doll.jpeg","golden.png","munchkin.png","persian.pn
 // const video = "catVideo.mp4"
 const testlike = [1,3,12,4,9,17]
 const testrepost = [1,3,4]
+
+let testComment = [
+  {
+      userID:7,
+      name: "hihi",
+      tag:"@hihi",
+      avatar:null,
+      replying:["@test"],
+      text:"u on jj",
+      image:["corgi.jpeg","doll.jpeg"],
+      like:[1,2,3],
+      date:1681145476102
+  }
+]
+
+
 
 export default function Post(){
 
@@ -32,6 +48,7 @@ export default function Post(){
           //change all test var to actual var
         setRepost(testrepost);
         setLike(testlike);
+        setComment(testComment);
         if(current in testlike){
           setLiked(true)
         }
@@ -72,10 +89,11 @@ export default function Post(){
 
     return(
        <>
-            <div className="flex text-2xl h-16 align-middle  bg-opacity-25 sticky top-0 backdrop-blur-sm">
-              <ArrowLeftIcon className="m-4"/>
+            <div className="flex text-2xl h-16 items-center bg-opacity-25 sticky top-0 backdrop-blur-sm z-10 ">
+              <ArrowLeftIcon className="m-4 h-10 w-10"/>
               <a className="my-4 mx-1">Posts</a>
             </div>
+
             <div className="my-4 flex items-center justify-left text-black-700 justify-start-onlarge mx-3">
               {/* User Profile Picture, Need to import from database*/}
               <img src="/usericon.jpg" alt="Profile Picture" className="w-12 h-12 rounded-full px-1"/>
@@ -114,6 +132,14 @@ export default function Post(){
             <Icon icon="material-symbols:ios-share" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />
             </div>
             <hr className="mx-2"></hr>
+            <h1> todo: comment panel</h1>
+            <hr className=" mx-2"/>
+            {
+              comment.map((com,index)=>{
+                return <Comment key={index} com={com} user={current}/>
+              })
+            }
+
       </> 
     )
   }

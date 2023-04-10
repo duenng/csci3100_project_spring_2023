@@ -8,7 +8,7 @@ export default function PostImage({ids}){
 
     const n = ids.length
     return(
-        <div className=" relative">
+        <div className=" relative z-0">
             <img
                 src={`${route}${ids[index]}`}
                 alt={`Image ${index}`}
