@@ -1,4 +1,4 @@
-export default function SideBarMenuItem({text, Icon, active}) {
+export default function SidebarMenuItem({text, Icon, active}) {
   return (
     <div className="hoverElement navbar space-x-3">
         <Icon className="h-7 flex-none" />

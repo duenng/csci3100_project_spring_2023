@@ -13,12 +13,9 @@ function Sidebar() {
         alt="Logo"
         width={75}
         height={75}
-
         >
         </Image>
-        
       </div>
-
       {/* Menu */}
       <div className="">
         <SideBarMenuItem text="Home" Icon={HomeIcon} active />
@@ -33,14 +30,15 @@ function Sidebar() {
       <div className="inline-onlarge"><button className="button-bg-theme text-white rounded-full font-bold shadow-md " style={{width:200, height:50}}>Creat a Post</button>
       </div>
 
-       
       {/* User Profile */}
 
       <div style={{display:'flex'}} className="items-center justify-center text-gray-700 hoverElement justify-start-onlarge" >
         {/* User Profile Picture, Need to import from database*/}
-        <img src="/usericon.jpg" alt="Profile Picture" width={100} height={100} 
-        className="rounded-full"
-        />
+        <img
+			src="/usericon.jpg"
+			alt="Profile Picture"
+			className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full"
+		/>
         <div className="">
         {/* User Name, Need to import from database*/}
           <h4 style={{padding:0, margin:0}}>Username</h4>
