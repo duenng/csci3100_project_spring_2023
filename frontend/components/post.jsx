@@ -1,9 +1,9 @@
-import { DotsHorizontalIcon, ArrowLeftIcon,ChatIcon,HeartIcon,} from "@heroicons/react/outline";
+import { DotsHorizontalIcon, ArrowLeftIcon,ChatIcon,HeartIcon} from "@heroicons/react/outline";
 import { Content } from "next/font/google";
 import PostImage from "./PostImage";
 import { useEffect, useMemo, useState } from "react";
 import { format } from 'date-fns';
-
+import { Icon } from '@iconify/react';
 
 // shd use post id to fetch
 let current = 1
@@ -74,6 +74,8 @@ export default function Post(){
             <div className="grid grid-cols-4">
               <ChatIcon/>
               <HeartIcon/>
+              <Icon icon="bx:repost" />
+        
             </div>
       </> 
     )
