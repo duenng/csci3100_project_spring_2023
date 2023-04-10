@@ -1,6 +1,7 @@
 import { DotsHorizontalIcon, ArrowLeftIcon} from "@heroicons/react/outline";
 import { Content } from "next/font/google";
 import PostImage from "./PostImage";
+import { format } from 'date-fns';
 
 // shd use post id to fetch
 let username = "test"
@@ -18,7 +19,7 @@ export default function Post(){
       const month = date.toLocaleString('default', { month: 'long' });
       const day = date.getDate();
       const period = date.getHours() < 12 ? 'am' : 'pm';
-      const formattedDate = `${period} ${hour}:${minute.toString().padStart(2, '0')} · ${year} ${month} ${day}`;
+      const formattedDate = format(new Date(), "pp · yyyy MMMM dd");
 
 
     return(
