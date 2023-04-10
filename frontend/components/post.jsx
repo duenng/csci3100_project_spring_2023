@@ -3,6 +3,7 @@ import PostImage from "./PostImage";
 import { useEffect, useState } from "react";
 import { format } from 'date-fns';
 import { Icon } from '@iconify/react';
+import { useRouter } from 'next/router'
 import Comment from "./Comment";
 import VideoPlayer from "./VideoPlayer";
 
@@ -42,6 +43,7 @@ export default function Post(){
       const [comment,setComment] = useState([])
 
       const formattedDate = format(date, "pp · yyyy MMMM dd");
+      const router = useRouter();
 
       // todo fetch post info 
       useEffect(()=>{
@@ -92,7 +94,7 @@ export default function Post(){
     return(
        <>
             <div className="flex text-2xl h-16 items-center bg-opacity-25 sticky top-0 backdrop-blur-sm z-10 ">
-              <ArrowLeftIcon className="m-4 h-10 w-10"/>
+              <ArrowLeftIcon className="m-4 h-10 w-10 hoverEffect" onClick={() => router.back()}/>
               <a className="my-4 mx-1">Posts</a>
             </div>
 
