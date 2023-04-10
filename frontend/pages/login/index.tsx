@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./login.module.css";
 const Login = () => {
   return (
-    <section className={styles.login-container-body}>
+    <section className="container">
       <h1 className="section-title">Animated Forms</h1>
       <div className="forms">
         <div className="form-wrapper is-active">
