@@ -1,22 +1,25 @@
 import React, { useCallback, useContext } from "react";
-import { withRouter, Redirect } from "react-router";
+import { useRouter } from 'next/router'; // Import useRouter
 import { auth } from './firebase';
-import {AuthContext} from "./UserContext";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { AuthContext } from "./UserContext";
 
-const Login = ({ history }) => {
+const Login = () => {
+  const router = useRouter(); // Use the useRouter hook
+
   const handleLogin = useCallback(
     async event => {
       event.preventDefault();
       const { email, password } = event.target.elements;
       try {
-        // Use the 'value' property to get input values
-        const result = await auth.signInWithEmailAndPassword(email.value, password.value);
-        history.push("/"); // Redirect to the home page upon successful login
+        const result = await signInWithEmailAndPassword(auth, email.value, password.value);
+        router.push('/'); // Use the router.push method instead of history.push
       } catch (error) {
-        console.error("Error signing in:", error);
+		console.log(error);
+        alert("Wrong email or password.", error);
       }
     },
-    [history]
+    [router] // Add router to the dependency array
   );
 
   const { currentUser } = useContext(AuthContext);
