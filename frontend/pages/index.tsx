@@ -7,9 +7,8 @@ import Login from '@/components/Login'
 import Feed from "@/components/Feed";
 import Trending from "@/components/Trending";
 import Suggestions from "@/components/Suggestions";
-import { auth } from './firebase';
 import {AuthContextProvider} from '@/components/UserContext';
-
+import Chat from "@/components/Chat";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,6 +18,7 @@ export default function Home() {
       <div className="main-content flex">
         <Sidebar />
         <Feed />
+        <Chat />
         <div className="right-section">
           <Trending />
 		  <AuthContextProvider>
