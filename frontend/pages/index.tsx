@@ -7,6 +7,7 @@ import Feed from "../components/Feed";
 import Trending from "../components/Trending";
 import Suggestions from "../components/Suggestions";
 
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
