@@ -1,8 +1,8 @@
 import React, { useCallback, useContext } from "react";
 import { useRouter } from 'next/router'; // Import useRouter
-import { auth } from './firebase';
+import { auth } from '@/components/firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { AuthContext } from "./UserContext";
+import { AuthContext } from "@/components/UserContext";
 
 const Login = () => {
   const router = useRouter(); // Use the useRouter hook
@@ -15,7 +15,7 @@ const Login = () => {
         const result = await signInWithEmailAndPassword(auth, email.value, password.value);
         router.push('/'); // Use the router.push method instead of history.push
       } catch (error) {
-        alert("Wrong email or password.", error);
+        alert("Hello! I am an alert box!!");
       }
     },
     [router] // Add router to the dependency array
