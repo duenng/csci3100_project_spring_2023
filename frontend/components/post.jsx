@@ -1,7 +1,9 @@
-import { DotsHorizontalIcon, ArrowLeftIcon,ChatIcon,HeartIcon} from "@heroicons/react/outline";
+import { DotsHorizontalIcon, ArrowLeftIcon,ChatIcon,HeartIcon,} from "@heroicons/react/outline";
 import { Content } from "next/font/google";
 import PostImage from "./PostImage";
 import { useEffect, useMemo, useState } from "react";
+import { format } from 'date-fns';
+
 
 // shd use post id to fetch
 let current = 1
@@ -20,13 +22,13 @@ export default function Post(){
       const [like,setLike] = useState([])
       const [comment,setComment] = useState([])
 
-      const hour = date.getHours() % 12;
-      const minute = date.getMinutes();
-      const year = date.getFullYear();
-      const month = date.toLocaleString('default', { month: 'long' });
-      const day = date.getDate();
-      const period = date.getHours() < 12 ? 'am' : 'pm';
-      const formattedDate = format(new Date(), "pp · yyyy MMMM dd");
+      // const hour = date.getHours() % 12;
+      // const minute = date.getMinutes();
+      // const year = date.getFullYear();
+      // const month = date.toLocaleString('default', { month: 'long' });
+      // const day = date.getDate();
+      // const period = date.getHours() < 12 ? 'am' : 'pm';
+      const formattedDate = format(date, "pp · yyyy MMMM dd");
 
       // todo fetch post info 
       useEffect(()=>{
