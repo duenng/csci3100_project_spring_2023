@@ -1,4 +1,3 @@
-import { ArrowCircleLeftIcon, ArrowCircleRightIcon } from "@heroicons/react/outline"
 import { useEffect, useState } from "react"
 
 
@@ -23,8 +22,6 @@ export default function PostImage({ids}){
                 setIndex((index+1)%n);
                 }
             }}/>
-            <ArrowCircleLeftIcon className="h-5"/>
-            <ArrowCircleRightIcon className="h-5"/>
         </div>
         
     )

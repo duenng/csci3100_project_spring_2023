@@ -1,16 +1,24 @@
-import { DotsHorizontalIcon, ArrowLeftIcon} from "@heroicons/react/outline";
+import { DotsHorizontalIcon, ArrowLeftIcon,ChatIcon,HeartIcon} from "@heroicons/react/outline";
 import { Content } from "next/font/google";
 import PostImage from "./PostImage";
+import { useEffect, useMemo, useState } from "react";
 
 // shd use post id to fetch
+let current = 1
 let username = "test"
 let tag = "@test"
 let text = "here is the testing content."
 const date = new Date(2023, 3, 10, 13, 0, 20);
-const testImages = ["corgi.jpeg","doll.jpeg","golden.png","munchkin.png","persian.png","samoyed.png","shiba.jpeg"]
-
+const images = ["corgi.jpeg","doll.jpeg","golden.png","munchkin.png","persian.png","samoyed.png","shiba.jpeg"]
+// const video = "catVideo.mp4"
+const testlike = [1,3,12,4,9,17]
+const testrepost = [1,3,4]
 
 export default function Post(){
+
+      const [repost,setRepost] = useState([])
+      const [like,setLike] = useState([])
+      const [comment,setComment] = useState([])
 
       const hour = date.getHours() % 12;
       const minute = date.getMinutes();
@@ -20,6 +28,12 @@ export default function Post(){
       const period = date.getHours() < 12 ? 'am' : 'pm';
       const formattedDate = `${period} ${hour}:${minute.toString().padStart(2, '0')} · ${year} ${month} ${day}`;
 
+      // todo fetch post info 
+      useEffect(()=>{
+        //todo use fetch
+        setRepost(testrepost);
+        setLike(testlike);
+      })
 
     return(
        <>
@@ -42,15 +56,23 @@ export default function Post(){
             <div className="text-l my-4 mx-3">
               <p>{text}</p>
             </div>
-            <div className="my-4 mx-3">
-              <PostImage ids={testImages}/>
-            </div>
+            {/* todo video handler */}
+            {images?.length?<div className="my-4 mx-3">
+              <PostImage ids={images}/>
+            </div>:null}
             <div className=" text-gray-500 text-sm my-4 mx-3">
               {formattedDate}
             </div>
             <hr className="mx-2"></hr>
-            
-         
+            <div className=" my-4 mx-3 text-m">
+            {repost.length?<span className="mx-2"><a className="font-semibold">{repost.length}</a><a className="text-gray-500"> reposts</a></span>:null}
+            {like.length?<span className="mx-2"><a className="font-semibold">{like.length}</a><a className="text-gray-500"> likes</a></span>:null}
+            </div>
+            <hr className="mx-2"></hr>
+            <div className="grid grid-cols-4">
+              <ChatIcon/>
+              <HeartIcon/>
+            </div>
       </> 
     )
 }
