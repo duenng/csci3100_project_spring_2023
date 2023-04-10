@@ -1,4 +1,4 @@
-import { DotsHorizontalIcon, ArrowLeftIcon,ChatIcon,HeartIcon} from "@heroicons/react/outline";
+import { DotsHorizontalIcon, ArrowLeftIcon} from "@heroicons/react/outline";
 import { Content } from "next/font/google";
 import PostImage from "./PostImage";
 import { useEffect, useMemo, useState } from "react";
@@ -20,22 +20,55 @@ export default function Post(){
 
       const [repost,setRepost] = useState([])
       const [like,setLike] = useState([])
+      const [liked,setLiked] = useState(false)
       const [comment,setComment] = useState([])
 
-      // const hour = date.getHours() % 12;
-      // const minute = date.getMinutes();
-      // const year = date.getFullYear();
-      // const month = date.toLocaleString('default', { month: 'long' });
-      // const day = date.getDate();
-      // const period = date.getHours() < 12 ? 'am' : 'pm';
       const formattedDate = format(date, "pp · yyyy MMMM dd");
 
       // todo fetch post info 
       useEffect(()=>{
-        //todo use fetch
+        return()=>{
+          //todo use fetch
+          //change all test var to actual var
         setRepost(testrepost);
         setLike(testlike);
-      })
+        if(current in testlike){
+          setLiked(true)
+        }
+      }},[])
+
+      const showCommentPanel = (e)=>{
+        //todo
+          console.log("show panal",e)
+      }
+
+      const handleRepost = (e)=>{
+        //todo
+        console.log("reposted",e)
+      }
+
+      const handleUnlike=(e)=>{
+        setLiked(false)
+        if(current in like){
+          let filtered = like.filter(id=>id!==current)
+          setLike([...filtered])
+          //fetch
+        }
+        
+      }
+
+      const handleLike=(e)=>{
+        setLiked(true);
+        if(current in like){
+          setLike(prev=>[...prev,current])
+          //fetch
+        }
+      }
+
+      const handleShare=(e)=>{
+        //todo
+        console.log("share",e)
+      }
 
     return(
        <>
@@ -71,12 +104,16 @@ export default function Post(){
             {like.length?<span className="mx-2"><a className="font-semibold">{like.length}</a><a className="text-gray-500"> likes</a></span>:null}
             </div>
             <hr className="mx-2"></hr>
-            <div className="grid grid-cols-4">
-              <ChatIcon/>
-              <HeartIcon/>
-              <Icon icon="bx:repost" />
-        
+            <div className="flex justify-evenly my-2">
+            <Icon icon="ic:outline-insert-comment" onClick={(e)=>showCommentPanel(e)} width="36" hFlip={true} />
+            <Icon icon="zondicons:repost"  onClick={(e)=>handleRepost(e)} width="36"/>
+            {
+              liked?<Icon icon="mdi:cards-heart" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} />:
+              <Icon icon="mdi:cards-heart" onClick={(e)=>handleLike(e)} width="36"/>
+            }
+            <Icon icon="material-symbols:ios-share" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />
             </div>
+            <hr className="mx-2"></hr>
       </> 
     )
-}
+  }
