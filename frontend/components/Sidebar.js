@@ -1,53 +1,62 @@
 import Image from "next/image";
 import SideBarMenuItem from "./SideBarMenuItem";
-import {HomeIcon} from "@heroicons/react/solid";
-import {BellIcon, InboxIcon, UserIcon, DotsCircleHorizontalIcon, DotsHorizontalIcon} from "@heroicons/react/outline";
+import { HomeIcon } from "@heroicons/react/solid";
+import {
+  BellIcon,
+  InboxIcon,
+  UserIcon,
+  DotsCircleHorizontalIcon,
+  DotsHorizontalIcon,
+} from "@heroicons/react/outline";
 
 function Sidebar() {
   return (
-    <div>
+    <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full ">
       {/* Tertwit Logo */}
-      {/* to be added, hover effect to the logo */}
-      <div style={{display:'flex'}} className="hoverElement">
-        <Image src="/tertwit_logo.svg"
-        alt="Logo"
-        width={75}
-        height={75}
-        >
-        </Image>
+      <div className="hoverEffect p-4 hover:bg-purple-100 xl:px-4">
+        <Image
+          src="/tertwit_logo.svg"
+          alt="Logo"
+          width={75}
+          height={75}
+        ></Image>
       </div>
-      {/* Menu */}
-      <div className="">
-        <SideBarMenuItem text="Home" Icon={HomeIcon} active />
-        <SideBarMenuItem text="Notification" Icon={BellIcon}/>
-        <SideBarMenuItem text="Messages" Icon={InboxIcon}/>
-        <SideBarMenuItem text="Profile" Icon={UserIcon}/>
-        <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon}/>
-      </div>  
 
+      {/* Menu */}
+      <div className="mt-4 mb-3 xl:items-start">
+        <SideBarMenuItem text="Home" Icon={HomeIcon} active />
+        <SideBarMenuItem text="Notification" Icon={BellIcon} />
+        <SideBarMenuItem text="Messages" Icon={InboxIcon} />
+        <SideBarMenuItem text="Profile" Icon={UserIcon} />
+        <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon} />
+      </div>
 
       {/* Tertwit Button */}
-      <div className="inline-onlarge"><button className="button-bg-theme text-white rounded-full font-bold shadow-md " style={{width:200, height:50}}>Creat a Post</button>
-      </div>
+        <button className="bg-purple-500 text-white hover:brightness-95 rounded-full w-56 h-12 font-bold shadow-md text-lg hidden xl:inline">
+          Creat a Post
+        </button>
+      
 
       {/* User Profile */}
 
-      <div style={{display:'flex'}} className="items-center justify-center text-gray-700 hoverElement justify-start-onlarge" >
+      <div className="flex items-center justify-center text-gray-700 hoverEffect xl:justify-start mt-auto">
         {/* User Profile Picture, Need to import from database*/}
         <img
-			src="/usericon.jpg"
-			alt="Profile Picture"
-			className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full"
-		/>
-        <div className="">
-        {/* User Name, Need to import from database*/}
-          <h4 style={{padding:0, margin:0}}>Username</h4>
-          <p style={{padding:0, margin:0}}>@username</p>
+          src="/usericon.jpg"  
+          alt="Profile Picture"
+          className="h-10 w-10 rounded-full xl:mr-2"
+        
+
+        />
+        <div className="leading-5">
+          {/* User Name, Need to import from database*/}
+          <h4 className="font-bold">Username</h4>
+          <p className="text-gray-500">@username</p>
         </div>
-        <DotsHorizontalIcon className="h-5"/>
+        <DotsHorizontalIcon className="h-5 xl:m1-8 " />
       </div>
     </div>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;
