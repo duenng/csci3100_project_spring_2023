@@ -43,7 +43,7 @@ export default function Comment({com,user}){
 
     return(
         <>
-        <div className="flex item-center mx-2 text-base z-0">
+        <div className="flex item-center mx-2 text-base ">
         <img className="h-8 round-full m-4" src ={`avatar/${com.avatar?com.avatar:"user.png"}`}/>
         <div>
         <p className="m-2"><a>{com.name} </a><a className=" text-gray-500">{com.tag} { format(new Date(com.date), " · yyyy MMMM dd")}</a></p>
@@ -51,7 +51,7 @@ export default function Comment({com,user}){
         
         </div>
       </div>
-      <div className="m-2 text-base z-0">
+      <div className="m-2 text-base ">
         <p className="m-2">{com.text}</p>
         <div className=" m-2 h-42 w-64">
           <PostImage ids={com.image}/>
@@ -60,7 +60,7 @@ export default function Comment({com,user}){
             <Icon icon="ic:outline-insert-comment" onClick={(e)=>showCommentPanel(e)} width="36" hFlip={true} />
             {
               liked?<Icon icon="mdi:cards-heart" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} />:
-              <Icon icon="mdi:cards-heart" onClick={(e)=>handleLike(e)} width="36"/>
+              <Icon icon="mdi:cards-heart-outline" onClick={(e)=>handleLike(e)} width="36"/>
             }
             <a className="text-gray-700 text-sm align-middle ml-1">{like.length}</a>
             </div>

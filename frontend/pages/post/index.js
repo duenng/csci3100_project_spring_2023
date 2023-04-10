@@ -6,7 +6,6 @@ import Sidebar from '@/components/Sidebar'
 import Trending from "@/components/Trending";
 import Suggestions from "@/components/Suggestions";
 import Post from "@/components/Post"
-import PostHeader from '../../components/postHeader'
 
 const inter = Inter({ subsets: ['latin'] })
 

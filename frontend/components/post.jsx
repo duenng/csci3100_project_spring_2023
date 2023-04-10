@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { format } from 'date-fns';
 import { Icon } from '@iconify/react';
 import Comment from "./Comment";
+import VideoPlayer from "./VideoPlayer";
 
 // shd use post id to fetch
 let current = 1
@@ -15,6 +16,7 @@ const images = ["corgi.jpeg","doll.jpeg","golden.png","munchkin.png","persian.pn
 // const video = "catVideo.mp4"
 const testlike = [1,3,12,4,9,17]
 const testrepost = [1,3,4]
+const video= "catVideo.mp4"
 
 let testComment = [
   {
@@ -113,6 +115,7 @@ export default function Post(){
             {images?.length?<div className="my-4 mx-3">
               <PostImage ids={images}/>
             </div>:null}
+            {video?<div className="my-4 mx-4"><VideoPlayer filename={video}/></div>:null}
             <div className=" text-gray-500 text-sm my-4 mx-3">
               {formattedDate}
             </div>
@@ -127,7 +130,7 @@ export default function Post(){
             <Icon icon="zondicons:repost"  onClick={(e)=>handleRepost(e)} width="36"/>
             {
               liked?<Icon icon="mdi:cards-heart" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} />:
-              <Icon icon="mdi:cards-heart" onClick={(e)=>handleLike(e)} width="36"/>
+              <Icon icon="mdi:cards-heart-outline" onClick={(e)=>handleLike(e)} width="36"/>
             }
             <Icon icon="material-symbols:ios-share" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />
             </div>
