@@ -17,9 +17,9 @@ const Login = () => {
   const handleLogin = useCallback(
     async event => {
       event.preventDefault();
-      const { email, password } = event.target.elements;
+      const { loginEmail, loginPassword } = event.target.elements;
       try {
-        const result = await signInWithEmailAndPassword(auth, email.value, password.value);
+        const result = await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
         router.push('/'); // Use the router.push method instead of history.push
       } catch (error) {
 		console.log(error);
@@ -28,12 +28,6 @@ const Login = () => {
     },
     [router] // Add router to the dependency array
   );
-  /*
-  const { currentUser } = useContext(AuthContext);
-  if (currentUser) {
-    return <Redirect to="/" />;
-  }
-  */
   return (
 	<div className={styles.body}>
 		<section className={styles.formsSection}>
@@ -44,16 +38,16 @@ const Login = () => {
 				Login
 				<span className={styles.underline}></span>
 			  </button>
-			  <form className={`${styles.form} ${styles.formLogin} ${activeForm === "login" ? styles.formWrapperIsActiveFormLogin : ""}`}>
+			  <form onSubmit={handleLogin} className={`${styles.form} ${styles.formLogin} ${activeForm === "login" ? styles.formWrapperIsActiveFormLogin : ""}`}>
 				<fieldset>
 				  <legend>Please, enter your email and password for login.</legend>
 				  <div className={styles.inputBlock}>
-					<label htmlFor="login-email">E-mail</label>
-					<input id="login-email" type="email" required />
+					<label htmlFor="loginEmail">E-mail</label>
+					<input id="loginEmail" type="email" required />
 				  </div>
 				  <div className={styles.inputBlock}>
-					<label htmlFor="login-password">Password</label>
-					<input id="login-password" type="password" required />
+					<label htmlFor="loginPassword">Password</label>
+					<input id="loginPassword" type="password" required />
 				  </div>
 				</fieldset>
 				<button type="submit" className={`${styles.btnLogin}`}>
