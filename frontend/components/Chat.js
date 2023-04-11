@@ -46,55 +46,64 @@ return (
                 <div className="text-gary-500 text-xs pt-1 text-center">Username</div>
             </div>
         </div>
-        <div>
-            <div className="flex m-3 bg-white rounded-lg p-2">
-                <div>
-                    <img className="w-14 h-14 rounded full" src="./usericon.jpg"/>
-                </div>
-                <div className="flex-grow p-3">
-                    <div className="flex text-xs justify-between">
-                        <div>Username</div>
-                        <div className="text-gray-400">12:00 AM</div>
+        <div className="grid grid-cols-1 gap-x-0 gap-y-0">
+                <button type="submit">
+                    <div className="flex m-3 bg-white rounded-lg p-2  text-gray-700 hoverEffect">
+                        <div>
+                            <img className="w-14 h-14 rounded full" src="./usericon.jpg"/>
+                        </div>
+                        <div className="flex-grow p-3">
+                            <div className="flex text-xs justify-between">
+                                <div>Username</div>
+                                <div className="text-gray-400">12:00 AM</div>
+                            </div>
+                            <div className="text-xs text-gray-400">This is the latest message.</div>
+                        </div>
                     </div>
-                    <div className="text-xs text-gray-400">This is the latest message.</div>
-                </div>
-            </div>
-            <div className="flex m-3 bg-white rounded-lg p-2">
-                <div>
-                    <img className="w-14 h-14 rounded full" src="./usericon.jpg"/>
-                </div>
-                <div className="flex-grow p-3">
-                    <div className="flex text-xs justify-between">
-                        <div>Username</div>
-                        <div className="text-gray-400">12:00 AM</div>
+                </button>
+                
+            <button type="submit">
+                <div className="flex m-3 bg-white rounded-lg p-2  text-gray-700 hoverEffect">
+                    <div>
+                        <img className="w-14 h-14 rounded full" src="./usericon.jpg"/>
                     </div>
-                    <div className="text-xs text-gray-400">This is the latest message.</div>
-                </div>
-            </div>
-            <div className="flex m-3 bg-white rounded-lg p-2">
-                <div>
-                    <img className="w-14 h-14 rounded full" src="./usericon.jpg"/>
-                </div>
-                <div className="flex-grow p-3">
-                    <div className="flex text-xs justify-between">
-                        <div>Username</div>
-                        <div className="text-gray-400">12:00 AM</div>
+                    <div className="flex-grow p-3">
+                        <div className="flex text-xs justify-between">
+                            <div>Username</div>
+                            <div className="text-gray-400">12:00 AM</div>
+                        </div>
+                        <div className="text-xs text-gray-400">This is the latest message.</div>
                     </div>
-                    <div className="text-xs text-gray-400">This is the latest message.</div>
                 </div>
-            </div>
-            <div className="flex m-3 bg-white rounded-lg p-2">
-                <div>
-                    <img className="w-14 h-14 rounded full" src="./usericon.jpg"/>
-                </div>
-                <div className="flex-grow p-3">
-                    <div className="flex text-xs justify-between">
-                        <div>Username</div>
-                        <div className="text-gray-400">12:00 AM</div>
+            </button>
+            <button type="submit">
+                <div className="flex m-3 bg-white rounded-lg p-2  text-gray-700 hoverEffect">
+                    <div>
+                        <img className="w-14 h-14 rounded full" src="./usericon.jpg"/>
                     </div>
-                    <div className="text-xs text-gray-400">This is the latest message.</div>
+                    <div className="flex-grow p-3">
+                        <div className="flex text-xs justify-between">
+                            <div>Username</div>
+                            <div className="text-gray-400">12:00 AM</div>
+                        </div>
+                        <div className="text-xs text-gray-400">This is the latest message.</div>
+                    </div>
                 </div>
-            </div>
+            </button>
+            <button type="submit">
+                <div className="flex m-3 bg-white rounded-lg p-2  text-gray-700 hoverEffect">
+                    <div>
+                        <img className="w-14 h-14 rounded full" src="./usericon.jpg"/>
+                    </div>
+                    <div className="flex-grow p-3">
+                        <div className="flex text-xs justify-between">
+                            <div>Username</div>
+                            <div className="text-gray-400">12:00 AM</div>
+                        </div>
+                        <div className="text-xs text-gray-400">This is the latest message.</div>
+                    </div>
+                </div>
+            </button>  
         </div>
     </div>
 
@@ -143,7 +152,9 @@ return (
         <div className=" w-full h-14 flex px-3 bg-red-100">
             <input placeholder="Start a new message..." type="text" className="flex-grow focus:outline-none "/>
             <div className =" rounded-full w-5 h-5 flex justify-between">
-                <img src="./sent.png" class="w-5 h-5 m-2"/>
+                <button type="submit">
+                    <img src="./sent.png" class="w-5 h-5 m-2"/>
+                </button>
             </div>
         </div>
     </div>
