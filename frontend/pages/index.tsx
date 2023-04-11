@@ -9,6 +9,8 @@ import Trending from "@/components/Trending";
 import Suggestions from "@/components/Suggestions";
 import {AuthContextProvider} from '@/components/UserContext';
 import Chat from "@/components/Chat";
+import Chatlist from "@/components/Chatlist";
+import Chatroom from "@/components/Chatroom";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,9 +20,10 @@ export default function Home() {
       <div className="main-content flex">
         <Sidebar />
         <Feed />
-        <Chat />
-        <div className="right-section">
-          <Trending />
+        <Chatlist />
+        <div className="right-section"> 
+        <Chatroom/>
+        <Trending />
 		  <AuthContextProvider>
 		  <Login />
 		  </AuthContextProvider>
