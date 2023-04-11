@@ -1,10 +1,10 @@
-.login-container *,
-.login-container *::before,
-.login-container *::after {
+.container *,
+.container *::before,
+.container *::after {
     box-sizing: border-box;
 }
 
-.login-container-body {
+.container-body {
 	margin: 0;
 	font-family: Roboto, -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
 	background: #3b4465;
