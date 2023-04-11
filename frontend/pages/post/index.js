@@ -17,7 +17,7 @@ export default function Home() {
         <Sidebar/>
       </div>
 
-      <div className='col-span-2 border-x-4  h-screen overflow-y-scroll'>
+      <div className='col-span-2 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words'>
        <Post/>
       </div>
       <div className=' overflow-y-scroll	 h-screen'>

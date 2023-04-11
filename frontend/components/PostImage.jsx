@@ -11,7 +11,7 @@ export default function PostImage({ids}){
         <div className=" relative z-0">
             <img
                 src={`${route}${ids[index]}`}
-                alt={`Image ${index}`}
+                alt={`${ids[index]}`}
                 className="rounded-lg"
                 onClick={(event) => {
                 const x = event.nativeEvent.offsetX;

@@ -6,6 +6,7 @@ import { Icon } from '@iconify/react';
 import { useRouter } from 'next/router'
 import Comment from "./Comment";
 import VideoPlayer from "./VideoPlayer";
+import CommentPanel from"./CommentPanel";
 
 // shd use post id to fetch
 let current = 1
@@ -26,7 +27,7 @@ let testComment = [
       tag:"@hihi",
       avatar:null,
       replying:["@test"],
-      text:"u on jj",
+      text:"The intricacies of language and the human mind are fascinating, as our ability to communicate complex ideas through speech and writing has shaped the course of human history, allowing us to build civilizations, share knowledge and connect with one another across time and space.",
       image:["corgi.jpeg","doll.jpeg"],
       like:[1,2,3],
       date:1681145476102
@@ -95,13 +96,13 @@ export default function Post(){
        <>
             <div className="flex text-2xl h-16 items-center bg-opacity-25 sticky top-0 backdrop-blur-sm z-10 ">
               <ArrowLeftIcon className="m-4 h-10 w-10 hoverEffect" onClick={() => router.back()}/>
-              <a className="my-4 mx-1">Posts</a>
+              <a className="my-4 mx-1 flex-grow">Posts</a>
             </div>
 
             <div className="my-4 flex items-center justify-left text-black-700 justify-start-onlarge mx-3">
               {/* User Profile Picture, Need to import from database*/}
               <img src="/usericon.jpg" alt="Profile Picture" className="w-12 h-12 rounded-full px-1"/>
-              <div className="px-1 text-m">
+              <div className="px-1 text-m flex-grow">
                 {/* User Name, Need to import from database*/}
                 <h4 style={{ padding: 0, margin: 0 }}>{username}</h4>
                 <p style={{ padding: 0, margin: 0 }} className="text-gray-500">
@@ -113,7 +114,6 @@ export default function Post(){
             <div className="text-l my-4 mx-3">
               <p>{text}</p>
             </div>
-            {/* todo video handler */}
             {images?.length?<div className="my-4 mx-3">
               <PostImage ids={images}/>
             </div>:null}
@@ -137,7 +137,9 @@ export default function Post(){
             <Icon icon="material-symbols:ios-share" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />
             </div>
             <hr className="mx-2"></hr>
-            <h1> todo: comment panel</h1>
+            <div className="mx -2">
+              <CommentPanel tags={[tag]} user = {{}}/>
+            </div>
             <hr className=" mx-2"/>
             {
               comment.map((com,index)=>{
