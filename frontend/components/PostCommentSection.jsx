@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import {useEffect,useState} from "react"
+import {useState} from "react"
 import Comment from "./Comment";
 import CommentPanel from"./CommentPanel";
 
@@ -23,7 +23,7 @@ export default function PostCommentSection(props){
 
       const handleUnlike=(e)=>{
         setLiked(false)
-        if(props.current in like){
+        if(like.includes(props.current)){
           let filtered = like.filter(id=>id!==props.current)
           setLike([...filtered])
           //fetch
@@ -33,8 +33,11 @@ export default function PostCommentSection(props){
 
       const handleLike=(e)=>{
         setLiked(true);
-        if(props.current in like){
-          setLike(prev=>[...prev,props.current])
+        console.log(like,props.current)
+        if(!like.includes(props.current)){
+            console.log("here")
+          setLike(prev=>{
+            return [...prev,props.current]})
           //fetch
         }
       }
@@ -42,6 +45,13 @@ export default function PostCommentSection(props){
       const handleShare=(e)=>{
         //todo
         console.log("share",e)
+      }
+
+      const addHandler=(newComment)=>{
+        console.log(2,newComment)
+        setComment(prev=>{
+            return [...prev,newComment]
+        })
       }
 
 
@@ -66,7 +76,7 @@ export default function PostCommentSection(props){
             <hr className="mx-2"></hr>
             {/* comment section */}
             <div className="mx -2">
-              <CommentPanel tags={[props.tag]} user = {{}}/>
+              <CommentPanel tag={props.tag} user = {{}} inPost={true} handler={addHandler}/>
             </div>
             <hr className=" mx-2"/>
             {
