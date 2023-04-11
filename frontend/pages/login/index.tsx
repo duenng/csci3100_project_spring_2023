@@ -2,7 +2,7 @@ import React, { useState, useCallback, useContext } from "react";
 import styles from "../../styles/login.module.css";
 import { useRouter } from 'next/router';
 import { auth } from '../../components/firebase';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { AuthContext } from "../../components/UserContext";
 import {AuthContextProvider} from '@/components/UserContext';
 
@@ -28,6 +28,27 @@ const Login = () => {
     },
     [router] // Add router to the dependency array
   );
+  const handleSignUp = useCallback(
+  async (event) => {
+    event.preventDefault();
+    const { signupEmail, signupPassword, signupPasswordConfirm } = event.target.elements;
+
+    if (signupPassword.value !== signupPasswordConfirm.value) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    try {
+      const result = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPassword.value);
+      // You can add any additional user-related setup here, like setting their display name
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+      alert("Failed to create account.", error);
+    }
+  },
+  [router]
+);
   return (
 	<div className={styles.body}>
 		<section className={styles.formsSection}>
@@ -60,21 +81,21 @@ const Login = () => {
 				Sign Up
 				<span className={styles.underline}></span>
 			  </button>
-			  <form className={`${styles.form} ${styles.formSignup}`}>
+			  <form onSubmit={handleSignUp} className={`${styles.form} ${styles.formSignup}`}>
 				<fieldset>
 				  <legend>Please, enter your email, password and password confirmation for sign up.</legend>
 				  <div className={styles.inputBlock}>
-					<label htmlFor="signup-email">E-mail</label>
-					<input id="signup-email" type="email" required />
-				  </div>
-				  <div className={styles.inputBlock}>
-					<label htmlFor="signup-password">Password</label>
-					<input id="signup-password" type="password" required />
-				  </div>
-				  <div className={styles.inputBlock}>
-					<label htmlFor="signup-password-confirm">Confirm password</label>
-					<input id="signup-password-confirm" type="password" required />
-				  </div>
+					  <label htmlFor="signupEmail">E-mail</label>
+					  <input id="signupEmail" type="email" required />
+					</div>
+					<div className={styles.inputBlock}>
+					  <label htmlFor="signupPassword">Password</label>
+					  <input id="signupPassword" type="password" required />
+					</div>
+					<div className={styles.inputBlock}>
+					  <label htmlFor="signupPasswordConfirm">Confirm password</label>
+					  <input id="signupPasswordConfirm" type="password" required />
+					</div>
 				</fieldset>
 				<button type="submit" className={`${styles.btnSignup}`}>
 				  Continue
