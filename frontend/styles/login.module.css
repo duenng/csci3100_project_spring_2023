@@ -1,23 +1,23 @@
-.container *,
-.container *::before,
-.container *::after {
+.login-container * {
     box-sizing: border-box;
 }
 
-.container-body {
-	margin: 0;
-	font-family: Roboto, -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
-	background: #3b4465;
+.body {
+    margin: 0;
+	padding: 0;
+    font-family: Roboto, -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+    background-color: #3b4465;
+	height: 100vh;
 }
 
-.forms-section {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+.formsSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.section-title {
+.sectionTitle {
 	font-size: 32px;
 	letter-spacing: 1px;
 	color: #fff;
@@ -29,11 +29,11 @@
 	margin-top: 30px;
 }
 
-.form-wrapper {
+.formWrapper {
 	animation: hideLayer .3s ease-out forwards;
 }
 
-.form-wrapper.is-active {
+.formWrapperIsActive {
 	animation: showLayer .3s ease-in forwards;
 }
 
@@ -74,12 +74,12 @@
 	transition: all .3s ease-out;
 }
 
-.form-wrapper.is-active .switcher-login {
+.formWrapperIsActiveSwitcherLogin {
 	color: #fff;
 	transform: translateX(90px);
 }
 
-.form-wrapper.is-active .switcher-signup {
+.formWrapperIsActiveSwitcherSignup {
 	color: #fff;
 	transform: translateX(-90px);
 }
@@ -106,15 +106,15 @@
 	transition: transform .2s ease-out;
 }
 
-.switcher-login .underline::before {
+.switcherLoginUnderline::before {
 	transform: translateX(101%);
 }
 
-.switcher-signup .underline::before {
+.switcherSignUpUnderline::before {
 	transform: translateX(-101%);
 }
 
-.form-wrapper.is-active .underline::before {
+.formWrapperIsActiveUnderline::before {
 	transform: translateX(0);
 }
 
@@ -127,12 +127,13 @@
 	transform-origin: top;
 }
 
-.form-login {
+.formLogin {
 	animation: hideLogin .3s ease-out forwards;
 }
 
-.form-wrapper.is-active .form-login {
+.formWrapperIsActiveFormLogin {
 	animation: showLogin .3s ease-in forwards;
+	margin-top: 80px;
 }
 
 @keyframes showLogin {
@@ -144,14 +145,14 @@
 		transform: translate(0, 0);
 	}
 	100% {
-		background-color: #fff;
+		background: #d7e7f1;
 		transform: translate(35%, -20px);
 	}
 }
 
 @keyframes hideLogin {
 	0% {
-		background-color: #fff;
+		background: #d7e7f1;
 		transform: translate(35%, -20px);
 	}
 	50% {
@@ -163,17 +164,17 @@
 	}
 }
 
-.form-signup {
+.formSignup {
 	animation: hideSignup .3s ease-out forwards;
 }
 
-.form-wrapper.is-active .form-signup {
+.formWrapperIsActiveFormSignup {
 	animation: showSignup .3s ease-in forwards;
 }
 
 @keyframes showSignup {
 	0% {
-		background: #d7e7f1;
+		background: #fff;
 		transform: translate(-40%, 10px) scaleY(.8);
 	}
 	50% {
@@ -194,7 +195,7 @@
 		transform: translate(0, 0) scaleY(.8);
 	}
 	100% {
-		background: #d7e7f1;
+		background: #fff;
 		transform: translate(-40%, 10px) scaleY(.8);
 	}
 }
@@ -208,15 +209,15 @@
 	transition: all .3s ease-out;
 }
 
-.form-login fieldset {
+.formLogin fieldset {
 	transform: translateX(-50%);
 }
 
-.form-signup fieldset {
+.formSignup fieldset {
 	transform: translateX(50%);
 }
 
-.form-wrapper.is-active fieldset {
+.formWrapperIsActive fieldset {
 	opacity: 1;
 	transform: translateX(0);
 	transition: opacity .4s ease-in, transform .35s ease-in;
@@ -230,16 +231,16 @@
 	clip: rect(0 0 0 0);
 }
 
-.input-block {
+.inputBlock {
 	margin-bottom: 20px;
 }
 
-.input-block label {
+.inputBlock label {
 	font-size: 14px;
   color: #a1b4b4;
 }
 
-.input-block input {
+.inputBlock input {
 	display: block;
 	width: 100%;
 	margin-top: 8px;
@@ -265,21 +266,20 @@
 	transition: all .3s ease-out;
 }
 
-.form-wrapper.is-active .form [type='submit'] {
+.formWrapperIsActive .form [type='submit'] {
 	opacity: 1;
 	transform: translateX(0);
 	transition: all .4s ease-in;
 }
 
-.btn-login {
+.btnLogin {
 	color: #fbfdff;
 	background: #a7e245;
 	transform: translateX(-30%);
 }
 
-.btn-signup {
+.btnSignup {
 	color: #a7e245;
-	background: #fbfdff;
 	box-shadow: inset 0 0 0 2px #a7e245;
 	transform: translateX(30%);
 }
