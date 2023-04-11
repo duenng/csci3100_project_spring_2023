@@ -12,9 +12,8 @@ import {
 function Chat() {
 
 return (
- 
-<body>
-    <header>
+
+<div>
         <div class="flex flex-row">
         <div class="flex-none w-60 h-14 text-[20px] p-3  font-bold ">
               Messages 
@@ -31,10 +30,7 @@ return (
             <Image class=" hover:bg-purple-200 rounded-full" src="/add-chat.png" alt="addchat" width={30}height={30} ></Image>
         </div>
         </div>
-    </header>
 
-
-    <main>
 
         <button className="bg-gray-200 items-center text-gray-500 hover:brightness-10 rounded-full w-80 h-12 font-bold shadow-md text-lg xl:inline flex p-5">
         <div class="flex-initial w-5 h-10 p-2 text-[15px]  ">
@@ -44,10 +40,8 @@ return (
             Search Direct Message 
         </div>
         </button>
-    </main>
 
 
-    <footer>
 
         <div className="flex items-center justify-centerborder-4 border-indigo-500/50 text-gray-700 hoverEffect rounded-none w-80 h-20 ">
             {/* User Profile Picture, Need to import from database*/}
@@ -64,9 +58,8 @@ return (
             </div>
         </div>
 
-    </footer>
-</body>
-
+ 
+</div>
 );
 
 }
