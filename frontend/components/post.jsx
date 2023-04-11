@@ -95,7 +95,7 @@ export default function Post(){
 
     return(
        <>
-            <div className="flex text-2xl h-16 items-center bg-opacity-25 sticky top-0 backdrop-blur-sm z-10 ">
+            <div className="flex text-2xl h-16 items-center bg-opacity-25 sticky top-0 backdrop-blur-sm z-10 bg-white">
               <ArrowLeftIcon className="m-4 h-10 w-10 hoverEffect" onClick={() => router.back()}/>
               <a className="my-4 mx-1 flex-grow">Posts</a>
             </div>
