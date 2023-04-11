@@ -6,7 +6,7 @@ export default function PostLike(props){
     const [repost,setRepost] = useState(props.repost)
     const [like,setLike] = useState(props.like)
     const [liked,setLiked] = useState(like.includes(props.current))
-    const [share,setShare] = useState("share")
+    const [copy,setCopy] = useState(false)
     
 
 
@@ -43,10 +43,10 @@ export default function PostLike(props){
       const handleShare=(e)=>{
         const currentUrl = window.location.href;
         navigator.clipboard.writeText(currentUrl)
-        setShare("copied")
+        setCopy(true)
         setTimeout(()=>{
-          setShare("share")
-        },5000)
+          setCopy(false)
+        },2000)
         //console.log("share",e)
       }
 
@@ -70,8 +70,9 @@ export default function PostLike(props){
               liked?<div title="unlike"><Icon icon="mdi:cards-heart"  className="hoverEffect h-10" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} /></div>:
               <div title= "like"><Icon icon="mdi:cards-heart-outline" className="hoverEffect h-10" onClick={(e)=>handleLike(e)} width="36"/></div>
             }
-            <div title={share}  className=''>
-            <Icon icon="material-symbols:ios-share" className="hoverEffect h-10" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />
+            <div title="share"  className=''>
+            {copy?<Icon icon="mdi:attachment-tick" width="36" height="36" />
+            :<Icon icon="material-symbols:ios-share" className="hoverEffect h-10" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />}
             </div>
             
             </div>
