@@ -15,9 +15,9 @@ let testComment = [
       name: "hihi",
       tag:"@hihi",
       avatar:null,
-      replying:["@test"],
+      replying:"@test",
       text:"The intricacies of language and the human mind are fascinating, as our ability to communicate complex ideas through speech and writing has shaped the course of human history, allowing us to build civilizations, share knowledge and connect with one another across time and space.",
-      image:["corgi.jpeg","doll.jpeg"],
+      images:["corgi.jpeg","doll.jpeg"],
       video:"catVideo.mp4",
       like:[1,2,3],
       date:1681145476102
@@ -33,7 +33,6 @@ let testPost = {
   repost:[1,3,4],
   date: new Date(2023, 3, 10, 13, 0, 20),
   images:["corgi.jpeg","doll.jpeg","golden.png","munchkin.png","persian.png","samoyed.png","shiba.jpeg"],
-  
   video: "catVideo.mp4",
   comment: testComment,
 }

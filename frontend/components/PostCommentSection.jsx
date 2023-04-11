@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import {useEffect,useState} from "react"
+import {useState} from "react"
 import Comment from "./Comment";
 import CommentPanel from"./CommentPanel";
 
@@ -7,7 +7,7 @@ export default function PostCommentSection(props){
 
     const [repost,setRepost] = useState(props.repost)
     const [like,setLike] = useState(props.like)
-    const [liked,setLiked] = useState(props.current in like)
+    const [liked,setLiked] = useState(like.includes(props.current))
     const [comment,setComment] = useState(props.comment)
 
 
@@ -23,7 +23,7 @@ export default function PostCommentSection(props){
 
       const handleUnlike=(e)=>{
         setLiked(false)
-        if(props.current in like){
+        if(like.includes(props.current)){
           let filtered = like.filter(id=>id!==props.current)
           setLike([...filtered])
           //fetch
@@ -33,8 +33,11 @@ export default function PostCommentSection(props){
 
       const handleLike=(e)=>{
         setLiked(true);
-        if(props.current in like){
-          setLike(prev=>[...prev,props.current])
+        console.log(like,props.current)
+        if(!like.includes(props.current)){
+            console.log("here")
+          setLike(prev=>{
+            return [...prev,props.current]})
           //fetch
         }
       }
@@ -42,6 +45,13 @@ export default function PostCommentSection(props){
       const handleShare=(e)=>{
         //todo
         console.log("share",e)
+      }
+
+      const addHandler=(newComment)=>{
+        console.log(2,newComment)
+        setComment(prev=>{
+            return [...prev,newComment]
+        })
       }
 
 
@@ -55,18 +65,18 @@ export default function PostCommentSection(props){
             </div>
             <hr className="mx-2"></hr>
             <div className="flex justify-evenly my-2">
-            <Icon icon="ic:outline-insert-comment" className="hoverEffect" onClick={(e)=>showCommentPanel(e)} width="36" hFlip={true} />
-            <Icon icon="zondicons:repost" className="hoverEffect" onClick={(e)=>handleRepost(e)} width="36"/>
+            <Icon icon="ic:outline-insert-comment" className="hoverEffect h-14" onClick={(e)=>showCommentPanel(e)} width="36" hFlip={true} />
+            <Icon icon="zondicons:repost" className="hoverEffect h-14" onClick={(e)=>handleRepost(e)} width="36"/>
             {
-              liked?<Icon icon="mdi:cards-heart"  className="hoverEffect" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} />:
-              <Icon icon="mdi:cards-heart-outline" className="hoverEffect" onClick={(e)=>handleLike(e)} width="36"/>
+              liked?<Icon icon="mdi:cards-heart"  className="hoverEffect h-14" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} />:
+              <Icon icon="mdi:cards-heart-outline" className="hoverEffect h-14" onClick={(e)=>handleLike(e)} width="36"/>
             }
-            <Icon icon="material-symbols:ios-share" className="hoverEffect" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />
+            <Icon icon="material-symbols:ios-share" className="hoverEffect h-14" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />
             </div>
             <hr className="mx-2"></hr>
             {/* comment section */}
             <div className="mx -2">
-              <CommentPanel tags={[props.tag]} user = {{}}/>
+              <CommentPanel tag={props.tag} user = {{}} inPost={true} handler={addHandler}/>
             </div>
             <hr className=" mx-2"/>
             {
