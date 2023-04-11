@@ -65,13 +65,13 @@ export default function PostCommentSection(props){
             </div>
             <hr className="mx-2"></hr>
             <div className="flex justify-evenly my-2">
-            <Icon icon="ic:outline-insert-comment" className="hoverEffect" onClick={(e)=>showCommentPanel(e)} width="36" hFlip={true} />
-            <Icon icon="zondicons:repost" className="hoverEffect" onClick={(e)=>handleRepost(e)} width="36"/>
+            <Icon icon="ic:outline-insert-comment" className="hoverEffect h-8" onClick={(e)=>showCommentPanel(e)} width="36" hFlip={true} />
+            <Icon icon="zondicons:repost" className="hoverEffect h-8" onClick={(e)=>handleRepost(e)} width="36"/>
             {
-              liked?<Icon icon="mdi:cards-heart"  className="hoverEffect" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} />:
-              <Icon icon="mdi:cards-heart-outline" className="hoverEffect" onClick={(e)=>handleLike(e)} width="36"/>
+              liked?<Icon icon="mdi:cards-heart"  className="hoverEffect h-8" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} />:
+              <Icon icon="mdi:cards-heart-outline" className="hoverEffect h-8" onClick={(e)=>handleLike(e)} width="36"/>
             }
-            <Icon icon="material-symbols:ios-share" className="hoverEffect" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />
+            <Icon icon="material-symbols:ios-share" className="hoverEffect h-8" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />
             </div>
             <hr className="mx-2"></hr>
             {/* comment section */}
