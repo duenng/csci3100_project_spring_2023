@@ -23,7 +23,7 @@ export default function Comment({com,current}){
       <div className="m-2 text-base ">
         <p className="m-2">{com.text}</p>
         {/* media */}
-        {com?.images?.length?<div className=" m-2"><PostImage ids={com.images}/></div>:null}
+        {com?.image?.length?<div className=" m-2"><PostImage ids={com.image}/></div>:null}
         {com.video?<div className="my-4 mx-4"><VideoPlayer filename={com.video}/></div>:null}
         
         <hr className=" mx-2"/>

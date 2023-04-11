@@ -49,7 +49,6 @@ export default function Post(){
     useEffect(()=>{
       return()=>{
         setPost(testPost)
-        console.log(post)
       }
     },[])
       
