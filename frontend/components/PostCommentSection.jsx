@@ -33,9 +33,9 @@ export default function PostCommentSection(props){
 
       const handleLike=(e)=>{
         setLiked(true);
-        console.log(like,props.current)
+        //console.log(like,props.current)
         if(!like.includes(props.current)){
-            console.log("here")
+            //console.log("here")
           setLike(prev=>{
             return [...prev,props.current]})
           //fetch
@@ -65,13 +65,13 @@ export default function PostCommentSection(props){
             </div>
             <hr className="mx-2"></hr>
             <div className="flex justify-evenly my-2">
-            <Icon icon="ic:outline-insert-comment" className="hoverEffect h-14" onClick={(e)=>showCommentPanel(e)} width="36" hFlip={true} />
-            <Icon icon="zondicons:repost" className="hoverEffect h-14" onClick={(e)=>handleRepost(e)} width="36"/>
+            <Icon icon="ic:outline-insert-comment" className="hoverEffect h-10" onClick={(e)=>showCommentPanel(e)} width="36" hFlip={true} />
+            <Icon icon="zondicons:repost" className="hoverEffect h-10" onClick={(e)=>handleRepost(e)} width="36"/>
             {
-              liked?<Icon icon="mdi:cards-heart"  className="hoverEffect h-14" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} />:
-              <Icon icon="mdi:cards-heart-outline" className="hoverEffect h-14" onClick={(e)=>handleLike(e)} width="36"/>
+              liked?<Icon icon="mdi:cards-heart"  className="hoverEffect h-10" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} />:
+              <Icon icon="mdi:cards-heart-outline" className="hoverEffect h-10" onClick={(e)=>handleLike(e)} width="36"/>
             }
-            <Icon icon="material-symbols:ios-share" className="hoverEffect h-14" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />
+            <Icon icon="material-symbols:ios-share" className="hoverEffect h-10" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />
             </div>
             <hr className="mx-2"></hr>
             {/* comment section */}

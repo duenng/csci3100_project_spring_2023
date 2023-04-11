@@ -28,8 +28,8 @@ export default function CommentLikes(props){
         <>
         <div className="flex my-2 items-center mr-3 text-m font-semibold">
             {
-              liked?<Icon icon="mdi:cards-heart" className="hoverEffect h-14" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} />:
-              <Icon icon="mdi:cards-heart-outline" className="hoverEffect h-14" onClick={(e)=>handleLike(e)} width="36"/>
+              liked?<Icon icon="mdi:cards-heart" className="hoverEffect h-10" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} />:
+              <Icon icon="mdi:cards-heart-outline" className="hoverEffect h-10" onClick={(e)=>handleLike(e)} width="36"/>
             }
             <a className="text-gray-700 text-sm align-middle">{like.length}</a>
         </div>
