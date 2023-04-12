@@ -1,7 +1,6 @@
-import React, { createContext, useReducer, useEffect, useContext } from 'react';
+import React, { useState, createContext, useReducer, useEffect, useContext } from 'react';
 import { auth } from '../components/firebase'; // Import auth from firebase
 import { onAuthStateChanged } from 'firebase/auth'; // Import onAuthStateChanged from firebase/auth
-
 export const AuthContext = createContext();
 
 const initialState = {
@@ -50,9 +49,30 @@ export const AuthContextProvider = (props) => {
 };
 
 export const useUser = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useUser must be used within a AuthContextProvider');
-  }
-  return context;
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Subscribe to Firebase auth state changes
+    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+      if (firebaseUser) {
+        setUser(firebaseUser); // Set the user state to the logged-in Firebase user
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
+
+    // Unsubscribe from the auth state changes when the component is unmounted
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const logout = async () => {
+    await auth.signOut(); // Sign out the user from Firebase
+    setUser(null);
+  };
+
+  return { user, loading, logout };
 };

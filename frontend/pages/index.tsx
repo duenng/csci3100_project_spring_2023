@@ -12,18 +12,18 @@ import Chatroom from "@/components/Chatroom";
 import Profile from "@/components/Profile";
 
 export default function Home() {
-  const { user, token, loading } = useUser(); // Destructure user and loading
+  const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
   const router = useRouter();
-  const [showProfile, setShowProfile] = useState(false); // Add state for showing the profile component
+  const [showProfile, setShowProfile] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) { // Only redirect if loading is false and user is null
-      router.replace("/login"); // Use replace instead of push
+    if (!loading && !user) {
+      router.replace("/login");
     }
-  }, [user, loading, router]); // Add loading to the dependency array
+  }, [user, loading, router]);
 
-  if (loading) { // Render nothing until the user status is checked
-    return <div>Loading...</div>; // You can replace this with a loading spinner or any other loading component
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   if (!user) {
@@ -34,7 +34,7 @@ export default function Home() {
     <div className="container">
       <div className="main-content flex">
         <div className="left-section flex">
-          <Sidebar setShowProfile={setShowProfile} /> {/* Pass the setShowProfile function to the sidebar */}
+          <Sidebar setShowProfile={setShowProfile} logout={logout} /> {/* Pass the setShowProfile and logout functions to the sidebar */}
         </div>
         <div className="middle-section">
           {showProfile ? (
