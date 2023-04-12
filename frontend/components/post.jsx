@@ -8,6 +8,14 @@ import PostCommentSection from "./PostCommentSection";
 // shd use post id to fetch
 let current = 1
 
+let testUser ={
+  userId:123,
+  username:"test",
+  tag:"@test",
+  avatar:"123.png",
+  following:[],
+  follower:[],
+}
 
 let testComment = [
   {

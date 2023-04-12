@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 app.use(cors());
 app.use(express.json());
@@ -31,16 +32,16 @@ mongoose.connection.on('error', (err) => {
 mongoose.connection.once("open",function(){
   console.log("Connection is open...");
 
-  const userSchema = new mongoose.Schema({
+  const userSchema = new Schema({
     userId: { type: Number, required: true, unique: true },
     username: { type: String, required: true },
     tag: { type: String, required: true },
     avatar: { type: String, default: null },
-    following: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] },
-    follower: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] },
+    following: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
+    follower: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
   });
 
-  const postSchema = new mongoose.Schema({
+  const postSchema = new Schema({
         postId:{type:Number, required: true, unique:true},
         user:{type:Schema.Types.ObjectId, ref: 'User',required: true},
         text: { type: String, required: true },
@@ -49,10 +50,10 @@ mongoose.connection.once("open",function(){
         date: { type: Date, default: Date.now },
         images: { type: [String], default: [] },
         video: { type: String, default: null },
-        comment: { type: [mongoose.Schema.Types.ObjectId], ref: 'Comment', default: null }
+        comment: { type: [Schema.Types.ObjectId], ref: 'Comment', default: null }
     });
 
-    const commentSchema = new mongoose.Schema({
+    const commentSchema = new Schema({
           user:{type:Schema.Types.ObjectId, ref: 'User',required: true},
           replying: {type:Schema.Types.ObjectId, ref: 'User',required: true},
           text: { type: String, required: true },

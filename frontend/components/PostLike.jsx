@@ -1,5 +1,13 @@
 import { useState} from "react";
 import { Icon } from '@iconify/react';
+import tickOutline from '@iconify/icons-mdi/tick-outline';
+import cardsHeartOutline from '@iconify/icons-mdi/cards-heart-outline';
+import cardsHeart from '@iconify/icons-mdi/cards-heart';
+import repostIcon from '@iconify/icons-zondicons/repost';
+import outlineComment from '@iconify/icons-ic/outline-comment';
+import iosShareRounded from '@iconify/icons-material-symbols/ios-share-rounded';
+
+
 
 
 export default function PostLike(props){
@@ -61,19 +69,18 @@ export default function PostLike(props){
             <hr className="mx-2"></hr>
             <div className="flex justify-evenly my-2">
             <div title="comment">
-              <Icon icon="ic:outline-insert-comment" className="hoverEffect h-10" onClick={(e)=>showCommentPanel(e)} width="36" hFlip={true} />
+              <Icon icon={outlineComment} hFlip={true} />
             </div>
             <div title='repost'>
-              <Icon icon="zondicons:repost" className="hoverEffect h-10" onClick={(e)=>handleRepost(e)} width="36"/>
+              <Icon icon={repostIcon} />
             </div>
             {
-              liked?<div title="unlike"><Icon icon="mdi:cards-heart"  className="hoverEffect h-10" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} /></div>:
-              <div title= "like"><Icon icon="mdi:cards-heart-outline" className="hoverEffect h-10" onClick={(e)=>handleLike(e)} width="36"/></div>
+              liked?<div title="unlike"><Icon icon={cardsHeart} /></div>:
+              <div title= "like"><Icon icon={cardsHeartOutline} /></div>
             }
-            <div title="share"  className=''>
-            {copy?<Icon icon="mdi:attachment-tick" width="36" height="36" />
-            :<Icon icon="material-symbols:ios-share" className="hoverEffect h-10" onClick={(e)=>handleShare(e)} height="36" hFlip={true} />}
-            </div>
+            
+            {copy?<div><Icon icon={tickOutline} /></div>
+            :<div onClick={()=>handleShare()}><Icon icon={iosShareRounded} /></div>}
             
             </div>
         </>
