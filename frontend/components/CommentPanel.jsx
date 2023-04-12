@@ -190,7 +190,7 @@ export default function CommentPanel(props){
                     </label>
                     
                     <div className=" flex-grow"/>
-                    <button disabled={uploadingImage||uploadingVideo} className="bg-violet-500 text-white rounded-full font-semibold px-3 py-1 flex-wrap" onClick={handleAdd}>{uploadingImage||uploadingVideo?"Uploading":"Comment!"}</button>
+                    <button disabled={uploadingImage||uploadingVideo} className="hover:bg-violet-400 bg-violet-500 text-white rounded-full font-semibold px-3 py-1 flex-wrap" onClick={handleAdd}>{uploadingImage||uploadingVideo?"Uploading":"Comment!"}</button>
                 </div>
             </div>
                 

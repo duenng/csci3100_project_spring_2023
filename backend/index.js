@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 app.use(cors());
 app.use(express.json());
@@ -26,6 +27,50 @@ mongoose.connection.on('connected', () => {
 
 mongoose.connection.on('error', (err) => {
   console.log('Error connecting to MongoDB:', err);
+});
+
+mongoose.connection.once("open",function(){
+  console.log("Connection is open...");
+
+  const userSchema = new Schema({
+    userId: { type: Number, required: true, unique: true },
+    username: { type: String, required: true },
+    tag: { type: String, required: true },
+    avatar: { type: String, default: null },
+    following: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
+    follower: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
+	token: { type: String, required: true, unique: true },
+	isAdmin: { type: Boolean, default: false},
+  });
+
+  const postSchema = new Schema({
+        postId:{type:Number, required: true, unique:true},
+        user:{type:Schema.Types.ObjectId, ref: 'User',required: true},
+        text: { type: String, required: true },
+        like: { type: [Schema.Types.ObjectId], ref:"User",default: [] },
+        repost: { type: [Schema.Types.ObjectId],ref:"Post", default: [] },
+        date: { type: Date, default: Date.now },
+        images: { type: [String], default: [] },
+        video: { type: String, default: null },
+        comment: { type: [Schema.Types.ObjectId], ref: 'Comment', default: null }
+    });
+
+    const commentSchema = new Schema({
+          user:{type:Schema.Types.ObjectId, ref: 'User',required: true},
+          replying: {type:Schema.Types.ObjectId, ref: 'User',required: true},
+          text: { type: String, required: true },
+          date: { type: Date, default: Date.now },
+          like: { type: [Schema.Types.ObjectId], ref:"User",default: [] },
+          images: { type: [String], default: [] },
+          video: { type: String, default: null },
+    });
+
+    const User = mongoose.model('User', userSchema);
+    const Comment = mongoose.model('Comment', commentSchema);
+    const Post = mongoose.model('Post', postSchema);
+
+
+
 });
 
 

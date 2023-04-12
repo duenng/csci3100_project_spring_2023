@@ -13,9 +13,11 @@ interface ProfileProps {
   loading: boolean;
 }
 
-export default function Profile({ user, token, loading }: ProfileProps) {
+export default function Profile({ user, token, loading, setShowProfile }) {
   const router = useRouter();
   const [userData, setUserData] = useState(null);
+
+  console.log("rendering Profile");
 
   useEffect(() => {
     async function fetchUserData() {

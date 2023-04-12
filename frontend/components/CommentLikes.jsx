@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { Icon } from '@iconify/react';
+import cardsHeartOutline from '@iconify/icons-mdi/cards-heart-outline';
+import cardsHeart from '@iconify/icons-mdi/cards-heart';
 
 export default function CommentLikes(props){
     const [like,setLike] = useState(props.like)
@@ -28,8 +30,8 @@ export default function CommentLikes(props){
         <>
         <div className="flex my-2 items-center mr-3 text-m font-semibold">
             {
-              liked?<div title= "unlike"><Icon icon="mdi:cards-heart" className="hoverEffect h-10" onClick={(e)=>handleUnlike(e)} color="red" height="36" hFlip={true} /></div>:
-              <div title="like"><Icon icon="mdi:cards-heart-outline" className="hoverEffect h-10" onClick={(e)=>handleLike(e)} width="36"/></div>
+              liked?<div title="unlike" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center align-middle" onClick={()=>handleUnlike()}><Icon icon={cardsHeart}  color="red" width="32" height="32"/></div>:
+              <div title= "like" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center align-middle" onClick={()=>handleLike()}><Icon icon={cardsHeartOutline} width="32" height="32"/></div>
             }
             <a className="text-gray-700 text-sm align-middle">{like.length}</a>
         </div>
