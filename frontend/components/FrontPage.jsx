@@ -26,6 +26,7 @@ let testComment = [
   ]
   
   let testPost = {
+    postId:1,
     user:testUser,
     text:"here is the testing content.",
     like:[1,3,12,4,9,17],
@@ -52,8 +53,8 @@ export default function FrontPage(){
             {/* todo: search bar */}
             <h1 className="bg-slate-500">search bar</h1>
 
-            {posts.length?posts.map((post)=>{
-                return <PreviewPost post={post} user={testUser}/>
+            {posts.length?posts.map((post,index)=>{
+                return <PreviewPost post={post} user={testUser} key={index}/>
             }):null}
 
 

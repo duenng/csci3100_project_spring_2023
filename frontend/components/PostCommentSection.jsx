@@ -41,7 +41,7 @@ export default function PostCommentSection(props){
                 return <Comment key={index} com={com} current={props.current}/>
               })
             }
-            {/* <div className='fiexed w-screen h-screen z-9999 bg-slate-600 top-0 left-0'></div> */}
+           
         </>
     )
 }
