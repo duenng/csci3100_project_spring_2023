@@ -71,6 +71,8 @@ button {
   justify-content: center;
 }
 
+/* Styles for small screens */
+
 /* ---------- Styles for extra-large screens ---------*/
 @media (min-width: 1200px) {
   /* Additional styles for extra-large screens */
@@ -96,5 +98,9 @@ button {
 @layer components {
   .hoverEffect {
     @apply hoverElement rounded-full w-[50px] h-[50px] xl:w-auto xl:h-auto xl:p-3 cursor-pointer hover:bg-gray-200;
+  }
+
+  .hoverEffect2 {
+    @apply hoverElement h-[50px] xl:w-auto xl:h-auto xl:p-3 cursor-pointer hover:bg-gray-200;
   }
 }

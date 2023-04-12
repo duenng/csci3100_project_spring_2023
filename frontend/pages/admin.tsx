@@ -27,6 +27,7 @@ export default function Setting({newsResults}) {
         
         {/* <Feed /> */}
         <div className="right-section">
+          {/* <Widgets /> */}
         <Widgets newsResults={newsResults.articles}/>
           {/* <Trending />
           <Suggestions /> */}

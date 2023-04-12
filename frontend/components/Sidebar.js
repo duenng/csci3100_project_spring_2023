@@ -12,14 +12,17 @@ import {
 function Sidebar() {
   return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
-      {/* Tertwit Logo */}
-      <div className="hoverEffect p-4 hover:bg-purple-100 xl:px-4">
+      {/* Tertwit Logo v2, change to text*/}
+      {/* <div className="hoverEffect p-4 hover:bg-purple-100 xl:px-4">
         <Image
           src="/tertwit_logo.svg"
           alt="Logo"
           width={75}
           height={75}
         ></Image>
+      </div> */}
+      <div className="px-1.5 hoverEffect p-4 hover:bg-purple-100 xl:px-4 xl:items-start">
+        <h1 className="text-xs font-extrabold text-purple-500 xl:text-3xl">Tertwit</h1>
       </div>
 
       {/* Menu */}
