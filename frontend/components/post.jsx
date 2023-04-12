@@ -9,12 +9,14 @@ import PostCommentSection from "./PostCommentSection";
 let current = 1
 
 let testUser ={
-  userId:123,
+  userId:1,
   username:"test",
   tag:"@test",
-  avatar:"123.png",
+  avatar:null,
   following:[],
   follower:[],
+  token:"abc",
+  isAdmin:fasle
 }
 
 let testComment = [
