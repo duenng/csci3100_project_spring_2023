@@ -149,7 +149,7 @@ return (
                     <div className="flex justify-between w-3/6 bg-blue-600 m-8 rounded-md">
                         
                         <div className="p-5">
-                            <div className="text-xs text-gray-100">Oh Yeah! Come onUse overflow-auto to add scrollbars to an element in the event that its content overflows the bounds of that element. Unlike overflow-scroll, which always shows scrollbars, this utility will only show them if scrolling is necessary.Use overflow-auto to add scrollbars to an element in the event that its content overflows the bounds of that element. Unlike overflow-scroll, which always shows scrollbars, this utility will only show them if scrolling is necessary.!</div>
+                            <div className="text-xs text-gray-100">Oh Yeah! Come onUse overflow-auto to add scrollbars to an element in the event that its content overflows the bounds of that element. Unlike overflow-scroll, which always shows scrollbars, this utility will only show them if scrolling is necessary.!</div>
                             <div className=" flex items-end text-xs text-gray-200"> 8 minutes ago</div>
                         </div>     
                         <div className="">
