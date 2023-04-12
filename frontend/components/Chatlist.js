@@ -14,16 +14,16 @@ function Chat() {
 return (
  
 <div>
-        <div class="flex flex-row">
-        <div class="flex-none w-60 h-14 text-[20px] p-3  font-bold ">
+        <div className="flex flex-row">
+        <div className="flex-none w-60 h-14 text-[20px] p-3  font-bold ">
               Messages 
         </div>
             
         {/* Setting Logo */}
-        <div class="flex-initial w-14 h-14 p-3">
-        <button class="rounded-full ...">
+        <div className="flex-initial w-14 h-14 p-3">
+        <button className="rounded-full ...">
             <Image 
-            class=" hover:bg-purple-200 rounded-full" 
+            className=" hover:bg-purple-200 rounded-full" 
             src="/setting.png" 
             alt="Setting" 
             width={25}height={25}>
@@ -32,8 +32,8 @@ return (
         </div>
         
         {/* Addcaht Logo */}
-        <div class="flex-initial w-14 h-14 p-3">
-            <Image class=" hover:bg-purple-200 rounded-full"
+        <div className="flex-initial w-14 h-14 p-3">
+            <Image className=" hover:bg-purple-200 rounded-full"
             src="/add-chat.png" 
             alt="addchat" 
             width={30}height={30} >
@@ -42,19 +42,19 @@ return (
         </div>
 
         {/* Search DM Bar  */}
-        <div class="bg-gray-200 items-center  text-gray-500 hover:brightness-10 rounded-full flex p-2 pl-10">
+        <div className="bg-gray-200 items-center  text-gray-500 hover:brightness-10 rounded-full flex p-2 pl-10">
 
-        <Image class="flex-initial w-10 h-10 p-2.5" src="/search.png" alt="search" width={15}height={15} ></Image>
-        <input type="text" class="bg-gray-200" placeholder=" Search Direct Message " ></input>
+        <Image className="flex-initial w-10 h-10 p-2.5" src="/search.png" alt="search" width={15}height={15} ></Image>
+        <input type="text" className="bg-gray-200" placeholder=" Search Direct Message " ></input>
 
         </div>
 
         {/*
         <button className="bg-gray-200 items-center text-gray-500 hover:brightness-10 rounded-full w-80 h-12 font-bold shadow-md text-lg xl:inline flex p-5">
         
-        <div class="flex-initial w-5 h-10 p-2 text-[15px] "></div>
-        <Image class="flex-initial w-10 h-10 p-2.5" src="/search.png" alt="search" width={15}height={15} ></Image>
-        <div class="flex-initial w-30 h-10 p-2 text-[16px]  ">
+        <div className="flex-initial w-5 h-10 p-2 text-[15px] "></div>
+        <Image className="flex-initial w-10 h-10 p-2.5" src="/search.png" alt="search" width={15}height={15} ></Image>
+        <div className="flex-initial w-30 h-10 p-2 text-[16px]  ">
             Search Direct Message 
         </div>
         </button>*/}

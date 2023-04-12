@@ -9,6 +9,7 @@ import {
   DotsHorizontalIcon,
 } from "@heroicons/react/outline";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 function Sidebar({ setShowProfile }) {
 
@@ -23,6 +24,7 @@ function Sidebar({ setShowProfile }) {
     console.log('Profile clicked!');
     setShowProfile(true); // Call the setShowProfile function when the profile button is clicked
   };
+
 
   return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
@@ -45,6 +47,8 @@ function Sidebar({ setShowProfile }) {
       <button className="bg-purple-500 text-white hover:brightness-95 rounded-full w-56 h-12 font-bold shadow-md text-lg hidden xl:inline">
         Create a Post
       </button>
+
+
 
       {/* User Profile */}
       <div className="flex items-center justify-center text-gray-700 hoverEffect xl:justify-start mt-auto">
