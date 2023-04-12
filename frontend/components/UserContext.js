@@ -14,7 +14,8 @@ const reducer = (state, action) => {
     case 'setUser':
       return {
         ...state,
-        user: action.payload,
+        user: action.payload.user,
+        token: action.payload.token,
         loading: false,
       };
     default:
@@ -26,10 +27,15 @@ export const AuthContextProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      dispatch({ type: 'setUser', payload: user });
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const token = user.uid; // Use user's uid as a unique token
+        dispatch({ type: 'setUser', payload: { user, token } });
+      } else {
+        dispatch({ type: 'setUser', payload: { user: null, token: null } });
+      }
     });
-
+  
     // Clean up the listener when the component is unmounted
     return () => {
       unsubscribe();

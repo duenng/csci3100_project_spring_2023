@@ -10,7 +10,7 @@ import Chatlist from "@/components/Chatlist";
 import Chatroom from "@/components/Chatroom";
 
 export default function Home() {
-  const { user, loading } = useUser(); // Destructure user and loading
+  const { user, token, loading } = useUser(); // Destructure user and loading
   const router = useRouter();
 
   useEffect(() => {
@@ -32,7 +32,6 @@ export default function Home() {
       <div className="main-content flex">
         <div className="left-section flex"> {/* Add this container */}
           <Sidebar />
-          <Feed />
         </div>
         <div className="right-section">
           <Trending />
