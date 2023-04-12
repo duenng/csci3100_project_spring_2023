@@ -2,9 +2,7 @@ import React, { useState, useCallback, useContext } from "react";
 import styles from "../../styles/login.module.css";
 import { useRouter } from 'next/router';
 import { auth } from '../../components/firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { AuthContext } from "../../components/UserContext";
-import {AuthContextProvider} from '@/components/UserContext';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../../components/firebase";
 import { doc, setDoc } from "firebase/firestore";
@@ -16,6 +14,17 @@ const Login = () => {
     setActiveForm(form);
   };
   const router = useRouter(); // Use the useRouter hook
+
+  const handleGoogleLogin = useCallback(async () => {
+	const provider = new GoogleAuthProvider();
+	try {
+	  const result = await signInWithPopup(auth, provider);
+	  router.push("/");
+	} catch (error) {
+	  console.log(error);
+	  alert("Failed to sign in with Google.", error);
+	}
+  }, [router]);
 
   const handleLogin = useCallback(
     async event => {
@@ -99,6 +108,9 @@ const Login = () => {
 				</fieldset>
 				<button type="submit" className={`${styles.btnLogin}`}>
 				  Login
+				</button>
+				<button type="button" className={`${styles.btnGoogleLogin}`} onClick={handleGoogleLogin}>
+				Login with Google
 				</button>
 			  </form>
 			</div>

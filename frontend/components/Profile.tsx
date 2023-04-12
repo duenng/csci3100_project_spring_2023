@@ -11,9 +11,10 @@ interface ProfileProps {
   user: User;
   token: string;
   loading: boolean;
+  setShowProfile: (showProfile: boolean) => void;
 }
 
-export default function Profile({ user, token, loading, setShowProfile }) {
+export default function Profile({ user, token, loading, setShowProfile }: ProfileProps) {
   const router = useRouter();
   const [userData, setUserData] = useState(null);
 
@@ -47,6 +48,7 @@ export default function Profile({ user, token, loading, setShowProfile }) {
       <h1>Welcome, {user.displayName}</h1>
       <p>This is your unique page with token: {token}</p>
       {userData && <p>User-specific data: {userData}</p>}
+      <button onClick={() => setShowProfile(false)}>Close Profile</button>
     </div>
   );
 }

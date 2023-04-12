@@ -4,11 +4,7 @@ import { useRouter } from "next/router";
 import { useUser } from "../components/UserContext";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
-import Trending from "@/components/Trending";
-import Suggestions from "@/components/Suggestions";
-import Chat from "@/components/Chat";
 import Chatlist from "@/components/Chatlist";
-import Chatroom from "@/components/Chatroom";
 import Profile from "@/components/Profile";
 
 export default function Home() {
@@ -42,12 +38,10 @@ export default function Home() {
           ) : (
             <div>
               <Feed />
-              <Trending />
             </div>
           )}
         </div>
         <div className="right-section">
-          <Suggestions />
           <Chatlist />
         </div>
       </div>
