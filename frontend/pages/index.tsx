@@ -1,28 +1,35 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import Sidebar from '@/components/Sidebar'
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useUser } from "../components/UserContext";
+import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Trending from "@/components/Trending";
 import Suggestions from "@/components/Suggestions";
-import {AuthContextProvider} from '@/components/UserContext';
 import Chat from "@/components/Chat";
 import Chatlist from "@/components/Chatlist";
 import Chatroom from "@/components/Chatroom";
 
-const inter = Inter({ subsets: ['latin'] })
-
 export default function Home() {
+  const user = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
+
+  if (!user) {
+    return null; // Render nothing until the user status is checked
+  }
+
   return (
     <div className="container">
       <div className="main-content flex">
         <Sidebar />
         <Feed />
-        <div className="right-section"> 
-        <Trending />
-		  <AuthContextProvider>
-		  </AuthContextProvider>
+        <div className="right-section">
+          <Trending />
           <Suggestions />
         </div>
       </div>

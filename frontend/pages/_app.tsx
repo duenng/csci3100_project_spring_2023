@@ -1,12 +1,16 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+// pages/_app.js
+import '@/styles/globals.css';
+import type { AppProps } from 'next/app';
 import "../styles/globals.css";
 import '../styles/tailwind.css';
+import { UserProvider } from "../components/UserContext"; // Import the UserProvider
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Component {...pageProps} />
+      <UserProvider> {/* Wrap the UserProvider around your Component */}
+        <Component {...pageProps} />
+      </UserProvider>
       <style jsx global>{`
         .container {
           max-width: 1200px;
