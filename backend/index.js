@@ -48,6 +48,7 @@ mongoose.connection.once("open",function(){
         user:{type:Schema.Types.ObjectId, ref: 'User',required: true},
         text: { type: String, required: true },
         like: { type: [Schema.Types.ObjectId], ref:"User",default: [] },
+        repostig:{type:Schema.Types.ObjectId, ref: 'Post', default:null},
         repost: { type: [Schema.Types.ObjectId],ref:"Post", default: [] },
         date: { type: Date, default: Date.now },
         images: { type: [String], default: [] },

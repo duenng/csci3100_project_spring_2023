@@ -36,6 +36,7 @@ let testPost = {
   text:"here is the testing content.",
   like:[1,3,12,4,9,17],
   repost:[1,3,4],
+  reposting:null,
   date: new Date(2023, 3, 10, 13, 0, 20),
   images:["corgi.jpeg","doll.jpeg","golden.png","munchkin.png","persian.png","samoyed.png","shiba.jpeg"],
   video: "catVideo.mp4",

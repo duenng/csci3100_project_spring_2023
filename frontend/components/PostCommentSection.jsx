@@ -12,7 +12,7 @@ export default function PostCommentSection(props){
       if (commentRef.current) {
         let area = commentRef.current.children[0].children[1].children[1]
         //console.log(area)
-        commentRef.current.scrollIntoView({ behavior: 'smooth' });
+        commentRef.current.scrollIntoView({ behavior: 'smooth', block:'center'});
         setTimeout(() => {
           area.focus()
         },500);

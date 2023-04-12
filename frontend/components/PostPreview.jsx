@@ -10,6 +10,7 @@ import iosShareRounded from '@iconify/icons-material-symbols/ios-share-rounded';
 import CommentPanel from './CommentPanel';
 import PostImage from "./PostImage";
 import VideoPlayer from "./VideoPlayer";
+import { useRouter } from 'next/router';
 
 function LikePanel(props){
     let post = props.post
@@ -31,7 +32,7 @@ function LikePanel(props){
         setTimeout(()=>{
             let area = commentRef.current.children[1].children[0].children[1].children[1]
             //console.log(area)
-            commentRef.current.scrollIntoView({ behavior: 'smooth' });
+            commentRef.current.scrollIntoView({ behavior: 'smooth', block: 'center'});
             setTimeout(() => {
               area.focus()
             },490);
@@ -86,30 +87,30 @@ function LikePanel(props){
         <>
              {/* likes and etc... */}
             
-            <div className="flex justify-evenly my-2">
-            <div>
-                <div title="comment" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center align-middle" onClick={()=>showCommentPanel()}>
+            <div className="flex justify-evenly my-2 items-center">
+            <div className='flex items-center'>
+                <div title="comment" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center " onClick={()=>showCommentPanel()}>
                 <Icon icon={outlineComment} hFlip={true} width="32" height="32" />
                 </div>
-                {comment.length?<a className=' text-gray-500'>{comment.length}</a>:null}
+                {comment.length?<a className=' text-gray-500 ml-1 font-semibold'>{comment.length}</a>:null}
             </div>
-            <div>
-                <div title='repost' className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center align-middle" onClick={()=>handleRepost()}>
+            <div className='flex items-center'>
+                <div title='repost' className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center " onClick={()=>handleRepost()}>
                 <Icon icon={repostIcon} width="32" height="32"/>
                 </div>
-                {repost.length?<a className=' text-gray-500'>{repost.length}</a>:null}
+                {repost.length?<a className=' text-gray-500 ml-1 font-semibold '>{repost.length}</a>:null}
             </div>
-            <div>
+            <div className='flex items-center'>
                 {
-                liked?<div title="unlike" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center align-middle" onClick={()=>handleUnlike()}><Icon icon={cardsHeart}  color="red" width="32" height="32"/></div>:
-                <div title= "like" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center align-middle" onClick={()=>handleLike()}><Icon icon={cardsHeartOutline} width="32" height="32"/></div>
+                liked?<div title="unlike" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center " onClick={()=>handleUnlike()}><Icon icon={cardsHeart}  color="red" width="32" height="32"/></div>:
+                <div title= "like" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center" onClick={()=>handleLike()}><Icon icon={cardsHeartOutline} width="32" height="32"/></div>
                 }
-                {like.length?<a className=' text-gray-500'>{like.length}</a>:null}
+                {like.length?<a className=' text-gray-500 ml-1 font-semibold  align-text-bottom'>{like.length}</a>:null}
             </div>
            
             
-            {copy?<div title="copied" className="flex rounded-full h-8 w-8 align-middle justify-center" ><Icon icon={tickOutline} width="32" height="32" /></div>
-            :<div title="share" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center align-middle" onClick={()=>handleShare()}  >< Icon icon={iosShareRounded} width="32" height="32" /></div>}
+            {copy?<div title="copied" className="flex rounded-full h-8 w-8  justify-center" ><Icon icon={tickOutline} width="32" height="32" /></div>
+            :<div title="share" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center " onClick={()=>handleShare()}  >< Icon icon={iosShareRounded} width="32" height="32" /></div>}
             
             </div>
             <div ref={commentRef}>
@@ -134,22 +135,29 @@ export default function PreviewPost(props){
     let post = props.post
     let owner = post.user
     let currentUser = props.user
-    // useEffect(()=>{
-    //     console.log(post)
-    // })
+    const router = useRouter()
+
+    const handleClick = (e)=>{
+      let tag = e.target.tagName
+      if(tag==="IMG"||tag==="VIDEO"||tag==="A"||window.getSelection().toString().length){
+        return
+      }
+      router.push(`/post/${post.postId}`)
+    }
+
     
     return(
         <>
-        <div className="flex item-center mx-2 text-base ">
+        <div className="flex item-center mx-2 text-base " onClick={(e)=>handleClick(e)}>
             {/* info */}
             <img className="h-8 round-full m-4" src ={`avatar/${owner.avatar?owner.avatar:"user.png"}`}/>
                 <div className="flex-grow">
                     <p className="m-2"><a>{owner.username} </a><a className=" text-gray-500">{owner.tag} </a></p>
-                    <p className="m-2"><a className=" text-gray-500 text-sm" >{ format(post.date, "pp · yyyy MMMM dd")}</a></p>
+                    <p className="m-2 text-gray-500 text-sm">{ format(post.date, "pp · yyyy MMMM dd")}</p>
                 </div>
         </div>
             {/* text */}
-        <div className="m-2 text-base ">
+        <div className="m-2 text-base " onClick={(e)=>handleClick(e)}>
             <p className="m-2">{post.text}</p>
             {/* media */}
             {post?.images?.length?<div className=" m-2"><PostImage ids={post.images}/></div>:null}

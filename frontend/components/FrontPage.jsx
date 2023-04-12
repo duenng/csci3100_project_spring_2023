@@ -12,10 +12,7 @@ let testUser ={
 
 let testComment = [
     {
-        userID:7,
-        name: "hihi",
-        tag:"@hihi",
-        avatar:null,
+        user:testUser,
         replying:"@test",
         text:"The intricacies of language and the human mind are fascinating, as our ability to communicate complex ideas through speech and writing has shaped the course of human history, allowing us to build civilizations, share knowledge and connect with one another across time and space.",
         images:["corgi.jpeg","doll.jpeg"],
@@ -30,6 +27,7 @@ let testComment = [
     user:testUser,
     text:"here is the testing content.",
     like:[1,3,12,4,9,17],
+    reposting:null,
     repost:[1,3,4],
     date: new Date(2023, 3, 10, 13, 0, 20),
     images:["corgi.jpeg","doll.jpeg","golden.png","munchkin.png","persian.png","samoyed.png","shiba.jpeg"],
@@ -37,7 +35,7 @@ let testComment = [
     comment: testComment,
   }
 
-  let testData = new Array(1)
+  let testData = new Array(10)
   testData.fill(testPost)
 
 export default function FrontPage(){
