@@ -19,3 +19,8 @@ npm install formidable
 
 path
 npm install --save path
+
+icon
+npm install --save-dev @iconify/react @iconify/icons-ic  @iconify/react @iconify/icons-zondicons @iconify/react @iconify/icons-mdi @iconify/react @iconify/icons-material-symbols
+
+
