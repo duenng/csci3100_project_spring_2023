@@ -10,3 +10,12 @@ npm uninstall --save video-react react react-dom redux
 
 videoJS
 npm install --save-dev video.js
+
+axios
+npm install axios
+
+formidabe
+npm install formidable
+
+path
+npm install --save path
