@@ -7,21 +7,25 @@ import {
   UserIcon,
   DotsCircleHorizontalIcon,
   DotsHorizontalIcon,
+  LogoutIcon, // Import the LogoutIcon (replace with an appropriate icon)
 } from "@heroicons/react/outline";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
-function Sidebar({ setShowProfile }) {
+function Sidebar({ setShowProfile, logout }) {
+  const router = useRouter();
 
-  const router = useRouter()
-
-  const handleFront =()=>{
-      router.push("/")
-  }
-
+  const handleFront = () => {
+    router.push("/");
+  };
 
   const handleProfileClick = () => {
-    console.log('Profile clicked!');
-    setShowProfile(true); // Call the setShowProfile function when the profile button is clicked
+    console.log("Profile clicked!");
+    setShowProfile(true);
+  };
+
+  const handleLogoutClick = () => {
+    console.log("Logout clicked!");
+    logout();
   };
 
   return (
@@ -33,12 +37,13 @@ function Sidebar({ setShowProfile }) {
       {/* Menu */}
       <div className="mt-4 mb-3 xl:items-start">
         <div onClick={handleFront}>
-        <SideBarMenuItem text="Home" Icon={HomeIcon} active />
+          <SideBarMenuItem text="Home" Icon={HomeIcon} active />
         </div>
         <SideBarMenuItem text="Notification" Icon={BellIcon} />
         <SideBarMenuItem text="Messages" Icon={InboxIcon} />
-        <SideBarMenuItem text="Profile" Icon={UserIcon} onClick={handleProfileClick} /> {/* Add an onClick handler to the profile button */}
+        <SideBarMenuItem text="Profile" Icon={UserIcon} onClick={handleProfileClick} />
         <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon} />
+        <SideBarMenuItem text="Logout" Icon={LogoutIcon} onClick={handleLogoutClick} />
       </div>
 
       {/* Tertwit Button */}

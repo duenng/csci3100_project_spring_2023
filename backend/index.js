@@ -39,6 +39,8 @@ mongoose.connection.once("open",function(){
     avatar: { type: String, default: null },
     following: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
     follower: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
+	token: { type: String, required: true, unique: true },
+	isAdmin: { type: Boolean, default: false},
   });
 
   const postSchema = new Schema({
