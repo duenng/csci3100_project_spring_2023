@@ -84,10 +84,7 @@ export default function CommentPanel(props){
         }
         //need change to current user info
         let newComment={
-            userID: 123,
-            name: "testnew",
-            tag:"@new",
-            avatar:null,
+            user:user,
             replying:props.tag,
             text:text,
             image:imageNames,
@@ -95,10 +92,9 @@ export default function CommentPanel(props){
             like:[],
             date:Number(new Date())
         }
-        if(props.inPost){
-            props.handler(newComment)
-            // console.log(1,newComment)
-        }
+        
+        props.handler(newComment)
+           
         setText("")
         textRef.current.value=""
         setImages([])
