@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import Sidebar from '@/components/Sidebar'
-import Login from "../components/Login";
+//import Login from "../components/Login";
 import Feed from "@/components/Feed";
 import Trending from "@/components/Trending";
 import Suggestions from "@/components/Suggestions";
@@ -12,7 +12,7 @@ import SettingBar from "@/components/SettingBar";
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Setting({newsResults}) {
+export default function Setting({}) {
   return (
     <>
     <Head>
@@ -27,8 +27,9 @@ export default function Setting({newsResults}) {
         
         {/* <Feed /> */}
         <div className="right-section">
-          {/* <Widgets /> */}
-        <Widgets newsResults={newsResults.articles}/>
+        {/* Widgets  */}
+        {/* <Widgets newsResults={newsResults.articles}/> */}
+
           {/* <Trending />
           <Suggestions /> */}
         </div>
@@ -37,6 +38,8 @@ export default function Setting({newsResults}) {
   );
 }
 
+// Along with Widgets component
+//newsResults in props
 //https://saurav.tech/NewsAPI/everything/cnn.json
 
 export async function getServerSideProps() {
@@ -47,3 +50,4 @@ export async function getServerSideProps() {
     }
   }
 }
+//End of Widgets
