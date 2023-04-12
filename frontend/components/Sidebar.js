@@ -1,5 +1,6 @@
 import Image from "next/image";
 import SideBarMenuItem from "./SideBarMenuItem";
+<<<<<<< Updated upstream
 import { HomeIcon } from "@heroicons/react/solid";
 import {
   BellIcon,
@@ -14,6 +15,11 @@ function Sidebar({ setShowProfile }) {
     console.log('Profile clicked!');
     setShowProfile(true); // Call the setShowProfile function when the profile button is clicked
   };
+=======
+import {HomeIcon} from "@heroicons/react/solid";
+import {BellIcon, InboxIcon, UserIcon, DotsCircleHorizontalIcon, DotsHorizontalIcon} from "@heroicons/react/outline";
+import Link from "next/link";
+>>>>>>> Stashed changes
 
   return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
@@ -31,9 +37,25 @@ function Sidebar({ setShowProfile }) {
       </div>
 
       {/* Tertwit Button */}
+<<<<<<< Updated upstream
       <button className="bg-purple-500 text-white hover:brightness-95 rounded-full w-56 h-12 font-bold shadow-md text-lg hidden xl:inline">
         Create a Post
       </button>
+=======
+      <div className="inline-onlarge"><button className="button-bg-theme text-white rounded-full font-bold shadow-md " style={{width:200, height:50}}>Create a Post</button>
+      </div>
+	  
+
+		<div>
+		  <h1>Home</h1>
+		  <Link href="../pages/login" className="your-class">
+			  Your Link Text
+			</Link>
+		</div>
+	  );
+
+
+>>>>>>> Stashed changes
 
       {/* User Profile */}
       <div className="flex items-center justify-center text-gray-700 hoverEffect xl:justify-start mt-auto">
