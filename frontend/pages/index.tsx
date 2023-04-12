@@ -10,24 +10,30 @@ import Chatlist from "@/components/Chatlist";
 import Chatroom from "@/components/Chatroom";
 
 export default function Home() {
-  const user = useUser();
+  const { user, loading } = useUser(); // Destructure user and loading
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
-      router.push("/login");
+    if (!loading && !user) { // Only redirect if loading is false and user is null
+      router.replace("/login"); // Use replace instead of push
     }
-  }, [user, router]);
+  }, [user, loading, router]); // Add loading to the dependency array
+
+  if (loading) { // Render nothing until the user status is checked
+    return <div>Loading...</div>; // You can replace this with a loading spinner or any other loading component
+  }
 
   if (!user) {
-    return null; // Render nothing until the user status is checked
+    return null;
   }
 
   return (
     <div className="container">
       <div className="main-content flex">
-        <Sidebar />
-        <Feed />
+        <div className="left-section flex"> {/* Add this container */}
+          <Sidebar />
+          <Feed />
+        </div>
         <div className="right-section">
           <Trending />
           <Suggestions />

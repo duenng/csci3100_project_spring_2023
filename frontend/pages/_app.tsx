@@ -3,14 +3,14 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import "../styles/globals.css";
 import '../styles/tailwind.css';
-import { UserProvider } from "../components/UserContext"; // Import the UserProvider
+import { AuthContextProvider } from "../components/UserContext"; // Import the UserProvider
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <UserProvider> {/* Wrap the UserProvider around your Component */}
+      <AuthContextProvider> {/* Wrap the UserProvider around your Component */}
         <Component {...pageProps} />
-      </UserProvider>
+      </AuthContextProvider>
       <style jsx global>{`
         .container {
           max-width: 1200px;
@@ -29,6 +29,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         .right-section {
           display: flex;
           flex-direction: column;
+          gap: 1rem;
+        }
+		.left-section {
+          display: flex;
+          justify-content: flex-start;
           gap: 1rem;
         }
       `}</style>

@@ -1,28 +1,52 @@
-// components/UserContext.js
-import { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
+import React, { createContext, useReducer, useEffect, useContext } from 'react';
+import { auth } from '../components/firebase'; // Import auth from firebase
+import { onAuthStateChanged } from 'firebase/auth'; // Import onAuthStateChanged from firebase/auth
 
-const UserContext = createContext({ user: null });
+export const AuthContext = createContext();
 
-export const useUser = () => useContext(UserContext);
+const initialState = {
+  user: null,
+  loading: true,
+};
 
-export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'setUser':
+      return {
+        ...state,
+        user: action.payload,
+        loading: false,
+      };
+    default:
+      return state;
+  }
+};
+
+export const AuthContextProvider = (props) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
+      dispatch({ type: 'setUser', payload: user });
     });
 
+    // Clean up the listener when the component is unmounted
     return () => {
       unsubscribe();
     };
   }, []);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ ...state, dispatch }}>
+      {props.children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useUser = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useUser must be used within a AuthContextProvider');
+  }
+  return context;
 };
