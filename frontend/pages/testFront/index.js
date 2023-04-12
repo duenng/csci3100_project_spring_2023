@@ -1,7 +1,5 @@
 import { Inter } from 'next/font/google'
 import Sidebar from '@/components/Sidebar'
-import Trending from "@/components/Trending";
-import Suggestions from "@/components/Suggestions";
 import FrontPage from '../../components/FrontPage';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -14,14 +12,9 @@ export default function Home() {
         <Sidebar/>
       </div>
 
-      <div className='col-span-2 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words'>
+      <div className='col-span-3 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words'>
        <FrontPage/>
       </div>
-      <div className=' overflow-y-scroll	 h-screen'>
-        <Trending/>
-        <Suggestions/>
-      </div>
-
     </div>
   );
 }
