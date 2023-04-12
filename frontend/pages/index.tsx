@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "../components/UserContext";
@@ -8,10 +9,12 @@ import Suggestions from "@/components/Suggestions";
 import Chat from "@/components/Chat";
 import Chatlist from "@/components/Chatlist";
 import Chatroom from "@/components/Chatroom";
+import Profile from "@/components/Profile";
 
 export default function Home() {
   const { user, token, loading } = useUser(); // Destructure user and loading
   const router = useRouter();
+  const [showProfile, setShowProfile] = useState(false); // Add state for showing the profile component
 
   useEffect(() => {
     if (!loading && !user) { // Only redirect if loading is false and user is null
@@ -30,12 +33,22 @@ export default function Home() {
   return (
     <div className="container">
       <div className="main-content flex">
-        <div className="left-section flex"> {/* Add this container */}
-          <Sidebar />
+        <div className="left-section flex">
+          <Sidebar setShowProfile={setShowProfile} /> {/* Pass the setShowProfile function to the sidebar */}
+        </div>
+        <div className="middle-section">
+          {showProfile ? (
+            <Profile user={user} setShowProfile={setShowProfile} />
+          ) : (
+            <div>
+              <Feed />
+              <Trending />
+            </div>
+          )}
         </div>
         <div className="right-section">
-          <Trending />
           <Suggestions />
+          <Chatlist />
         </div>
       </div>
     </div>
