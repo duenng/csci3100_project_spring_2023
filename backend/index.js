@@ -28,5 +28,24 @@ mongoose.connection.on('error', (err) => {
   console.log('Error connecting to MongoDB:', err);
 });
 
+mongoose.connection.once("open",function(){
+  console.log("Connection is open...");
+  // const EventSchema = Schema({
+  //   eventId: {type: Number, required: true, unique: true },
+  //   refId: {type: Number, required: true, unique: true},
+  //   title: { type: String, required: true,},
+  //   venue: { type: Schema.Types.ObjectId, ref: 'Venue',required: true},
+  //   date: { type: String ,required: true},
+  //   description: { type: String,},
+  //   presenter: {type: String,required:true},
+  //   price: {type: String,}
+  // });
+
+  // const Event = mongoose.model('Program', EventSchema);
+
+
+
+})
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
