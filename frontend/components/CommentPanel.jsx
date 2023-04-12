@@ -107,7 +107,7 @@ export default function CommentPanel(props){
     return(
         <>
         <div className="flex item-center mx-2 text-base flex-wrap">
-            <img className="h-8 round-full m-4 flex-none" src ={`avatar/${user?.avatar?user.avatar:"user.png"}`}/>
+            <img className="h-8 round-full m-4 flex-none" src ={`avatar/${user.avatar?user.avatar:"user.png"}`}/>
             <div className="flex-grow">
                 <p className="m-1  text-gray-500">Reply {props.tag}</p>
                 <textarea ref={textRef} className=" w-full" placeholder="Comments here..." onChange={e=>setText(e.target.value)}/>

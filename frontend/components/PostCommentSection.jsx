@@ -29,16 +29,16 @@ export default function PostCommentSection(props){
 
     return(
         <>
-            <PostLike current={props.current} repost={props.repost} like={props.like} handler={()=>handleShowAddComment()}/>
+            <PostLike current={props.user.userId} repost={props.repost} like={props.like} handler={()=>handleShowAddComment()}/>
             <hr className="mx-2"></hr>
             {/* comment section */}
             <div className="mx-2" ref={commentRef}>
-              <CommentPanel tag={props.tag} user = {{}} inPost={true} handler={addHandler}/>
+              <CommentPanel  user = {props.user}  handler={addHandler}/>
             </div>
             <hr className=" mx-2"/>
             {
               comment.map((com,index)=>{
-                return <Comment key={index} com={com} current={props.current}/>
+                return <Comment key={index} com={com} current={props.user.userId}/>
               })
             }
            
