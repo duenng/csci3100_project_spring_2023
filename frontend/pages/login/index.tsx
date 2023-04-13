@@ -5,6 +5,7 @@ import { auth } from '../../components/firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../../components/firebase";
+import { storage } from '../../components/firebase';
 import { doc, setDoc } from "firebase/firestore";
 import axios from 'axios'; // or import fetch from 'node-fetch';
 const BACKEND_URL = 'http://localhost:3001'; // Replace with your actual backend URL
@@ -32,12 +33,9 @@ const Login = () => {
     event.preventDefault();
     const { loginEmail, loginPassword } = event.target.elements;
     try {
-      const response = await axios.post(`${BACKEND_URL}/login`, {
-        email: loginEmail.value,
-        password: loginPassword.value
-      });
+      await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
       // Handle successful login
-      router.push('/'); // Use the router.push method instead of history.push
+      router.push('/');
     } catch (error) {
       console.log(error);
       alert("Wrong email or password.", error);
@@ -45,32 +43,40 @@ const Login = () => {
   }, [router]);
 
   const handleSignUp = useCallback(
-    async (event) => {
-      event.preventDefault();
-      const { signupEmail, signupPassword, signupPasswordConfirm, signupUsername, signupAvatar } = event.target.elements;
-
-      if (signupPassword.value !== signupPasswordConfirm.value) {
-        alert("Passwords do not match.");
-        return;
-      }
-
-      try {
-        const response = await axios.post(`${BACKEND_URL}/signup`, {
-          email: signupEmail.value,
-          password: signupPassword.value,
-          username: signupUsername.valpue,
-          avatar: signupAvatar.files[0] // assuming the file input only allows one file to be uploaded
-        });
-
-        // Handle successful signup
-        router.push("/");
-      } catch (error) {
-        console.log(error);
-        alert("Failed to create account.", error);
-      }
-    },
-    [router]
+	async (event) => {
+	  event.preventDefault();
+	  const { signupEmail, signupPassword, signupPasswordConfirm, signupUsername, signupAvatar } = event.target.elements;
+  
+	  if (signupPassword.value !== signupPasswordConfirm.value) {
+		alert("Passwords do not match.");
+		return;
+	  }
+  
+	  try {
+		let avatarUrl = null;
+		if (signupAvatar.files && signupAvatar.files[0]) {
+		  const avatarRef = ref(storage, `avatars/${signupAvatar.files[0].name}`);
+		  await uploadBytes(avatarRef, signupAvatar.files[0]);
+		  avatarUrl = await getDownloadURL(avatarRef);
+		}
+  
+		const response = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPassword.value);
+  
+		await setDoc(doc(db, "users", response.user.uid), {
+		  email: signupEmail.value,
+		  username: signupUsername.value,
+		  avatar: avatarUrl,
+		});
+  
+		router.push("/");
+	  } catch (error) {
+		console.log(error);
+		alert("Failed to create account.", error);
+	  }
+	},
+	[router]
   );
+  
   return (
 	<div className={styles.body}>
 		<section className={styles.formsSection}>
