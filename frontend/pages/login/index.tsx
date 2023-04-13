@@ -72,13 +72,9 @@ const Login = () => {
 		// Send form data to backend
 		const token = await response.user.getIdToken(); // Get the user's ID token
 		await axios.post(`${BACKEND_URL}/user`, {
-		  email: signupEmail.value,
 		  username: signupUsername.value,
-		  tag: signupTag.value,
-		}, {
-		  headers: {
-		    Authorization: `Bearer ${token}`, // Add the token to the Authorization header
-		  },
+		  token: token,
+		  tag: signupTag.value
 		});
 
 		router.push("/");
