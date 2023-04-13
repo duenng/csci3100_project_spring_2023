@@ -58,7 +58,7 @@ const Login = () => {
         const response = await axios.post(`${BACKEND_URL}/signup`, {
           email: signupEmail.value,
           password: signupPassword.value,
-          username: signupUsername.value,
+          username: signupUsername.valpue,
           avatar: signupAvatar.files[0] // assuming the file input only allows one file to be uploaded
         });
 
