@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { useUser } from "../components/UserContext";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
-import Chatlist from "@/components/Chatlist";
 import Profile from "@/components/Profile";
 import Widgets from "@/components/Widgets";
 import Head from "next/head";
@@ -15,19 +14,6 @@ export default function Home({newsResults}) {
   const router = useRouter();
   const [showProfile, setShowProfile] = useState(false);
 
-  useEffect(() => {
-    if (!loading && !user) {
-      router.replace("/login");
-    }
-  }, [user, loading, router]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    return null;
-  }
 
   return (
     <>
@@ -39,7 +25,7 @@ export default function Home({newsResults}) {
     </Head>
     <main className="flex min-h-screen max-w-7xl mx-auto ">
           {/* <Sidebar /> */}
-          <Sidebar setShowProfile={setShowProfile} logout={logout} /> {/* Pass the setShowProfile and logout functions to the sidebar */}
+          <Sidebar setShowProfile={setShowProfile}/> {/* Pass the setShowProfile and logout functions to the sidebar */}
           {showProfile ? (
             <Profile user={user} setShowProfile={setShowProfile} token={""} loading={false} />
           ) : (

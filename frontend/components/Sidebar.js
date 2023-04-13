@@ -10,9 +10,29 @@ import {
   LogoutIcon, // Import the LogoutIcon (replace with an appropriate icon)
 } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useUser } from "../components/UserContext";
 
-function Sidebar({ setShowProfile, logout }) {
+
+function Sidebar({ setShowProfile }) {
+  const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
   const router = useRouter();
+  
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace("/login");
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return null;
+  }
+
 
   const handleFront = () => {
     router.push("/");
