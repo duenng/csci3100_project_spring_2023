@@ -79,21 +79,25 @@ function Searchbar(){
         // for test
         let list = new Array(keyword.length)
         list.fill(testResult)
+        setResult(list)
+        console.log(result)
     },[keyword])
 
     return(
         <>  
             <div className= " rounded-sm sticky z-30 top-0 flex justify-center h-12 items-center bg-opacity-25 backdrop-blur-sm bg-slate-800">
                 <Icon icon="ic:outline-search" color="gray" />
-                <input ref={searchRef} placeholder="Search user.." className=" text-gray-100 font-semibold placeholder-gray-200 bg-transparent w-3/5 h-3/5 mx-2"></input>
+                <input ref={searchRef} placeholder="Search user.." className=" text-gray-100 font-semibold placeholder-gray-200 bg-transparent w-3/5 h-3/5 mx-2" onChange={e=>setKeyword(e.target.value)}></input>
                 <Icon icon="ic:round-clear" color="gray" onClick={()=>{
                     setKeyword("")
                     searchRef.current.value=""
                 }}/>
             </div>
 
-            <div className="z-20 top-12 fixed left-1/2 bg-slate-500 bg-opacity-30 justify-center">
-                hihidddd
+            <div className="z-20 top-14 left-1/2 fixed bg-slate-500 bg-opacity-30 justify-center">
+                {result.map((n,i)=>{
+                    return <p>hi</p>
+                })}
             </div>
                 
                 

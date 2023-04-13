@@ -10,13 +10,39 @@ import {
   LogoutIcon, // Import the LogoutIcon (replace with an appropriate icon)
 } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useUser } from "../components/UserContext";
 
-function Sidebar({ setShowProfile, logout }) {
+
+function Sidebar({ setShowProfile }) {
+  const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
   const router = useRouter();
+  
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace("/login");
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return null;
+  }
+
 
   const handleFront = () => {
     router.push("/");
   };
+
+  const handleMessagesClick = () => {
+    console.log("Messages clicked!");
+    router.push('/chat')
+  };
+
 
   const handleProfileClick = () => {
     console.log("Profile clicked!");
@@ -29,7 +55,7 @@ function Sidebar({ setShowProfile, logout }) {
   };
 
   return (
-    <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
+    <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-12">
       <div className="px-1.5 hoverEffect p-4 hover:bg-purple-100 xl:px-4 xl:items-start" onClick={handleFront}>
         <h1 className="text-xs font-extrabold text-purple-500 xl:text-3xl">Tertwit</h1>
       </div>
@@ -40,7 +66,7 @@ function Sidebar({ setShowProfile, logout }) {
           <SideBarMenuItem text="Home" Icon={HomeIcon} active />
         </div>
         <SideBarMenuItem text="Notification" Icon={BellIcon} />
-        <SideBarMenuItem text="Messages" Icon={InboxIcon} />
+        <SideBarMenuItem text="Messages" Icon={InboxIcon} onClick={handleMessagesClick} />
         <SideBarMenuItem text="Profile" Icon={UserIcon} onClick={handleProfileClick} />
         <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon} />
         <SideBarMenuItem text="Logout" Icon={LogoutIcon} onClick={handleLogoutClick} />
