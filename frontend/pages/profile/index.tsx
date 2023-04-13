@@ -44,11 +44,14 @@ export default function Profile({ user, token, loading, setShowProfile }: Profil
   }
 
   return (
+    <>
+    <main className="flex min-h-screen max-w-7xl mx-auto "></main>
     <div>
       <h1>Welcome, {user.displayName}</h1>
       <p>This is your unique page with token: {token}</p>
       {userData && <p>User-specific data: {userData}</p>}
       <button onClick={() => setShowProfile(false)}>Close Profile</button>
     </div>
+    </>
   );
 }

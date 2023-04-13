@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useUser } from "../components/UserContext";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
-import Profile from "@/components/Profile";
+import Profile from "./profile/index";
 import Widgets from "@/components/Widgets";
 import Head from "next/head";
 import Input from "@/components/Input";
