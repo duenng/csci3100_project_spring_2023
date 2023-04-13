@@ -8,12 +8,12 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home({newsResults}) {
   return (
 
-    <div className='grid grid-cols-4 gap-2 w-screen'>
+    <div className='grid grid-cols-4  w-screen'>
       <div className=' overflow-y-scroll  h-screen'>
         <Sidebar/>
       </div>
 
-      <div className='col-span-2 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words'>
+      <div className='col-span-2   h-screen overflow-y-scroll overflow-x-hidden break-words'>
        <FrontPage/>
       </div>
 

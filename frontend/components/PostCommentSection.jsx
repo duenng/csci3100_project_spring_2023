@@ -30,12 +30,12 @@ export default function PostCommentSection(props){
     return(
         <>
             <PostLike current={props.user.userId} repost={props.repost} like={props.like} handler={()=>handleShowAddComment()}/>
-            <hr className="mx-2"></hr>
+            <hr className="mx-2 border-violet-500"></hr>
             {/* comment section */}
             <div className="mx-2" ref={commentRef}>
               <CommentPanel  user = {props.user}  handler={addHandler}/>
             </div>
-            <hr className=" mx-2"/>
+            <hr className="mx-2 border-violet-500"></hr>
             {
               comment.map((com,index)=>{
                 return <Comment key={index} com={com} current={props.user.userId}/>

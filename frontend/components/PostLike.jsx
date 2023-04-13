@@ -61,12 +61,12 @@ export default function PostLike(props){
     return (
         <>
              {/* likes and etc... */}
-          <hr className="mx-2 "></hr>
+             <hr className="mx-2 border-violet-500"></hr>
             <div className=" my-4 mx-3 text-m">
             {repost.length?<span className="mx-2"><a className="font-semibold">{repost.length}</a><a className="text-gray-500"> reposts</a></span>:null}
             {like.length?<span className="mx-2"><a className="font-semibold">{like.length}</a><a className="text-gray-500"> likes</a></span>:null}
             </div>
-            <hr className="mx-2"></hr>
+            <hr className="mx-2 border-violet-500"></hr>
             <div className="flex justify-evenly my-2">
             <div title="comment" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center align-middle" onClick={()=>showCommentPanel()}>
               <Icon icon={outlineComment} hFlip={true} width="32" height="32" />

@@ -6,7 +6,6 @@ import PostCommentSection from "./PostCommentSection";
 
 
 // shd use post id to fetch
-let current = 1
 
 let testUser ={
   userId:1,
@@ -62,9 +61,9 @@ export default function Post(){
     return(
        <>   
             {/* header */}
-            <div className="flex text-2xl h-16 items-center bg-opacity-25 sticky top-0 backdrop-blur-sm z-10 bg-white">
-              <ArrowLeftIcon className="m-4 h-10 w-10 hoverEffect" onClick={() => router.back()}/>
-              <a className="my-4 mx-1 flex-grow">Posts</a>
+            <div className="flex rounded-sm text-2xl h-16 items-center bg-opacity-50 sticky top-0 backdrop-blur-sm z-10 bg-violet-500">
+              <ArrowLeftIcon className="m-4 h-16 hoverEffect" color="white" onClick={() => router.back()}/>
+              <a className="my-4 text-white font-semibold flex-grow">Posts</a>
             </div>
             {
               post? <>
@@ -85,3 +84,4 @@ export default function Post(){
       </> 
     )
   }
+

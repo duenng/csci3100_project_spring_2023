@@ -116,7 +116,7 @@ function LikePanel(props){
             <div ref={commentRef}>
                 {showPanel?
                     <>
-                    <hr className="mx-1"></hr>
+                    <hr className="mx-2 border-violet-500"></hr>
                     <div className="mx-2">
                         <CommentPanel  tag={post.user.tag} user = {props.currentUser} handler={addHandler}/>
                     </div>
@@ -163,9 +163,9 @@ export default function PreviewPost(props){
             {post?.images?.length?<div className=" m-2"><PostImage ids={post.images}/></div>:null}
             {post.video?<div className="my-4 mx-4"><VideoPlayer filename={post.video}/></div>:null}
         </div>
-        <hr className=" mx-1"/>
+        <hr className=" mx-2 border-violet-500"/>
         <LikePanel post={post} currentUser={currentUser}/>
-        <hr className=" mx-1"/>
+        <hr className=" mx-2 border-violet-500"/>
         </>
     )
 }
