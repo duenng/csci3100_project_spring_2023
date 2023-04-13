@@ -9,6 +9,7 @@ import { storage } from '../../components/firebase';
 import { getDoc } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
 import axios from 'axios'; // or import fetch from 'node-fetch';
+import { Icon } from '@iconify/react';
 const BACKEND_URL = 'http://localhost:3001'; // Replace with your actual backend URL
 
 const Login = () => {
@@ -40,6 +41,11 @@ const Login = () => {
         }
   }
 
+  const clearAvatar =()=>{
+	setAvatar(null)
+	setPreviewAvatar("")
+	setUploadingA(false)
+  }
 
 
   const handleFormSwitch = (form) => {
@@ -199,6 +205,7 @@ const Login = () => {
 				<div className="flex justify-center">
 					<input id="signupAvatar" type="file" accept="image/*" hidden onChange={(e)=>handleAvatar(e)}/>
 					<button type="button"className="" onClick={() => document.getElementById('signupAvatar').click()}>Upload your avatar</button>
+					{avatar?<div className="ml-2" onClick={()=>clearAvatar()}><Icon icon="mdi:file-document-remove-outline" /></div>:null}
 				</div>
 				</fieldset>
 				<button disabled={uploadingA} type="submit" className={`${styles.btnSignup}`}>
