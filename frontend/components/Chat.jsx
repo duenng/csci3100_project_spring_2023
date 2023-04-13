@@ -17,11 +17,11 @@ import {
 
   let testUser1 ={
     userId:1,
-    username:"test",
-    tag:"@test",
-    avatar:null,
-    following:[],
-    follower:[],
+    username:"User1",
+    tag:"@asshole",
+    avatar: "./avator/user.png",
+    following:[123,234],
+    follower:[123,234,456],
     token:"abc",
     isAdmin:false
   }
@@ -212,7 +212,7 @@ return (
                             <div className="text-xs text-gray-100">Oh Yeah! Come onUse overflow-autoy.!</div>
                             <div className=" flex items-end text-xs text-gray-200"> 8 minutes ago</div>
                         </div>     
-                        <img className="w-10 h-10 rounded-full  m-6 " src="./usericon.jpg" alt="" />
+                        <img className="w-10 h-10 rounded-full  m-6" src="./usericon.jpg" alt="" />
      
                     </div>
                 </div>
