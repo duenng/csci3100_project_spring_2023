@@ -104,6 +104,7 @@ mongoose.connection.once("open",function(){
     //create
     //create user
     app.post("/user", async (req,res)=>{
+      try{
       let Id = await newUserId();
       let {username, tag, avatar, token} = req.body;
       if(!username || !tag || !token) {
@@ -116,7 +117,6 @@ mongoose.connection.once("open",function(){
         avatar:avatar,
         token:token,
       }
-      try{
         let result = await User.create(option)
         return res.status(201).json(result)
 
@@ -128,6 +128,7 @@ mongoose.connection.once("open",function(){
 
     //create post
     app.post("/post", async (req,res)=>{
+      try{
       let Id = await newPostId();
       let {userId, text, reposting,date,images,video} = req.body;
       let user = await User.findOne({userId:userId});
@@ -150,10 +151,11 @@ mongoose.connection.once("open",function(){
         images:images,
         video:video
       }
-      try{
         let result = await Post.create(option)
+        if(repostedPost){
+          await Post.updateOne({_id:repostedPost._id},{$push:{repost:result._id}});
+        }
         return res.status(201).json(result)
-
       }catch(err){
         console.log(err);
         return res.status(400).send(err);
@@ -230,6 +232,174 @@ mongoose.connection.once("open",function(){
         return res.status(400).send(err);
       }
     });
+    // Get all post info by postId
+    app.get("/post/allInfo/:ID", async (req, res) => {
+      let ID = req.params.ID;
+      try {
+        let post = await Post.findOne({ postId:ID})
+        .populate(['user',{path:'like',select:"userId"},"reposting",{path:"comment",populate:["user",{path:'like',select:"userId"}]}]);
+        if (!post) {
+          return res.status(404).send("Post not found");
+        }
+        return res.status(200).json(post);
+      } catch (err) {
+        console.log(err);
+        return res.status(400).send(err);
+      }
+    });
+    // get post info for preview
+    app.get("/post/preview/:ID", async (req, res) => {
+      let ID = req.params.ID;
+      try {
+        let post = await Post.findOne({ postId:ID})
+        .populate(['user',{path:'like',select:"userId"},"reposting"]);
+        if (!post) {
+          return res.status(404).send("Post not found");
+        }
+        return res.status(200).json(post);
+      } catch (err) {
+        console.log(err);
+        return res.status(400).send(err);
+      }
+    });
+
+    //validate ID
+    app.get("/post/validate/:ID", async (req, res) => {
+      let ID = req.params.ID;
+      try {
+        let post = await Post.findOne({ postId:ID});
+        if (!post) {
+          return res.status(404).send("Post not found");
+        }
+        return res.status(200).json(post);
+      } catch (err) {
+        console.log(err);
+        return res.status(400).send(err);
+      }
+    });
+
+    //admin login
+    app.get("/admin/login", async (req, res) => {
+      try {
+        const { username, password } = req.body;
+        const admin = await Admin.findOne({ username:username, username:password });
+        if (!admin) {
+          return res.status(401).json({ error: "Invalid username or password" });
+        }
+        return res.status(200).json({username:admin.username});
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    });
+
+    //like a post
+    app.post("/like/:postId", async(req,res)=>{
+      try {
+        const { userId } = req.body;
+        const postId  = req.params;
+    
+        const user = await User.findOne({ userId:userId });
+        if (!user) {
+          return res.status(404).send("User not found");
+        }
+        const post = await Post.findOne({ postId:postId });
+        if (!post) {
+          return res.status(404).send("Post not found");
+        }
+
+        if (!post.like.includes(user._id)) {
+          await Post.updateOne({_id:post._id},{$push:{like:user._id}});
+        }
+
+        return res.status(200).json(post);
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    });
+    //dislike
+    app.post("/dislike/:postId", async (req, res) => {
+      try {
+        const { userId } = req.body;
+        const postId  = req.params;
+    
+        const user = await User.findOne({ userId: userId });
+        if (!user) {
+          return res.status(404).send("User not found");
+        }
+    
+        const post = await Post.findOne({ postId: postId });
+        if (!post) {
+          return res.status(404).send("Post not found");
+        }
+    
+        if (post.like.includes(user._id)) {
+          await Post.updateOne({ _id: post._id }, { $pull: { like: user._id } });
+        }
+    
+        return res.status(200).json(post);
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    });
+
+    //follow
+    app.post("/follow/:followerId", async (req, res) => {
+      try {
+        let targetId = req.params
+        let {userId} = req.body
+        let user = await User.findOne({userId:userId});
+        if (!user) {
+          return res.status(404).send("User not found");
+        }
+        let target = User.findOne({userId:targetId})
+        if (!target) {
+          return res.status(404).send("Follow target not found");
+        }
+        if(!target.follower.includes(user._id)&&user.following.includes(target._id)){
+          await User.updateOne({_id:user._id},{$push:{following:target._id}});
+          await User.updateOne({_id:target._id},{$push:{follower:user._id}});
+        }
+        return res.status(200).json(user);
+      } catch (error) {
+        console.log(err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    });
+    
+    // unfollow
+    app.post("/unfollow/:followerId", async (req, res) => {
+      try {
+        let targetId = req.params.followerId;
+        let { userId } = req.body;
+        let user = await User.findOne({ userId: userId });
+        if (!user) {
+          return res.status(404).send("User not found");
+        }
+        let target = await User.findOne({ userId: targetId });
+        if (!target) {
+          return res.status(404).send("Unfollow target not found");
+        }
+        if (target.follower.includes(user._id) && user.following.includes(target._id)) {
+          await User.updateOne({ _id: user._id }, { $pull: { following: target._id } });
+          await User.updateOne({ _id: target._id }, { $pull: { follower: user._id } });
+        }
+        return res.status(200).json(user);
+      } catch (error) {
+        console.log(err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    });
+
+    //
+
+
+    
+    
+    
+
 
 
 
