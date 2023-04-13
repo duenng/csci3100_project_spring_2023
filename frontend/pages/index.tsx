@@ -44,11 +44,17 @@ export default function Home({newsResults}) {
             <Profile user={user} setShowProfile={setShowProfile} token={""} loading={false} />
           ) : (
           <>
+          <div className="flex-col justify-center w-full">
           <Feed />
           <Input />
+          </div>
           </>
 
           )}
+        
+          {/* <Feed />
+          <Input /> */}
+        
 
         <div className="right-section">
           {/* <Chatlist /> */}
