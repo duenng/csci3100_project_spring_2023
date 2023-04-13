@@ -1,0 +1,30 @@
+
+ .table{
+.cellWrapper{
+    display: flex;
+    align-items: center;
+
+    .image{
+        width:30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+}
+
+.status{
+    padding: 5px;
+    border-radius: 5px;
+
+    &.online {
+        color: green;
+        background-color: rgb(193, 232, 193);
+    }
+
+    &.offline {
+        color: rgb(174, 10, 67);
+        background-color: rgb(235, 158, 191);
+    }
+}
+
+ }
