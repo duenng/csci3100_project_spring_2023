@@ -12,6 +12,34 @@ const BACKEND_URL = 'http://localhost:3001'; // Replace with your actual backend
 
 const Login = () => {
   const [activeForm, setActiveForm] = useState("login");
+  const [avatar,setAvatar] = useState(null)
+  const [previewAvatar, setPreviewAvatar] = useState("");
+  const [uploadingA,setUploadingA] = useState(false)
+
+  const handleAvatar =({target})=>{
+	if(!target.files){
+		return
+	}
+	setAvatar(target.files[0]);
+	setPreviewAvatar(URL.createObjectURL(target.files[0]));
+  }
+
+  const uploadAvatar = async()=>{
+		setUploadingA(true);
+        try {
+            const formData = new FormData();
+            formData.append("myAvatar", avatar);
+            const { data } = await axios.post("/api/avatar", formData);
+			setUploadingA(false);
+            return data.data["myAvatar"]["newFilename"]
+        } catch (error) {
+            console.log(error.response?.data);
+            setUploadingA(false);
+            return null
+        }
+  }
+
+
 
   const handleFormSwitch = (form) => {
     setActiveForm(form);
@@ -53,28 +81,28 @@ const Login = () => {
 	  }
   
 	  try {
-		let avatarUrl = null;
-		if (signupAvatar.files && signupAvatar.files[0]) {
-		  const avatarRef = ref(storage, `avatars/${signupAvatar.files[0].name}`);
-		  await uploadBytes(avatarRef, signupAvatar.files[0]);
-		  avatarUrl = await getDownloadURL(avatarRef);
-		}
-  
+		
 		const response = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPassword.value);
 
 		// Send form data to backend
 		const token = await response.user.getIdToken(); // Get the user's ID token
+
+		let avatarName =""
+		if(token){
+			avatarName = await uploadAvatar()
+		}
 		let {data} = await axios.post(`${BACKEND_URL}/user`, {
 		  username: signupUsername.value,
 		  token: token,
-		  tag: signupTag.value
+		  tag: signupTag.value,
+		  avatar: avatarName
 		});
 
 		await setDoc(doc(db, "users", response.user.uid), {
 			email: signupEmail.value,
 			username: signupUsername.value,
 			tag: signupTag.value,
-			avatar: avatarUrl,
+			avatar: avatarName,
 			uid: data.userId
 		});
 		
@@ -136,10 +164,6 @@ const Login = () => {
 					<input id="signupTag" type="text" required />
 				</div>
 				<div className={styles.inputBlock}>
-					<label htmlFor="signupAvatar">Avatar</label>
-					<input id="signupAvatar" type="file" />
-				</div>
-				<div className={styles.inputBlock}>
 					<label htmlFor="signupEmail">E-mail</label>
 					<input id="signupEmail" type="email" required />
 				</div>
@@ -151,8 +175,15 @@ const Login = () => {
 					<label htmlFor="signupPasswordConfirm">Confirm password</label>
 					<input id="signupPasswordConfirm" type="password" required />
 				</div>
+				<div className="flex justify-center m-4">
+				{previewAvatar?<img src={previewAvatar} alt="Preview" className="h-24 max-w-24 rounded-full" />:null}
+				</div>
+				<div className="flex justify-center">
+					<input id="signupAvatar" type="file" accept="image/*" hidden onChange={(e)=>handleAvatar(e)}/>
+					<button type="button"className="" onClick={() => document.getElementById('signupAvatar').click()}>Upload your avatar</button>
+				</div>
 				</fieldset>
-				<button type="submit" className={`${styles.btnSignup}`}>
+				<button disabled={uploadingA} type="submit" className={`${styles.btnSignup}`}>
 				Continue
 				</button>
 			</form>
