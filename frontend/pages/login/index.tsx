@@ -6,6 +6,8 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithP
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../../components/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import axios from 'axios'; // or import fetch from 'node-fetch';
+const BACKEND_URL = 'http://localhost:3001'; // Replace with your actual backend URL
 
 const Login = () => {
   const [activeForm, setActiveForm] = useState("login");
@@ -16,74 +18,59 @@ const Login = () => {
   const router = useRouter(); // Use the useRouter hook
 
   const handleGoogleLogin = useCallback(async () => {
-	const provider = new GoogleAuthProvider();
-	try {
-	  const result = await signInWithPopup(auth, provider);
-	  router.push("/");
-	} catch (error) {
-	  console.log(error);
-	  alert("Failed to sign in with Google.", error);
-	}
-  }, [router]);
-
-  const handleLogin = useCallback(
-    async event => {
-      event.preventDefault();
-      const { loginEmail, loginPassword } = event.target.elements;
-      try {
-        const result = await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
-        router.push('/'); // Use the router.push method instead of history.push
-      } catch (error) {
-		console.log(error);
-        alert("Wrong email or password.", error);
-      }
-    },
-    [router] // Add router to the dependency array
-  );
-  const handleSignUp = useCallback(
-	async (event) => {
-	  event.preventDefault();
-	  const { signupEmail, signupPassword, signupPasswordConfirm, signupUsername, signupAvatar } = event.target.elements;
-  
-	  if (signupPassword.value !== signupPasswordConfirm.value) {
-		alert("Passwords do not match.");
-		return;
-	  }
-  
-	  try {
-		const result = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPassword.value);
-  
-		// Handle avatar upload
-		if (signupAvatar.files[0]) {
-		  const avatarRef = ref(storage, `avatars/${result.user.uid}`);
-		  await uploadBytes(avatarRef, signupAvatar.files[0]);
-        const avatarURL = await getDownloadURL(avatarRef);
-        
-        // Save the username and avatar URL to Firestore
-        const userDocRef = doc(db, "users", result.user.uid);
-
-        await setDoc(userDocRef, {
-          username: signupUsername.value,
-          avatarURL: avatarURL
-        });
-      } else {
-        // Save the username without an avatar URL to Firestore
-        const userDocRef = doc(db, "users", result.user.uid);
-        await setDoc(userDocRef, {
-          username: signupUsername.value,
-          avatarURL: null
-        });
-      }
-
-      // You can add any additional user-related setup here, like setting their display name
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
       router.push("/");
     } catch (error) {
       console.log(error);
-      alert("Failed to create account.", error);
+      alert("Failed to sign in with Google.", error);
     }
-  },
-  [router]
-);
+  }, [router]);
+
+  const handleLogin = useCallback(async event => {
+    event.preventDefault();
+    const { loginEmail, loginPassword } = event.target.elements;
+    try {
+      const response = await axios.post(`${BACKEND_URL}/login`, {
+        email: loginEmail.value,
+        password: loginPassword.value
+      });
+      // Handle successful login
+      router.push('/'); // Use the router.push method instead of history.push
+    } catch (error) {
+      console.log(error);
+      alert("Wrong email or password.", error);
+    }
+  }, [router]);
+
+  const handleSignUp = useCallback(
+    async (event) => {
+      event.preventDefault();
+      const { signupEmail, signupPassword, signupPasswordConfirm, signupUsername, signupAvatar } = event.target.elements;
+
+      if (signupPassword.value !== signupPasswordConfirm.value) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      try {
+        const response = await axios.post(`${BACKEND_URL}/signup`, {
+          email: signupEmail.value,
+          password: signupPassword.value,
+          username: signupUsername.value,
+          avatar: signupAvatar.files[0] // assuming the file input only allows one file to be uploaded
+        });
+
+        // Handle successful signup
+        router.push("/");
+      } catch (error) {
+        console.log(error);
+        alert("Failed to create account.", error);
+      }
+    },
+    [router]
+  );
   return (
 	<div className={styles.body}>
 		<section className={styles.formsSection}>
