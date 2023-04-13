@@ -1,3 +1,5 @@
+import { SparklesIcon } from "@heroicons/react/outline";
+
 function Feed() {
   const exampleTweets = [
     {
@@ -21,9 +23,15 @@ function Feed() {
   ];
 
   return (
-    <div className="feed">
-      <h2>Feed</h2>
-      {exampleTweets.map((tweet) => (
+    <div className="pt-4 xl:ml-[370px] border-l border-r xl:min-w-[576px] sm:ml-[10%] max-w-xl ml-[px] flex-grow sm:pl-0 min-w-[15%]">
+      <div className="top-0 z-50 bg-white border-b border-purple-200 flex py-2 px-3 sticky">
+        <h2 className="text-lg sm:text-xl font-bold">Home</h2>
+        {/* can add a search bar here */}
+        <div className="hoverEffect flex items-center justify-center ml-auto pt-0 w-11 h-11">
+          <SparklesIcon className="h-5"/>
+        </div> 
+      </div>
+      {/* {exampleTweets.map((tweet) => (
         <div key={tweet.id} className="tweet">
           <img
             src={tweet.user.avatar}
@@ -37,7 +45,7 @@ function Feed() {
             <p>{tweet.content}</p>
           </div>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 }

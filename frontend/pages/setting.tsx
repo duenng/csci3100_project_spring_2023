@@ -4,8 +4,6 @@ import { Inter } from 'next/font/google'
 import Sidebar from '@/components/Sidebar'
 //import Login from "../components/Login";
 import Feed from "@/components/Feed";
-import Trending from "@/components/Trending";
-import Suggestions from "@/components/Suggestions";
 import Widgets from "@/components/Widgets";
 import SettingBar from "@/components/SettingBar";
 
@@ -22,7 +20,7 @@ export default function Setting({}) {
         <link rel="icon" href="/tertwit_T.ico" />
     </Head>
     <main className="flex min-h-screen max-w-7xl mx-auto ">
-        <Sidebar />
+        <Sidebar setShowProfile={undefined} logout={undefined} />
         <SettingBar />
         
         {/* <Feed /> */}
