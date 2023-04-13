@@ -5,21 +5,31 @@ import {Link} from "react-router-dom"
 
 const Datatable = () => {
 
-    const actionColumn = [
-      {field:"action", headerName: "Action", width: 200, renderCell:()=>{
-        return(
+ 
+
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params) => {
+        return (
           <div className="cellAction">
-             <Link to="/users/123" style={{textDecoration: "none"}}>
-            <div className="viewButton">View</div>
+            <Link to="/users/test" style={{ textDecoration: "none" }}>
+              <div className="viewButton">View</div>
             </Link>
-            <div className="deleteButton">Delete</div>
+            <div
+              className="deleteButton"
+              onClick={() => console.log(params.row.id)}
+              
+            >
+              Delete
+            </div>
           </div>
-        )
-      } }
-    ]
-
-
-
+        );
+      },
+    },
+  ];
 
 
   return (
@@ -30,7 +40,8 @@ const Datatable = () => {
         columns={userColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        checkboxSelection
+        
+        
       />
    </div>
   )
