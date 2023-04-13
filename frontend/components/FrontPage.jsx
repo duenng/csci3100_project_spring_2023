@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import PreviewPost from "./PostPreview"
 import { Icon } from '@iconify/react';
+import CreatePost from "./CreatePost";
 
 
 
@@ -61,7 +62,10 @@ export default function FrontPage(){
             <div  className= " rounded-sm sticky z-30 top-0 flex  h-12 items-center bg-opacity-75 backdrop-blur-sm bg-violet-500" onClick={()=>handleTop()}>
               <h1 className=" font-bold text-white text-2xl ml-6" >Home</h1>
             </div>
-
+            <div className="my-2">
+                <CreatePost user={testUser} url={""}/>
+            </div>
+            <hr className="mx-2 border-violet-500"></hr>
             {posts.length?posts.map((post,index)=>{
                 return <PreviewPost post={post} user={testUser} key={index}/>
             }):null}

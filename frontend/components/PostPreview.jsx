@@ -11,6 +11,7 @@ import CommentPanel from './CommentPanel';
 import PostImage from "./PostImage";
 import VideoPlayer from "./VideoPlayer";
 import { useRouter } from 'next/router';
+import PopUpCreate from './PopUpCreatePost';
 
 function LikePanel(props){
     let post = props.post
@@ -20,6 +21,7 @@ function LikePanel(props){
     const [comment,setComment] = useState(post.comment)
     const [showPanel,setShowPanel] = useState(false)
     const [copy,setCopy] = useState(false)
+    const [repostPanel,setRepostPanel] = useState(false)
     const commentRef = useRef()
     
       const showCommentPanel = (e)=>{
@@ -40,9 +42,9 @@ function LikePanel(props){
         },10)
       }
 
-      const handleRepost = (e)=>{
+      const handleRepost = (pop)=>{
         //todo
-        console.log("reposted",e)
+        setRepostPanel(pop)
       }
 
       const handleUnlike=(e)=>{
@@ -67,12 +69,12 @@ function LikePanel(props){
       }
 
       const handleShare=(e)=>{
-        const Url = `${window.location.href}/post/${post.postId}`;
+        const Url = `${window.location.host}/post/${post.postId}`;
         navigator.clipboard.writeText(Url)
         setCopy(true)
         setTimeout(()=>{
           setCopy(false)
-        },25000)
+        },2500)
         //console.log("share",e)
       }
 
@@ -95,7 +97,7 @@ function LikePanel(props){
                 {comment.length?<a className=' text-gray-500 ml-1 font-semibold'>{comment.length}</a>:null}
             </div>
             <div className='flex items-center'>
-                <div title='repost' className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center " onClick={()=>handleRepost()}>
+                <div title='repost' className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center " onClick={()=>handleRepost(true)}>
                 <Icon icon={repostIcon} width="32" height="32"/>
                 </div>
                 {repost.length?<a className=' text-gray-500 ml-1 font-semibold '>{repost.length}</a>:null}
@@ -123,6 +125,8 @@ function LikePanel(props){
                     </>
                 :null}
             </div>
+
+            {repostPanel?<PopUpCreate handler={()=>handleRepost(false)} user={props.currentUser} url={`${window.location.host}/post/${post.postId}`}/>:null}
             
             
         </>

@@ -71,7 +71,7 @@ export default function Post(){
               <PostContent owner={post.user} date={post.date} text={post.text} images={post.images} video= {post.video}/>
               
               {/* comment section */}
-              <PostCommentSection user={testUser} like={post.like} repost={post.repost} comment={post.comment}/>
+              <PostCommentSection user={testUser} tag={post.user.tag} like={post.like} repost={post.repost} comment={post.comment}/>
   
               
               {/* pop up message */}

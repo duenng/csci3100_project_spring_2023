@@ -14,10 +14,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useUser } from "../components/UserContext";
 import { set } from "date-fns";
+import PopUpCreate from './PopUpCreatePost';
 
 
 function Sidebar({setShowProfile }) {
   const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
+  const [showPop,setShowPop] = useState(false)
   const router = useRouter();
 
   //active variable
@@ -87,7 +89,8 @@ function Sidebar({setShowProfile }) {
   };
 
   return (
-    <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-12">
+    <>
+      <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-12">
       <div className="px-1.5 hoverEffect p-4 hover:bg-purple-100 xl:px-4 xl:items-start" onClick={handleFront}>
         <h1 className="text-xs font-extrabold text-purple-500 xl:text-3xl">Tertwit</h1>
       </div>
@@ -105,10 +108,11 @@ function Sidebar({setShowProfile }) {
       </div>
 
       {/* Tertwit Button */}
-      <button className="bg-purple-500 text-white hover:brightness-95 rounded-full w-56 h-12 font-bold shadow-md text-lg hidden xl:inline">
+      <button className="bg-purple-500 text-white hover:brightness-95 rounded-full w-56 h-12 font-bold shadow-md text-lg hidden xl:inline"
+        onClick={()=>setShowPop(true)}>
         Create a Post
       </button>
-
+     
       {/* User Profile */}
       <div className="flex items-center justify-center text-gray-700 hoverEffect xl:justify-start mt-auto">
         <img
@@ -124,6 +128,10 @@ function Sidebar({setShowProfile }) {
         <DotsHorizontalIcon className="h-5 xl:m1-8 xl:inline hidden" />
       </div>
     </div>
+     {showPop?<PopUpCreate user={user} url={""} handler={()=>setShowPop(false)}/>:null}
+    </>
+    
+
   );
 }
 

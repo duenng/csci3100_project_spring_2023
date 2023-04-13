@@ -3,15 +3,64 @@ import axios from "axios";
 import { Icon } from "@iconify/react";
 
 
-export default function CommentPanel(props){
+export default function CreatePost({user,url}){
     const [text,setText] = useState("")
     const [images,setImages] = useState([])
     const [video,setVideo] = useState(null)
     const [message,setMessage] = useState("")
     const [uploadingImage,setUploadingI] = useState(false)
     const [uploadingVideo,setUploadingV] = useState(false)
+    const [verifyingUrl, setVerifyingUrl] = useState(false)
+    const [showLink, setShowLink] = useState(url.length)
+    const [editingLink, setEditingLink] = useState(false)
+    const [reposting, setReposting] = useState(url)
+
     const textRef = useRef()
-    let user = props.user
+    const linkRef = useRef()
+
+    const handleShowLink=()=>{
+        if(!showLink){
+            setShowLink(true)
+            setEditingLink(true)
+        }
+        if(showLink&&editingLink){
+            setShowLink(false)
+        }
+        if(showLink&&!editingLink){
+            setEditingLink(true)
+            setTimeout(()=>{
+                linkRef.current.value=reposting
+            },10)
+        }
+    }
+
+    const verifyLink=()=>{
+        setVerifyingUrl(true)
+        setMessage("")
+        let link = linkRef.current.value
+        if(link==""){
+            setMessage("Please provide your link first.")
+            linkRef.current.focus()
+            setVerifyingUrl(false)
+            return
+        }
+        let splited = link.split("/")
+        if(splited.length!==3||
+            splited[0]!==window.location.host||
+            splited[1]!=="post"||
+            isNaN(splited[2])){
+                setMessage("Your link is not a valid link of Tertwit post.")
+                //console.log(splited,isNaN(splited[2]))
+                setVerifyingUrl(false)
+                return
+        }
+        // todo fetch post data
+        //set message if post not exist
+        setVerifyingUrl(false)
+        setReposting(link)
+        setEditingLink(false)
+        return
+    }
 
     const removeImage = (target) =>{
         setImages((prev)=>{
@@ -60,7 +109,7 @@ export default function CommentPanel(props){
         }
     }
 
-    const handleAdd = async(e) =>{
+    const handleCreate = async(e) =>{
         setMessage("")
         if(!text.length){
             setMessage("Text is required.")
@@ -84,31 +133,23 @@ export default function CommentPanel(props){
         }
         let date = new Date()
         let content = text
+        let url = reposting
         //todo ftech comment to sever
-        let data={
-            userId:user.userId,
-            replying:props.tag,
+        let  data = {
+            userId: user.userId,
             text:content,
-            image:imageNames,
-            video:videoName,
             like:[],
-            date:date
-        }
+            repost:[],
+            reposting:url,
+            date: date,
+            images:imageNames,
+            video: videoName,
+            comment: [],
+          }
 
         // post request, if res.status not ok, return
 
         //need change to current user info
-        let newComment={
-            user:user,
-            replying:props.tag,
-            text:content,
-            image:imageNames,
-            video:videoName,
-            like:[],
-            date:date
-        }
-        
-        props.handler(newComment)
            
         setText("")
         textRef.current.value=""
@@ -121,11 +162,10 @@ export default function CommentPanel(props){
 
     return(
         <>
-        <div className="flex item-center mx-2 text-base flex-wrap">
+        <div className="flex mx-2 item-center text-base flex-wrap w-[99%] h-full">
             <img className="h-8 round-full m-4 flex-none" src ={`avatar/${user.avatar?user.avatar:"user.png"}`}/>
             <div className="flex-grow">
-                <p className="m-1  text-gray-500">Reply {props.tag}</p>
-                <textarea ref={textRef} className=" w-full border-none" placeholder="Comments here..." onChange={e=>setText(e.target.value)}/>
+                <textarea ref={textRef} className=" w-full border-none" placeholder="What's happening?" onChange={e=>setText(e.target.value)}/>
                 {/* medias */}
                 <div className="flex mx-1 flex-wrap">
                     {images.length?
@@ -141,6 +181,26 @@ export default function CommentPanel(props){
                          <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-green-400 text-sm font-semibold rounded-md items-center"><a>{video.name>10?video.name.slice(0,11)+"...":video.name}</a> <Icon className="ml-1" onClick={()=>setVideo(null)} width="16" icon="material-symbols:scan-delete" /></div>
                         :null}
                 </div>
+                <div className="flex mx-1 ">
+                {showLink?editingLink?
+                    <div className=" align-middle flex-grow-0 flex m-1 text-sm items-center w-4/6">
+                        <input ref={linkRef} className="w-4/6 mr-1 flex-grow" placeholder=" Paste your Tertwit link here"></input>
+                        <Icon icon="fluent-mdl2:completed-solid" color="green" onClick={verifyLink}/>
+                        </div>:
+                     <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-violet-400 text-sm font-semibold rounded-md items-center"><a>{reposting}</a>
+                      <Icon className="ml-1" onClick={()=>{
+                        setEditingLink(true)
+                        setTimeout(()=>{
+                            linkRef.current.value=reposting
+                        },10)
+                      }} width="16" icon="material-symbols:edit" />
+                      <Icon className="ml-1" onClick={()=>{
+                        setReposting("")
+                        setShowLink(false)
+                      }} width="16" icon="ic:sharp-clear" /></div>
+                        :null}
+                </div>
+               
                 <p className="w-full text-red-600 font-semibold text-sm">{message?message:null}</p>
                 <div className="flex m-2 flex-warp">
                     {/* image */}
@@ -200,10 +260,12 @@ export default function CommentPanel(props){
                         <Icon icon="icon-park-solid:video-two" width="34" />
                     </label>
 
-                   
+                    <label className="" onClick={handleShowLink}>
+                        <Icon icon="mdi:link-plus" width="34"/>
+                    </label>
                     
                     <div className=" flex-grow"/>
-                    <button disabled={uploadingImage||uploadingVideo} className="hover:bg-violet-400 bg-violet-500 text-white rounded-full font-semibold px-3 py-1 flex-wrap" onClick={handleAdd}>{uploadingImage||uploadingVideo?"Uploading":"Comment!"}</button>
+                    <button disabled={uploadingImage||uploadingVideo||verifyingUrl} className="hover:bg-violet-400 bg-violet-500 text-white rounded-full font-semibold px-3 py-1 flex-wrap" onClick={handleCreate}>{uploadingImage||uploadingVideo||verifyingUrl?"Wait...":"Post!"}</button>
                 </div>
             </div>
                 
