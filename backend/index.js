@@ -284,10 +284,10 @@ mongoose.connection.once("open",function(){
     });
 
     //like a post
-    app.post("/like/:postId", async(req,res)=>{
+    app.post("/like/:ID", async(req,res)=>{
       try {
         const { userId } = req.body;
-        const postId  = req.params;
+        const postId  = req.params.ID;
     
         const user = await User.findOne({ userId:userId });
         if (!user) {
@@ -309,10 +309,10 @@ mongoose.connection.once("open",function(){
       }
     });
     //dislike
-    app.post("/dislike/:postId", async (req, res) => {
+    app.post("/dislike/:ID", async (req, res) => {
       try {
         const { userId } = req.body;
-        const postId  = req.params;
+        const postId  = req.params.ID;
     
         const user = await User.findOne({ userId: userId });
         if (!user) {
@@ -338,7 +338,7 @@ mongoose.connection.once("open",function(){
     //follow
     app.post("/follow/:followerId", async (req, res) => {
       try {
-        let targetId = req.params
+        let targetId = req.params.followerId;
         let {userId} = req.body
         let user = await User.findOne({userId:userId});
         if (!user) {
@@ -404,20 +404,8 @@ mongoose.connection.once("open",function(){
     //get users by keyword
     app.get("/searchUsers/:keyword",async(req,res)=>{
       try {
-        let keyword = req.params;
+        let keyword = req.params.keyword;
         let users =  await User.find({ username: { $regex: new RegExp(keyword), $options: "i" } }).limit(feedLimit).select({ username: 1, tag: 1, avatar:1})
-        return res.status(200).json(users)
-      } catch (error) {
-        console.log(err);
-        return res.status(500).json({ error: "Internal server error" });
-      }
-    })
-
-    //get users by keyword
-    app.get("/searchUsers/:keyword",async(req,res)=>{
-      try {
-        let keyword = req.params;
-        let users =  await User.find({ username: { $regex: new RegExp(keyword), $options: "i" } }).limit(feedLimit).select({userId:1, username: 1, tag: 1, avatar:1})
         return res.status(200).json(users)
       } catch (error) {
         console.log(err);
@@ -437,24 +425,32 @@ mongoose.connection.once("open",function(){
     })
 
     //admin delete user
-    app.delete(".admin/user/:ID",async(req,res)=>{
+    app.delete("/admin/user/:ID", async (req, res) => {
       try {
-        let id = req.params
-        let posts = await Post.find({userId:id})
-        posts.forEach((post)=>{
-          
-        })
+        let id = req.params.ID;
+        let user = await User.findOne({userId:id});
+        let posts = await Post.find({ user: user._id });
+        for (let i = 0; i < posts.length; i++) {
+          let post = posts[i];
+          await Comment.deleteMany({ _id: { $in: post.comment } });
+          await Post.deleteOne({ _id: post._id });
+        }
+        let comments = await Comment.find({ user: user._id });
+        for (let i = 0; i < comments.length; i++) {
+          let comment = comments[i];
+          await Post.updateOne(
+            { _id: comment.belong },
+            { $pull: { comment: comment._id } }
+          );
+          await Comment.deleteOne({ _id: comment._id });
+        }
+        await User.deleteOne({ _id: user._id });
+        return res.status(204).send(`Deleted user ${id}`);
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Internal server error" });
       }
-      catch{
-
-      }
-    })
-
-
-
-
-    
-    
+    });
     
 
 
