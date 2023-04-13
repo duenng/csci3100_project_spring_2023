@@ -13,11 +13,21 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useUser } from "../components/UserContext";
+import { set } from "date-fns";
 
 
-function Sidebar({ setShowProfile }) {
+function Sidebar({setShowProfile }) {
   const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
   const router = useRouter();
+
+  //active variable
+  const [isHomeActive, setIsHomeActive] = useState(true);
+  const [isProfileActive, setIsProfileActive] = useState(false);
+  const [isMessageActive, setIsMessageActive] = useState(false);
+  const [isSettingActive, setIsSettingActive] = useState(false);
+
+
+
   
   useEffect(() => {
     if (!loading && !user) {
@@ -35,18 +45,40 @@ function Sidebar({ setShowProfile }) {
 
 
   const handleFront = () => {
+    console.log("Front clicked!");
+    /* setIsHomeActive(true); // Set "Home" as active
+    setIsMessageActive(false);
+    setIsProfileActive(false);
+    setIsSettingActive(false); */
     router.push("/");
   };
 
   const handleMessagesClick = () => {
     console.log("Messages clicked!");
+    /* setIsMessageActive(true); // Set "Messages" as active
+    setIsHomeActive(false);
+    setIsProfileActive(false);
+    setIsSettingActive(false); */
     router.push('/chat')
   };
 
 
   const handleProfileClick = () => {
     console.log("Profile clicked!");
+   /*  setIsProfileActive(true); // Set "Profile" as active
+    setIsHomeActive(false);
+    setIsMessageActive(false);
+    setIsSettingActive(false); */
     setShowProfile(true);
+  };
+
+  const handleSettingClick = () => {
+    console.log("Setting clicked!");
+    /* setIsSettingActive(true); // Set "Setting" as active
+    setIsHomeActive(false);
+    setIsMessageActive(false);
+    setIsProfileActive(false); */
+    router.push('/setting')
   };
 
   const handleLogoutClick = () => {
@@ -63,12 +95,12 @@ function Sidebar({ setShowProfile }) {
       {/* Menu */}
       <div className="mt-4 mb-3 xl:items-start">
         <div onClick={handleFront}>
-          <SideBarMenuItem text="Home" Icon={HomeIcon} active />
+          <SideBarMenuItem text="Home" Icon={HomeIcon} active={isHomeActive}/>
         </div>
         <SideBarMenuItem text="Notification" Icon={BellIcon} />
-        <SideBarMenuItem text="Messages" Icon={InboxIcon} onClick={handleMessagesClick} />
-        <SideBarMenuItem text="Profile" Icon={UserIcon} onClick={handleProfileClick} />
-        <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon} />
+        <SideBarMenuItem text="Messages" Icon={InboxIcon} onClick={handleMessagesClick} active={isMessageActive}/>
+        <SideBarMenuItem text="Profile" Icon={UserIcon} onClick={handleProfileClick} active={isProfileActive} />
+        <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon} onClick={handleSettingClick} active={isSettingActive}/>
         <SideBarMenuItem text="Logout" Icon={LogoutIcon} onClick={handleLogoutClick} />
       </div>
 
