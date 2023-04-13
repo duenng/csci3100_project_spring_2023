@@ -401,6 +401,22 @@ mongoose.connection.once("open",function(){
       }
     });
 
+    //get preview post info of an user by Id
+    app.get("/userPost/:ID", async (req,res)=>{
+      try {
+        const id = req.params.ID
+        let user = await User.findOne({userId:id})
+        if(!user){
+          return res.status(404).send("User not found");
+        }
+        let posts = Post.find({user:user._id}).populate(['user',{path:'like',select:"userId"},"reposting"]).sort('-date').limit(feedLimit);
+        return res.status(200).json(posts)
+      } catch (error) {
+        console.log(err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    });
+
     //get users by keyword
     app.get("/searchUsers/:keyword",async(req,res)=>{
       try {
@@ -451,10 +467,6 @@ mongoose.connection.once("open",function(){
         return res.status(500).json({ error: "Internal server error" });
       }
     });
-    
-
-
-
 
 });
 
