@@ -194,8 +194,8 @@ mongoose.connection.once("open",function(){
     //create admin user
     app.post("/admin", async (req,res)=>{
       let Id = await newAdminId();
-      let {username,} = req.body;
-      if(!username||!tag||!token){
+      let {username,password} = req.body;
+      if(!username||!password){
         return res.status(400).send("Missing required data in request body")
       }
       let option ={
@@ -216,7 +216,6 @@ mongoose.connection.once("open",function(){
     })
 
     // read
-    // get user by token
     // Get user by token
     app.get("/user/token/:token", async (req, res) => {
       let token = req.params.token;
