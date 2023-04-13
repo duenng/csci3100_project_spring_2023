@@ -15,6 +15,28 @@ import {
     getDoc,
   } from "firebase/firestore";
 
+  let testUser1 ={
+    userId:1,
+    username:"test",
+    tag:"@test",
+    avatar:null,
+    following:[],
+    follower:[],
+    token:"abc",
+    isAdmin:false
+  }
+
+  let testUser2 ={
+    userId:1,
+    username:"test2",
+    tag:"@test2",
+    avatar:null,
+    following:[],
+    follower:[],
+    token:"fff",
+    isAdmin:false
+  }
+
 function Chat() {
     const [username, setUsername] = useState("");
     const [user, setUser] = useState(null);
