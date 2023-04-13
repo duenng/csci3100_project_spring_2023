@@ -12,7 +12,7 @@ export default function PostCommentSection(props){
       if (commentRef.current) {
         let area = commentRef.current.children[0].children[1].children[1]
         //console.log(area)
-        commentRef.current.scrollIntoView({ behavior: 'smooth' });
+        commentRef.current.scrollIntoView({ behavior: 'smooth', block:'center'});
         setTimeout(() => {
           area.focus()
         },500);
@@ -29,19 +29,19 @@ export default function PostCommentSection(props){
 
     return(
         <>
-            <PostLike current={props.current} repost={props.repost} like={props.like} handler={()=>handleShowAddComment()}/>
+            <PostLike current={props.user.userId} repost={props.repost} like={props.like} handler={()=>handleShowAddComment()}/>
             <hr className="mx-2"></hr>
             {/* comment section */}
             <div className="mx-2" ref={commentRef}>
-              <CommentPanel tag={props.tag} user = {{}} inPost={true} handler={addHandler}/>
+              <CommentPanel  user = {props.user}  handler={addHandler}/>
             </div>
             <hr className=" mx-2"/>
             {
               comment.map((com,index)=>{
-                return <Comment key={index} com={com} current={props.current}/>
+                return <Comment key={index} com={com} current={props.user.userId}/>
               })
             }
-            {/* <div className='fiexed w-screen h-screen z-9999 bg-slate-600 top-0 left-0'></div> */}
+           
         </>
     )
 }

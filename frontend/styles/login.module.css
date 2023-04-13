@@ -120,15 +120,35 @@
 
 .form {
 	overflow: hidden;
-	min-width: 260px;
+	min-width: 300px;
 	margin-top: 50px;
 	padding: 30px 25px;
   border-radius: 5px;
 	transform-origin: top;
 }
 
+.btnGoogleLogin {
+	display: block;
+	margin: 20px auto 10px;
+	padding: 10px 20px;
+	font-size: 18px;
+	line-height: 1.5;
+	color: #ffffff;
+	background-color: #a7e245;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+  }
+  
+  .btnGoogleLogin:hover {
+	background-color: #83c444;
+  }
+  
+
 .formLogin {
 	animation: hideLogin .3s ease-out forwards;
+	padding: 50px 20px;
 }
 
 .formWrapperIsActiveFormLogin {

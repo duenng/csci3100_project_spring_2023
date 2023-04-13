@@ -3,8 +3,6 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import Sidebar from '@/components/Sidebar'
-import Trending from "@/components/Trending";
-import Suggestions from "@/components/Suggestions";
 import Post from "@/components/Post"
 
 const inter = Inter({ subsets: ['latin'] })
@@ -17,12 +15,8 @@ export default function Home() {
         <Sidebar/>
       </div>
 
-      <div className='col-span-2 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words'>
+      <div className='col-span-3 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words'>
        <Post/>
-      </div>
-      <div className=' overflow-y-scroll	 h-screen'>
-        <Trending/>
-        <Suggestions/>
       </div>
 
     </div>

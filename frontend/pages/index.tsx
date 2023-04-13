@@ -4,14 +4,13 @@ import { useRouter } from "next/router";
 import { useUser } from "../components/UserContext";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
-import Trending from "@/components/Trending";
-import Suggestions from "@/components/Suggestions";
-import Chat from "@/components/Chat";
 import Chatlist from "@/components/Chatlist";
-import Chatroom from "@/components/Chatroom";
 import Profile from "@/components/Profile";
+import Widgets from "@/components/Widgets";
+import Head from "next/head";
+import Input from "@/components/Input";
 
-export default function Home() {
+export default function Home({newsResults}) {
   const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
   const router = useRouter();
   const [showProfile, setShowProfile] = useState(false);
@@ -31,26 +30,47 @@ export default function Home() {
   }
 
   return (
-    <div className="container">
-      <div className="main-content flex">
-        <div className="left-section flex">
+    <>
+    <Head>
+        <title>Home</title>
+        <meta name="description" content="CSCI3100 PROJECT" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/tertwit_T.ico" />
+    </Head>
+    <main className="flex min-h-screen max-w-7xl mx-auto ">
+          {/* <Sidebar /> */}
           <Sidebar setShowProfile={setShowProfile} logout={logout} /> {/* Pass the setShowProfile and logout functions to the sidebar */}
-        </div>
-        <div className="middle-section">
           {showProfile ? (
-            <Profile user={user} setShowProfile={setShowProfile} />
+            <Profile user={user} setShowProfile={setShowProfile} token={""} loading={false} />
           ) : (
-            <div>
-              <Feed />
-              <Trending />
-            </div>
+          <>
+          <Feed />
+          <Input />
+          </>
+
           )}
-        </div>
+
         <div className="right-section">
-          <Suggestions />
-          <Chatlist />
+          {/* <Chatlist /> */}
+          {/* Widgets */}
+          <Widgets newsResults={newsResults.articles}/>
         </div>
-      </div>
-    </div>
+     
+    </main>
+    </>
   );
 }
+
+// Along with Widgets component
+//newsResults in props
+//https://saurav.tech/NewsAPI/everything/cnn.json
+
+export async function getServerSideProps() {
+  const newsResults = await fetch('https://saurav.tech/NewsAPI/everything/bbc-news.json').then(res => res.json())
+  return {
+    props: {
+      newsResults
+    }
+  }
+}
+//End of Widgets

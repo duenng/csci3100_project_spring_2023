@@ -84,10 +84,7 @@ export default function CommentPanel(props){
         }
         //need change to current user info
         let newComment={
-            userID: 123,
-            name: "testnew",
-            tag:"@new",
-            avatar:null,
+            user:user,
             replying:props.tag,
             text:text,
             image:imageNames,
@@ -95,10 +92,9 @@ export default function CommentPanel(props){
             like:[],
             date:Number(new Date())
         }
-        if(props.inPost){
-            props.handler(newComment)
-            // console.log(1,newComment)
-        }
+        
+        props.handler(newComment)
+           
         setText("")
         textRef.current.value=""
         setImages([])
@@ -111,7 +107,7 @@ export default function CommentPanel(props){
     return(
         <>
         <div className="flex item-center mx-2 text-base flex-wrap">
-            <img className="h-8 round-full m-4 flex-none" src ={`avatar/${user?.avatar?user.avatar:"user.png"}`}/>
+            <img className="h-8 round-full m-4 flex-none" src ={`avatar/${user.avatar?user.avatar:"user.png"}`}/>
             <div className="flex-grow">
                 <p className="m-1  text-gray-500">Reply {props.tag}</p>
                 <textarea ref={textRef} className=" w-full" placeholder="Comments here..." onChange={e=>setText(e.target.value)}/>
@@ -123,11 +119,11 @@ export default function CommentPanel(props){
                             if( name.length>10){
                                 name = name.slice(0,11)+"..."
                             }
-                            return <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-sky-300 text-sm font-semibold rounded-md "><a>{name}</a> <Icon className="ml-1" onClick={()=>removeImage(file)} width="16" icon="material-symbols:scan-delete" /></div>
+                            return <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-sky-300 text-sm font-semibold rounded-md items-center"><a>{name}</a> <Icon className="ml-1" onClick={()=>removeImage(file)} width="16" icon="material-symbols:scan-delete" /></div>
                         })
                     :null}
                     {video?
-                         <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-green-400 text-sm font-semibold rounded-md "><a>{video.name>10?video.name.slice(0,11)+"...":video.name}</a> <Icon className="ml-1" onClick={()=>setVideo(null)} width="16" icon="material-symbols:scan-delete" /></div>
+                         <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-green-400 text-sm font-semibold rounded-md items-center"><a>{video.name>10?video.name.slice(0,11)+"...":video.name}</a> <Icon className="ml-1" onClick={()=>setVideo(null)} width="16" icon="material-symbols:scan-delete" /></div>
                         :null}
                 </div>
                 <p className="w-full text-red-600 font-semibold text-sm">{message?message:null}</p>

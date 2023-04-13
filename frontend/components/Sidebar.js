@@ -58,11 +58,12 @@ function Sidebar({ setShowProfile, logout }) {
           alt="Profile Picture"
           className="h-10 w-10 rounded-full xl:mr-2"
         />
-        <div className="leading-5">
+        <div className="hidden xl:inline leading-5">
+          {/* User Name, Need to import from database*/}
           <h4 className="font-bold">Username</h4>
           <p className="text-gray-500">@username</p>
         </div>
-        <DotsHorizontalIcon className="h-5 xl:m1-8 " />
+        <DotsHorizontalIcon className="h-5 xl:m1-8 xl:inline hidden" />
       </div>
     </div>
   );
