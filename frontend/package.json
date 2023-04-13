@@ -28,6 +28,7 @@
     "next": "^13.3.0",
     "next-auth": "^4.22.0",
     "path": "^0.12.7",
+    "perf_hooks": "^0.0.1",
     "postcss": "^8.4.21",
     "react-router": "^6.10.0",
     "sass": "^1.62.0",
