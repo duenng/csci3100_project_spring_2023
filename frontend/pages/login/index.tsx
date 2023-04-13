@@ -5,6 +5,7 @@ import { auth } from '../../components/firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../../components/firebase";
+import { storage } from '../../components/firebase';
 import { doc, setDoc } from "firebase/firestore";
 import axios from 'axios'; // or import fetch from 'node-fetch';
 const BACKEND_URL = 'http://localhost:3001'; // Replace with your actual backend URL
@@ -32,12 +33,9 @@ const Login = () => {
     event.preventDefault();
     const { loginEmail, loginPassword } = event.target.elements;
     try {
-      const response = await axios.post(`${BACKEND_URL}/login`, {
-        email: loginEmail.value,
-        password: loginPassword.value
-      });
+      await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
       // Handle successful login
-      router.push('/'); // Use the router.push method instead of history.push
+      router.push('/');
     } catch (error) {
       console.log(error);
       alert("Wrong email or password.", error);
@@ -45,32 +43,54 @@ const Login = () => {
   }, [router]);
 
   const handleSignUp = useCallback(
-    async (event) => {
-      event.preventDefault();
-      const { signupEmail, signupPassword, signupPasswordConfirm, signupUsername, signupAvatar } = event.target.elements;
+	async (event) => {
+	  event.preventDefault();
+	  const { signupEmail, signupPassword, signupPasswordConfirm, signupUsername, signupTag, signupAvatar } = event.target.elements;
+  
+	  if (signupPassword.value !== signupPasswordConfirm.value) {
+		alert("Passwords do not match.");
+		return;
+	  }
+  
+	  try {
+		let avatarUrl = null;
+		if (signupAvatar.files && signupAvatar.files[0]) {
+		  const avatarRef = ref(storage, `avatars/${signupAvatar.files[0].name}`);
+		  await uploadBytes(avatarRef, signupAvatar.files[0]);
+		  avatarUrl = await getDownloadURL(avatarRef);
+		}
+  
+		const response = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPassword.value);
+  
+		await setDoc(doc(db, "users", response.user.uid), {
+			email: signupEmail.value,
+			username: signupUsername.value,
+			tag: signupTag.value,
+			avatar: avatarUrl,
+		});
 
-      if (signupPassword.value !== signupPasswordConfirm.value) {
-        alert("Passwords do not match.");
-        return;
-      }
+		// Send form data to backend
+		const token = await response.user.getIdToken(); // Get the user's ID token
+		await axios.post(`${BACKEND_URL}/user`, {
+		  email: signupEmail.value,
+		  username: signupUsername.value,
+		  tag: signupTag.value,
+		}, {
+		  headers: {
+		    Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+		  },
+		});
 
-      try {
-        const response = await axios.post(`${BACKEND_URL}/signup`, {
-          email: signupEmail.value,
-          password: signupPassword.value,
-          username: signupUsername.valpue,
-          avatar: signupAvatar.files[0] // assuming the file input only allows one file to be uploaded
-        });
+		router.push("/");
+	  } catch (error) {
+		console.log(error);
+		alert("Failed to create account.", error);
+	  }
+	},
+	[router]
+);
 
-        // Handle successful signup
-        router.push("/");
-      } catch (error) {
-        console.log(error);
-        alert("Failed to create account.", error);
-      }
-    },
-    [router]
-  );
+  
   return (
 	<div className={styles.body}>
 		<section className={styles.formsSection}>
@@ -102,38 +122,42 @@ const Login = () => {
 			  </form>
 			</div>
 			<div className={`${styles.formWrapper} ${activeForm === "signup" ? styles.formWrapperIsActive : ""}`}>
-			  <button type="button" className={`${styles.switcher} ${styles.switcherSignup}`} onClick={() => handleFormSwitch("signup")}>
+			<button type="button" className={`${styles.switcher} ${styles.switcherSignup}`} onClick={() => handleFormSwitch("signup")}>
 				Sign Up
 				<span className={styles.underline}></span>
-			  </button>
-			  <form onSubmit={handleSignUp} className={`${styles.form} ${styles.formSignup}`}>
+			</button>
+			<form onSubmit={handleSignUp} className={`${styles.form} ${styles.formSignup}`}>
 				<fieldset>
-				  <legend>Please, enter your email, password and password confirmation for sign up.</legend>
-				  	<div className={styles.inputBlock}>
+				<legend>Please, enter your email, password and password confirmation for sign up.</legend>
+				<div className={styles.inputBlock}>
 					<label htmlFor="signupUsername">Username</label>
 					<input id="signupUsername" type="text" required />
-					</div>
-					<div className={styles.inputBlock}>
+				</div>
+				<div className={styles.inputBlock}>
+					<label htmlFor="signupTag">Tag</label>
+					<input id="signupTag" type="text" required />
+				</div>
+				<div className={styles.inputBlock}>
 					<label htmlFor="signupAvatar">Avatar</label>
 					<input id="signupAvatar" type="file" />
-					</div>
-					<div className={styles.inputBlock}>
-					  <label htmlFor="signupEmail">E-mail</label>
-					  <input id="signupEmail" type="email" required />
-					</div>
-					<div className={styles.inputBlock}>
-					  <label htmlFor="signupPassword">Password</label>
-					  <input id="signupPassword" type="password" required />
-					</div>
-					<div className={styles.inputBlock}>
-					  <label htmlFor="signupPasswordConfirm">Confirm password</label>
-					  <input id="signupPasswordConfirm" type="password" required />
-					</div>
+				</div>
+				<div className={styles.inputBlock}>
+					<label htmlFor="signupEmail">E-mail</label>
+					<input id="signupEmail" type="email" required />
+				</div>
+				<div className={styles.inputBlock}>
+					<label htmlFor="signupPassword">Password</label>
+					<input id="signupPassword" type="password" required />
+				</div>
+				<div className={styles.inputBlock}>
+					<label htmlFor="signupPasswordConfirm">Confirm password</label>
+					<input id="signupPasswordConfirm" type="password" required />
+				</div>
 				</fieldset>
 				<button type="submit" className={`${styles.btnSignup}`}>
-				  Continue
+				Continue
 				</button>
-			  </form>
+			</form>
 			</div>
 		  </div>
 		</section>

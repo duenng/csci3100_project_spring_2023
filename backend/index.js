@@ -106,8 +106,8 @@ mongoose.connection.once("open",function(){
     app.post("/user", async (req,res)=>{
       let Id = await newUserId();
       let {username, tag, avatar, token} = req.body;
-      if(!username||!tag||!token){
-        return res.status(400).send("Missing required data in request body")
+      if(!username || !tag || !token) {
+        return res.status(422).send("Missing required data in request body");
       }
       let option ={
         userId:Id,
