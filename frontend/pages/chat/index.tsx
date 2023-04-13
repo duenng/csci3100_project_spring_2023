@@ -8,7 +8,7 @@ import Feed from "@/components/Feed";
 import Trending from "@/components/Trending";
 import Suggestions from "@/components/Suggestions";
 import {AuthContextProvider} from '@/components/UserContext';
-import Chat from "@/components/Chat";
+import Chat from "@/components/Chat.js";
 
 const inter = Inter({ subsets: ['latin'] })
 

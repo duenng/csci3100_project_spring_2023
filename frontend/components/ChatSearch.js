@@ -11,7 +11,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { db } from "@/components/firebase";
-import { AuthContext } from "@/components/AuthContext";
+import { AuthContext } from "@/components/FirebaseContext";
 
 
 const ChatSearch = () => {
@@ -19,12 +19,14 @@ const ChatSearch = () => {
     const [user, setUser] = useState(null);
     const [err, setErr] = useState(false);
 
-
+    const { currentUser } = useContext(AuthContext);
+    
     const handleSearch = async () => {
         const q = query(
           collection(db, "users"),
-          where("displayName", "==", username)
+          where("username", "==", username)
         );
+        console.log(username);
     
         try {
           const querySnapshot = await getDocs(q);
@@ -48,7 +50,7 @@ const ChatSearch = () => {
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
     try {
-      const res = await getDoc(doc(db, "chats", combinedId));
+      const res = await getDoc(doc(db, "chats" , combinedId));
 
       if (!res.exists()) {
         //create a chat in chats collection
@@ -57,9 +59,9 @@ const ChatSearch = () => {
         //create user chats
         await updateDoc(doc(db, "userChats", currentUser.uid), {
           [combinedId + ".userInfo"]: {
-            uid: user.uid,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
+            avatar: user.uid,
+            displayName: user.username,
+            photoURL: user.avatar,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
@@ -67,8 +69,8 @@ const ChatSearch = () => {
         await updateDoc(doc(db, "userChats", user.uid), {
           [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
-            displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL,
+            displayName: currentUser.username,
+            photoURL: currentUser.avatar,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
@@ -97,15 +99,22 @@ const ChatSearch = () => {
             {err && <span>User not found!</span>}
             {user && (
                 <div className="userChat" onClick={handleSelect}>
-                <img src={user.photoURL} alt="" />
-                <div className="userChatInfo">
-                    <span>{user.displayName}</span>
-                </div>
+                  <div className="p-2 flex justify-center items-center flex-col">
+                  <img className="w-10 h-10 rounded-full" src={ `avatar/${user.avatar?user.avatar:"user.png"}`} alt="" />
+                  <div className="userChatInfo text-gary-500 text-xs pt-1 text-center">
+                      <span>{user.username}</span>
+                  </div>
+                  </div>
                 </div>
             )}
     </div>
     );
 
 };
+
+
+
+
+
 
 export default ChatSearch;
