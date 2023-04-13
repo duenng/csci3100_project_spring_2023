@@ -4,9 +4,29 @@ import { useEffect, useRef, useState } from "react"
 import { Icon } from '@iconify/react';
 
 function Widgets({newsResults}) {
+
+  const [showResult,setShowResult] = useState(false)
+
+  const handleClick= (inSearch)=>{
+    if(inSearch&&!showResult){
+      setShowResult(true)
+    }
+
+    if(!inSearch&&showResult){
+      setShowResult(false)
+    }
+
+  }
+
+
+
   return (
     <>
-    <Searchbar/>
+    <div onClick={()=>handleClick(true)}>
+      <Searchbar show = {showResult}/>
+    </div>
+    
+    
 
     {/* <div className="w-full space-y-5  md:inline py-4 grid justify-items-center" >  */}
       {/* search bar */}
@@ -21,7 +41,10 @@ function Widgets({newsResults}) {
       </div> */}
 
       {/* news bar*/}
-      <NewsBox newsResults={newsResults}/>
+      <div onClick={()=>handleClick(false)}>
+       <NewsBox newsResults={newsResults}/>
+      </div>
+      
      
     {/* </div> */}
     </>
@@ -47,13 +70,22 @@ function NewsBox({newsResults}){
 
 }
 
-let testResult = ["test","@test"]
+let testUser ={
+  userId:1,
+  username:"test",
+  tag:"@test",
+  avatar:null,
+  following:[],
+  follower:[],
+}
 
-function Searchbar(){
+function Searchbar({show}){
   const [keyword,setKeyword] = useState("")
   const [result,setResult] = useState([])
-  const [focus,setFocus] = useState(false)
+  const [resultNum, setResultNum] = useState(10)
+  let limitedResult = result.slice(0,resultNum)
   const searchRef = useRef()
+
 
   useEffect(()=>{
       if(!keyword){
@@ -64,27 +96,48 @@ function Searchbar(){
       
       // for test
       let list = new Array(keyword.length)
-      list.fill(testResult)
+      list.fill(testUser)
       setResult(list)
-      console.log(result)
+      //console.log(result)
   },[keyword])
+
+
+  const addNum=()=>{
+    if(resultNum>=result.length){
+      return
+    }
+    setResultNum(prev=>prev+5)
+  }
+
 
   return(
       <>  
-          <div className= " rounded-sm sticky z-30 top-0 flex justify-center h-12 items-center bg-opacity-25 backdrop-blur-sm bg-slate-800">
+          <div className= " search rounded-sm sticky z-30 top-0 flex justify-center h-12 items-center bg-opacity-25 backdrop-blur-sm bg-slate-800">
               <Icon icon="ic:outline-search" color="gray" />
-              <input ref={searchRef} placeholder="Search user.." className=" text-gray-100 font-semibold placeholder-gray-200 bg-transparent w-3/5 h-3/5 mx-2" onChange={e=>setKeyword(e.target.value)}></input>
+              <input ref={searchRef}  placeholder="Search user.." className=" text-gray-100 font-semibold placeholder-gray-200 bg-transparent w-3/5 h-3/5 mx-2" onChange={e=>setKeyword(e.target.value)}></input>
               <Icon icon="ic:round-clear" color="gray" onClick={()=>{
                   setKeyword("")
                   searchRef.current.value=""
               }}/>
           </div>
-
-          <div className="z-20 top-14 fixed bg-slate-500 bg-opacity-30 justify-center" style={{right:"12.5%"}}>
-              {result.map((n,i)=>{
-                  return <p>hi</p>
-              })}
-          </div>
+            
+          {
+            result.length&&show?
+            <div className="z-20 top-14 fixed bg-slate-500 bg-opacity-25 backdrop-blur-sm  justify-center rounded-xl py-2 px-1" style={{right:"9.5%"}}>
+                {limitedResult.map((item,i)=>{
+                    return <>
+                    {/* todo: add link */}
+                    <div className="flex items-center hover:bg-slate-100 hover:bg-opacity-25 p-2 cursor-pointer rounded-lg">
+                      <img className="h-4 round-full" src ={`avatar/${item.avatar?item.avatar:"user.png"}`}/>
+                      <a className="text-white mx-3">{item.username} </a>
+                          <a className="text-gray-500"> {item.tag}</a>
+                          </div>
+                    </>
+                })}
+                <div className=" text-gray-500 text-sm hover:bg-slate-100 hover:bg-opacity-25 p-2 cursor-pointer rounded-lg" onClick={addNum}>Show more...</div>
+            </div>:null
+          }
+          
               
               
       </>
