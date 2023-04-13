@@ -10,8 +10,7 @@ import {
   LogoutIcon, // Import the LogoutIcon (replace with an appropriate icon)
 } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState,useEffect } from "react";
 import { useUser } from "../components/UserContext";
 import { set } from "date-fns";
 import PopUpCreate from './PopUpCreatePost';

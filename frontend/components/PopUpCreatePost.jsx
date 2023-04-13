@@ -1,4 +1,3 @@
-import { getConfigFileParsingDiagnostics } from "typescript";
 import CreatePost from "./CreatePost";
 
 export default function PopUpCreate({user,url,handler}){
