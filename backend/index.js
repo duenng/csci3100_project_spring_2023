@@ -70,6 +70,22 @@ mongoose.connection.once("open",function(){
     const Comment = mongoose.model('Comment', commentSchema);
     const Post = mongoose.model('Post', postSchema);
 
+    const newUserId = async () =>{
+      let last = await Event.findOne().sort('-userId');
+      if(!last) return 1;
+      let id =  last.userId +1;
+      return  id;
+    }
+
+    const newPostId = async () =>{
+      let last = await Event.findOne().sort('-postId');
+      if(!last) return 1;
+      let id =  last.postId +1;
+      return  id;
+    }
+
+    
+
 
 
 });

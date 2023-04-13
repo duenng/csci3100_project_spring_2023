@@ -133,20 +133,28 @@ export default function CreatePost({user,url}){
         }
         let date = new Date()
         let content = text
-        let url = reposting
+        let repostingId = null
+        //console.log(reposting)
+        if(reposting){
+            let splited = reposting.split("/")
+            if(splited.length!==3||isNaN(splited[2])){
+                return
+            }
+            repostingId = Number(splited[2])
+        }
         //todo ftech comment to sever
         let  data = {
             userId: user.userId,
             text:content,
             like:[],
             repost:[],
-            reposting:url,
+            reposting:repostingId,
             date: date,
             images:imageNames,
             video: videoName,
             comment: [],
           }
-
+        //console.log(data)
         // post request, if res.status not ok, return
 
         //need change to current user info
@@ -174,7 +182,7 @@ export default function CreatePost({user,url}){
                             if( name.length>10){
                                 name = name.slice(0,11)+"..."
                             }
-                            return <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-sky-300 text-sm font-semibold rounded-md items-center"><a>{name}</a> <Icon className="ml-1" onClick={()=>removeImage(file)} width="16" icon="material-symbols:scan-delete" /></div>
+                            return <div key={index} className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-sky-300 text-sm font-semibold rounded-md items-center"><a>{name}</a> <Icon className="ml-1" onClick={()=>removeImage(file)} width="16" icon="material-symbols:scan-delete" /></div>
                         })
                     :null}
                     {video?
