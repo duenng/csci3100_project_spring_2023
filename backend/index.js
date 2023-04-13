@@ -7,6 +7,10 @@ const Schema = mongoose.Schema;
 app.use(cors());
 app.use(express.json());
 const port = process.env.PORT || 3001;
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./firebase-service-account.json");
@@ -34,13 +38,12 @@ mongoose.connection.once("open",function(){
 
   const userSchema = new Schema({
     userId: { type: Number, required: true, unique: true },
-    username: { type: String, required: true },
-    tag: { type: String, required: true },
+    username: { type: String, required: true , unique: true},
+    tag: { type: String, required: true, unique: true },
     avatar: { type: String, default: null },
     following: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
     follower: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
-	token: { type: String, required: true, unique: true },
-	isAdmin: { type: Boolean, default: false},
+	  token: { type: String, required: true, unique: true },
   });
 
   const postSchema = new Schema({
@@ -66,6 +69,12 @@ mongoose.connection.once("open",function(){
           video: { type: String, default: null },
     });
 
+    const adminSchema = new Schema({
+      userId: { type: Number, required: true, unique: true },
+      username: { type: String, required: true, unique: true },
+      password: { type: String, required: true },
+    });
+
     const User = mongoose.model('User', userSchema);
     const Comment = mongoose.model('Comment', commentSchema);
     const Post = mongoose.model('Post', postSchema);
@@ -84,7 +93,30 @@ mongoose.connection.once("open",function(){
       return  id;
     }
 
-    
+    //create
+    //create user
+    app.post("/user", async (req,res)=>{
+      let Id = await newUserId();
+      let {username, tag, avatar, token} = req.body;
+      if(!username||!tag||!token){
+        return res.status(400).send("Missing required data in request body")
+      }
+      let option ={
+        userId:Id,
+        username:username,
+        tag:tag,
+        avatar:avatar,
+        token:token,
+      }
+      try{
+        let result = await User.create(option)
+        return res.status(201).json(result)
+
+      }catch(err){
+        console.log(err);
+        return res.status(400).send(err);
+      }
+    })
 
 
 
