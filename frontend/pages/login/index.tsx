@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithP
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../../components/firebase";
 import { storage } from '../../components/firebase';
+import { getDoc } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
 import axios from 'axios'; // or import fetch from 'node-fetch';
 const BACKEND_URL = 'http://localhost:3001'; // Replace with your actual backend URL
@@ -19,15 +20,29 @@ const Login = () => {
   const router = useRouter(); // Use the useRouter hook
 
   const handleGoogleLogin = useCallback(async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      router.push("/");
-    } catch (error) {
-      console.log(error);
-      alert("Failed to sign in with Google.", error);
-    }
+	const provider = new GoogleAuthProvider();
+	try {
+	  const result = await signInWithPopup(auth, provider);
+	  const userId = result.user.uid;
+  
+	  const userDocRef = doc(db, "users", userId);
+	  const userDocSnap = await getDoc(userDocRef);
+  
+	  const isNewUser = !userDocSnap.exists();
+	  console.log(isNewUser);
+  
+	  // Pass the isNewUser value to the Home component via a query parameter
+	  router.push({
+		pathname: '/',
+		query: { isNewUser: isNewUser },
+	  });
+	} catch (error) {
+	  console.log(error);
+	  alert('Failed to sign in with Google.', error);
+	}
   }, [router]);
+  
+  
 
   const handleLogin = useCallback(async event => {
     event.preventDefault();
@@ -62,6 +77,7 @@ const Login = () => {
   
 		const response = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPassword.value);
 
+
 		// Send form data to backend
 		const token = await response.user.getIdToken(); // Get the user's ID token
 		let {data} = await axios.post(`${BACKEND_URL}/user`, {
@@ -76,9 +92,9 @@ const Login = () => {
 			tag: signupTag.value,
 			avatar: avatarUrl,
 			uid: data.userId
-		});
+		  });
 		
-		console.log(user);
+		console.log(response.user);
 		router.push("/");
 	  } catch (error) {
 		console.log(error);
