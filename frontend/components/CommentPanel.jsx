@@ -82,23 +82,36 @@ export default function CommentPanel(props){
                 return
             }
         }
-        //need change to current user info
-        let newComment={
-            userID: 123,
-            name: "testnew",
-            tag:"@new",
-            avatar:null,
+        let date = new Date()
+        let content = text
+        //todo ftech comment to sever
+        let data={
+            userId:user.userId,
+            postId:props.postId,
             replying:props.tag,
-            text:text,
+            text:content,
             image:imageNames,
             video:videoName,
             like:[],
-            date:Number(new Date())
+            date:date
         }
-        if(props.inPost){
-            props.handler(newComment)
-            // console.log(1,newComment)
+        console.log(data)
+
+        // post request, if res.status not ok, return
+
+        //need change to current user info
+        let newComment={
+            user:user,
+            replying:props.tag,
+            text:content,
+            image:imageNames,
+            video:videoName,
+            like:[],
+            date:date
         }
+        
+        props.handler(newComment)
+           
         setText("")
         textRef.current.value=""
         setImages([])
@@ -111,10 +124,10 @@ export default function CommentPanel(props){
     return(
         <>
         <div className="flex item-center mx-2 text-base flex-wrap">
-            <img className="h-8 round-full m-4 flex-none" src ={`avatar/${user?.avatar?user.avatar:"user.png"}`}/>
+            <img className="h-8 round-full m-4 flex-none" src ={`avatar/${user.avatar?user.avatar:"user.png"}`}/>
             <div className="flex-grow">
                 <p className="m-1  text-gray-500">Reply {props.tag}</p>
-                <textarea ref={textRef} className=" w-full" placeholder="Comments here..." onChange={e=>setText(e.target.value)}/>
+                <textarea ref={textRef} className=" w-full border-none" placeholder="Comments here..." onChange={e=>setText(e.target.value)}/>
                 {/* medias */}
                 <div className="flex mx-1 flex-wrap">
                     {images.length?
@@ -123,18 +136,18 @@ export default function CommentPanel(props){
                             if( name.length>10){
                                 name = name.slice(0,11)+"..."
                             }
-                            return <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-sky-300 text-sm font-semibold rounded-md "><a>{name}</a> <Icon className="ml-1" onClick={()=>removeImage(file)} width="16" icon="material-symbols:scan-delete" /></div>
+                            return <div key={index} className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-sky-300 text-sm font-semibold rounded-md items-center"><a>{name}</a> <Icon className="ml-1" onClick={()=>removeImage(file)} width="16" icon="material-symbols:scan-delete" /></div>
                         })
                     :null}
                     {video?
-                         <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-green-400 text-sm font-semibold rounded-md "><a>{video.name>10?video.name.slice(0,11)+"...":video.name}</a> <Icon className="ml-1" onClick={()=>setVideo(null)} width="16" icon="material-symbols:scan-delete" /></div>
+                         <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-green-400 text-sm font-semibold rounded-md items-center"><a>{video.name>10?video.name.slice(0,11)+"...":video.name}</a> <Icon className="ml-1" onClick={()=>setVideo(null)} width="16" icon="material-symbols:scan-delete" /></div>
                         :null}
                 </div>
                 <p className="w-full text-red-600 font-semibold text-sm">{message?message:null}</p>
                 <div className="flex m-2 flex-warp">
                     {/* image */}
                     <label>
-                        <input type="file" hidden multiple="multiple"
+                        <input type="file" hidden multiple
                         onChange={({ target }) => {
                             if (target.files) {
                                 setMessage("")
@@ -188,9 +201,11 @@ export default function CommentPanel(props){
                         />
                         <Icon icon="icon-park-solid:video-two" width="34" />
                     </label>
+
+                   
                     
                     <div className=" flex-grow"/>
-                    <button disabled={uploadingImage||uploadingVideo} className="bg-violet-500 text-white rounded-full font-semibold px-3 py-1 flex-wrap" onClick={handleAdd}>{uploadingImage||uploadingVideo?"Uploading":"Comment!"}</button>
+                    <button disabled={uploadingImage||uploadingVideo} className="hover:bg-violet-400 bg-violet-500 text-white rounded-full font-semibold px-3 py-1 flex-wrap" onClick={handleAdd}>{uploadingImage||uploadingVideo?"Uploading":"Comment!"}</button>
                 </div>
             </div>
                 
