@@ -33,7 +33,7 @@ export default function PostCommentSection(props){
             <hr className="mx-2 border-violet-500"></hr>
             {/* comment section */}
             <div className="mx-2" ref={commentRef}>
-              <CommentPanel  user = {props.user} tag={props.tag} handler={addHandler}/>
+              <CommentPanel  user = {props.user} tag={props.tag} postId={props.postId} handler={addHandler}/>
             </div>
             <hr className="mx-2 border-violet-500"></hr>
             {

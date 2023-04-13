@@ -51,7 +51,7 @@ mongoose.connection.once("open",function(){
         user:{type:Schema.Types.ObjectId, ref: 'User',required: true},
         text: { type: String, required: true },
         like: { type: [Schema.Types.ObjectId], ref:"User",default: [] },
-        repostig:{type:Schema.Types.ObjectId, ref: 'Post', default:null},
+        reposting:{type:Schema.Types.ObjectId, ref: 'Post', default:null},
         repost: { type: [Schema.Types.ObjectId],ref:"Post", default: [] },
         date: { type: Date, default: Date.now },
         images: { type: [String], default: [] },
@@ -78,16 +78,24 @@ mongoose.connection.once("open",function(){
     const User = mongoose.model('User', userSchema);
     const Comment = mongoose.model('Comment', commentSchema);
     const Post = mongoose.model('Post', postSchema);
+    const Admin = mongoose.model('Admin', postSchema);
 
     const newUserId = async () =>{
-      let last = await Event.findOne().sort('-userId');
+      let last = await User.findOne().sort('-userId');
       if(!last) return 1;
       let id =  last.userId +1;
       return  id;
     }
 
     const newPostId = async () =>{
-      let last = await Event.findOne().sort('-postId');
+      let last = await Post.findOne().sort('-postId');
+      if(!last) return 1;
+      let id =  last.postId +1;
+      return  id;
+    }
+
+    const newAdminId = async () =>{
+      let last = await Admin.findOne().sort('-postId');
       if(!last) return 1;
       let id =  last.postId +1;
       return  id;
@@ -117,6 +125,112 @@ mongoose.connection.once("open",function(){
         return res.status(400).send(err);
       }
     })
+
+    //create post
+    app.post("/post", async (req,res)=>{
+      let Id = await newPostId();
+      let {userId, text, reposting,date,images,video} = req.body;
+      let user = await User.findOne({userId:userId});
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+      let repostedPost = null;
+      if(reposting){
+        repostedPost = await Post.findOne({postId:reposting});
+        if(!repostedPost){
+          return res.status(404).send("Repost target not found");
+        }
+      }
+      let option={
+        postId:Id,
+        user:user._id,
+        text:text,
+        reposting:repostedPost._id,
+        date:date,
+        images:images,
+        video:video
+      }
+      try{
+        let result = await Post.create(option)
+        return res.status(201).json(result)
+
+      }catch(err){
+        console.log(err);
+        return res.status(400).send(err);
+      }
+    })
+
+    //create comment 
+    app.post("/comment", async (req,res)=>{
+      let {userId, postId,replying,text,images,video,date} = req.body;
+      let user = await User.findOne({userId:userId});
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+      let post = await Post.findOne({postId:postId});
+      if (!post) {
+        return res.status(404).send("User not found");
+      }
+      
+      let option={
+        user:user._id,
+        replying:replying,
+        text:text,
+        date:date,
+        images:images,
+        video:video
+      }
+      try{
+        let result = await Comment.create(option)
+        await Post.updateOne({_id:post._id},{$push:{comment:result._id}});
+        return res.status(201).json(result)
+
+      }catch(err){
+        console.log(err);
+        return res.status(400).send(err);
+      }
+    })
+
+    //create admin user
+    app.post("/admin", async (req,res)=>{
+      let Id = await newAdminId();
+      let {username,} = req.body;
+      if(!username||!tag||!token){
+        return res.status(400).send("Missing required data in request body")
+      }
+      let option ={
+        userId:Id,
+        username:username,
+        tag:tag,
+        avatar:avatar,
+        token:token,
+      }
+      try{
+        let result = await User.create(option)
+        return res.status(201).json(result)
+
+      }catch(err){
+        console.log(err);
+        return res.status(400).send(err);
+      }
+    })
+
+    // read
+    // get user by token
+    // Get user by token
+    app.get("/user/token/:token", async (req, res) => {
+      let token = req.params.token;
+      try {
+        let user = await User.findOne({ token: token });
+        if (!user) {
+          return res.status(404).send("User not found");
+        }
+        return res.status(200).json(user);
+      } catch (err) {
+        console.log(err);
+        return res.status(400).send(err);
+      }
+    });
 
 
 

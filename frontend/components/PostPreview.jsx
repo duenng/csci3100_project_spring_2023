@@ -120,7 +120,7 @@ function LikePanel(props){
                     <>
                     <hr className="mx-2 border-violet-500"></hr>
                     <div className="mx-2">
-                        <CommentPanel  tag={post.user.tag} user = {props.currentUser} handler={addHandler}/>
+                        <CommentPanel  tag={post.user.tag} user = {props.currentUser} handler={addHandler} postId={post.postId}/>
                     </div>
                     </>
                 :null}

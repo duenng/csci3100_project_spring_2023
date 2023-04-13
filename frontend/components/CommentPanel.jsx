@@ -87,6 +87,7 @@ export default function CommentPanel(props){
         //todo ftech comment to sever
         let data={
             userId:user.userId,
+            postId:props.postId,
             replying:props.tag,
             text:content,
             image:imageNames,
@@ -94,6 +95,7 @@ export default function CommentPanel(props){
             like:[],
             date:date
         }
+        console.log(data)
 
         // post request, if res.status not ok, return
 

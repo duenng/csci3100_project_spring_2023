@@ -31,6 +31,7 @@ let testComment = [
 ]
 
 let testPost = {
+  postId:1,
   user:testUser,
   text:"here is the testing content.",
   like:[1,3,12,4,9,17],
@@ -71,7 +72,7 @@ export default function Post(){
               <PostContent owner={post.user} date={post.date} text={post.text} images={post.images} video= {post.video}/>
               
               {/* comment section */}
-              <PostCommentSection user={testUser} tag={post.user.tag} like={post.like} repost={post.repost} comment={post.comment}/>
+              <PostCommentSection user={testUser} tag={post.user.tag} like={post.like} repost={post.repost} comment={post.comment} postId={post.postId}/>
   
               
               {/* pop up message */}
