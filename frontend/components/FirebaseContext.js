@@ -1,8 +1,8 @@
 import React, { useState, createContext, useReducer, useEffect, useContext } from 'react';
 import { auth } from '../components/firebase'; // Import auth from firebase
 import { onAuthStateChanged } from 'firebase/auth'; // Import onAuthStateChanged from firebase/auth
-export const AuthContext = createContext();
 
+export const AuthContext = createContext();
 const initialState = {
   user: null,
   loading: true,
@@ -32,7 +32,7 @@ export const AuthContextProvider = (props) => {
         dispatch({ type: 'setUser', payload: { user, token } });
       } else {
         dispatch({ type: 'setUser', payload: { user: null, token: null } });
-      }
+      } 
     });
   
     // Clean up the listener when the component is unmounted
