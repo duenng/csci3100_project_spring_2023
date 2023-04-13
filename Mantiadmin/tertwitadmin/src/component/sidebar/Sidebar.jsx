@@ -18,34 +18,41 @@ const Sidebar = () => {
     <div className='sidebar'>
        
         <div className="top">
-            <Link to="/">
+            <Link to="/" style={{textDecoration: "none"}}>
             <span className="logo">tertwitadmin</span></Link></div>
         <hr />
         <div className="center">
             <ul>
                 <p className="title">Main</p>
+                
                 <li>
                      <DashboardIcon className="icon"/>
                     <span>Dashboard</span>
                 </li>
                 <p className="title">List</p>
+                <Link to="/users/123" style={{textDecoration: "none"}}>
                 <li>
                      <AccountBoxIcon className="icon"/>
                     <span>profile</span>
                 </li>
+                </Link>
+                <Link to="/users" style={{textDecoration: "none"}}>
                 <li>
                     <PersonIcon className="icon"/>
                     <span>Users</span>
                 </li>
+                </Link>
                 <li>
                     <ChatBubbleIcon className="icon"/>
                     <span>Posts</span>
                 </li>
                 <p className="title">Service</p>
+                <Link to="/users" style={{textDecoration: "none"}}>
                 <li>
                      <PersonOffIcon className="icon"/>
                     <span>Del users</span>
                 </li>
+                </Link>
                 <li>
                      <DeleteForeverIcon className="icon"/>
                     <span>Del comments</span>
