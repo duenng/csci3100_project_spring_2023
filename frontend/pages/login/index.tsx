@@ -61,21 +61,23 @@ const Login = () => {
 		}
   
 		const response = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPassword.value);
-  
+
+		// Send form data to backend
+		const token = await response.user.getIdToken(); // Get the user's ID token
+		let {data} = await axios.post(`${BACKEND_URL}/user`, {
+		  username: signupUsername.value,
+		  token: token,
+		  tag: signupTag.value
+		});
+
 		await setDoc(doc(db, "users", response.user.uid), {
 			email: signupEmail.value,
 			username: signupUsername.value,
 			tag: signupTag.value,
 			avatar: avatarUrl,
+			uid: data.userId
 		});
-
-		// Send form data to backend
-		const token = await response.user.getIdToken(); // Get the user's ID token
-		let user = await axios.post(`${BACKEND_URL}/user`, {
-		  username: signupUsername.value,
-		  token: token,
-		  tag: signupTag.value
-		});
+		
 		console.log(user);
 		router.push("/");
 	  } catch (error) {
