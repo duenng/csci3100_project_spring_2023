@@ -45,7 +45,7 @@ const Login = () => {
   const handleSignUp = useCallback(
 	async (event) => {
 	  event.preventDefault();
-	  const { signupEmail, signupPassword, signupPasswordConfirm, signupUsername, signupAvatar } = event.target.elements;
+	  const { signupEmail, signupPassword, signupPasswordConfirm, signupUsername, signupTag, signupAvatar } = event.target.elements;
   
 	  if (signupPassword.value !== signupPasswordConfirm.value) {
 		alert("Passwords do not match.");
@@ -63,11 +63,24 @@ const Login = () => {
 		const response = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPassword.value);
   
 		await setDoc(doc(db, "users", response.user.uid), {
+			email: signupEmail.value,
+			username: signupUsername.value,
+			tag: signupTag.value,
+			avatar: avatarUrl,
+		});
+
+		// Send form data to backend
+		const token = await response.user.getIdToken(); // Get the user's ID token
+		await axios.post(`${BACKEND_URL}/user`, {
 		  email: signupEmail.value,
 		  username: signupUsername.value,
-		  avatar: avatarUrl,
+		  tag: signupTag.value,
+		}, {
+		  headers: {
+		    Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+		  },
 		});
-  
+
 		router.push("/");
 	  } catch (error) {
 		console.log(error);
@@ -75,7 +88,8 @@ const Login = () => {
 	  }
 	},
 	[router]
-  );
+);
+
   
   return (
 	<div className={styles.body}>
@@ -108,38 +122,42 @@ const Login = () => {
 			  </form>
 			</div>
 			<div className={`${styles.formWrapper} ${activeForm === "signup" ? styles.formWrapperIsActive : ""}`}>
-			  <button type="button" className={`${styles.switcher} ${styles.switcherSignup}`} onClick={() => handleFormSwitch("signup")}>
+			<button type="button" className={`${styles.switcher} ${styles.switcherSignup}`} onClick={() => handleFormSwitch("signup")}>
 				Sign Up
 				<span className={styles.underline}></span>
-			  </button>
-			  <form onSubmit={handleSignUp} className={`${styles.form} ${styles.formSignup}`}>
+			</button>
+			<form onSubmit={handleSignUp} className={`${styles.form} ${styles.formSignup}`}>
 				<fieldset>
-				  <legend>Please, enter your email, password and password confirmation for sign up.</legend>
-				  	<div className={styles.inputBlock}>
+				<legend>Please, enter your email, password and password confirmation for sign up.</legend>
+				<div className={styles.inputBlock}>
 					<label htmlFor="signupUsername">Username</label>
 					<input id="signupUsername" type="text" required />
-					</div>
-					<div className={styles.inputBlock}>
+				</div>
+				<div className={styles.inputBlock}>
+					<label htmlFor="signupTag">Tag</label>
+					<input id="signupTag" type="text" required />
+				</div>
+				<div className={styles.inputBlock}>
 					<label htmlFor="signupAvatar">Avatar</label>
 					<input id="signupAvatar" type="file" />
-					</div>
-					<div className={styles.inputBlock}>
-					  <label htmlFor="signupEmail">E-mail</label>
-					  <input id="signupEmail" type="email" required />
-					</div>
-					<div className={styles.inputBlock}>
-					  <label htmlFor="signupPassword">Password</label>
-					  <input id="signupPassword" type="password" required />
-					</div>
-					<div className={styles.inputBlock}>
-					  <label htmlFor="signupPasswordConfirm">Confirm password</label>
-					  <input id="signupPasswordConfirm" type="password" required />
-					</div>
+				</div>
+				<div className={styles.inputBlock}>
+					<label htmlFor="signupEmail">E-mail</label>
+					<input id="signupEmail" type="email" required />
+				</div>
+				<div className={styles.inputBlock}>
+					<label htmlFor="signupPassword">Password</label>
+					<input id="signupPassword" type="password" required />
+				</div>
+				<div className={styles.inputBlock}>
+					<label htmlFor="signupPasswordConfirm">Confirm password</label>
+					<input id="signupPasswordConfirm" type="password" required />
+				</div>
 				</fieldset>
 				<button type="submit" className={`${styles.btnSignup}`}>
-				  Continue
+				Continue
 				</button>
-			  </form>
+			</form>
 			</div>
 		  </div>
 		</section>

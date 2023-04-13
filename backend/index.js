@@ -86,11 +86,11 @@ mongoose.connection.once("open",function(){
       return  id;
     }
 
-    const newPostId = async () =>{
-      let last = await Event.findOne().sort('-postId');
-      if(!last) return 1;
-      let id =  last.postId +1;
-      return  id;
+    const newPostId = async () => {
+      let last = await Post.findOne().sort('-postId');
+      if (!last) return 1;
+      let id = last.postId + 1;
+      return id;
     }
 
     //create
@@ -98,8 +98,8 @@ mongoose.connection.once("open",function(){
     app.post("/user", async (req,res)=>{
       let Id = await newUserId();
       let {username, tag, avatar, token} = req.body;
-      if(!username||!tag||!token){
-        return res.status(400).send("Missing required data in request body")
+      if(!username || !tag || !token) {
+        return res.status(422).send("Missing required data in request body");
       }
       let option ={
         userId:Id,
