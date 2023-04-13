@@ -88,6 +88,7 @@ function Searchbar({show}){
 
 
   useEffect(()=>{
+      setResultNum(10)
       if(!keyword){
           setResult([])
           return
