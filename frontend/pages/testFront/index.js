@@ -12,7 +12,7 @@ export default function Home() {
         <Sidebar/>
       </div>
 
-      <div className='col-span-3 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words'>
+      <div className='col-span-3 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words '>
        <FrontPage/>
       </div>
     </div>

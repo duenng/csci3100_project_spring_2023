@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import PreviewPost from "./PostPreview"
+import { Icon } from '@iconify/react';
+
 
 let testUser ={
     userId:1,
@@ -48,8 +50,7 @@ export default function FrontPage(){
 
     return(
         <>
-            {/* todo: search bar */}
-            <h1 className="bg-slate-500">search bar</h1>
+            <Searchbar/>
 
             {posts.length?posts.map((post,index)=>{
                 return <PreviewPost post={post} user={testUser} key={index}/>
@@ -57,5 +58,46 @@ export default function FrontPage(){
 
 
         </>
+    )
+}
+
+let testResult = ["test","@test"]
+
+function Searchbar(){
+    const [keyword,setKeyword] = useState("")
+    const [result,setResult] = useState([])
+    const [focus,setFocus] = useState(false)
+    const searchRef = useRef()
+
+    useEffect(()=>{
+        if(!keyword){
+            setResult([])
+            return
+        }
+        // todo: request search users
+        
+        // for test
+        let list = new Array(keyword.length)
+        list.fill(testResult)
+    },[keyword])
+
+    return(
+        <>  
+            <div className= " rounded-sm sticky z-30 top-0 flex justify-center h-12 items-center bg-opacity-25 backdrop-blur-sm bg-slate-800">
+                <Icon icon="ic:outline-search" color="gray" />
+                <input ref={searchRef} placeholder="Search user.." className=" text-gray-100 font-semibold placeholder-gray-200 bg-transparent w-3/5 h-3/5 mx-2"></input>
+                <Icon icon="ic:round-clear" color="gray" onClick={()=>{
+                    setKeyword("")
+                    searchRef.current.value=""
+                }}/>
+            </div>
+
+            <div className="z-20 top-12 fixed left-1/2 bg-slate-500 bg-opacity-30 justify-center">
+                hihidddd
+            </div>
+                
+                
+        </>
+       
     )
 }

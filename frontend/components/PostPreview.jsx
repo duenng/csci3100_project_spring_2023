@@ -142,7 +142,7 @@ export default function PreviewPost(props){
       if(tag==="IMG"||tag==="VIDEO"||tag==="A"||window.getSelection().toString().length){
         return
       }
-      router.push(`/post/${post.postId}`)
+      //router.push(`/post/${post.postId}`)
     }
 
     

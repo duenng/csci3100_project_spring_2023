@@ -119,11 +119,11 @@ export default function CommentPanel(props){
                             if( name.length>10){
                                 name = name.slice(0,11)+"..."
                             }
-                            return <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-sky-300 text-sm font-semibold rounded-md "><a>{name}</a> <Icon className="ml-1" onClick={()=>removeImage(file)} width="16" icon="material-symbols:scan-delete" /></div>
+                            return <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-sky-300 text-sm font-semibold rounded-md items-center"><a>{name}</a> <Icon className="ml-1" onClick={()=>removeImage(file)} width="16" icon="material-symbols:scan-delete" /></div>
                         })
                     :null}
                     {video?
-                         <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-green-400 text-sm font-semibold rounded-md "><a>{video.name>10?video.name.slice(0,11)+"...":video.name}</a> <Icon className="ml-1" onClick={()=>setVideo(null)} width="16" icon="material-symbols:scan-delete" /></div>
+                         <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-green-400 text-sm font-semibold rounded-md items-center"><a>{video.name>10?video.name.slice(0,11)+"...":video.name}</a> <Icon className="ml-1" onClick={()=>setVideo(null)} width="16" icon="material-symbols:scan-delete" /></div>
                         :null}
                 </div>
                 <p className="w-full text-red-600 font-semibold text-sm">{message?message:null}</p>
