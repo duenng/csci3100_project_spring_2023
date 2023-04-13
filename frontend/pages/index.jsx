@@ -1,61 +1,65 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
-import { useRouter } from "next/router";
-import { useUser } from "../components/FirebaseContext";
-import Sidebar from "@/components/Sidebar";
-import Feed from "@/components/Feed";
-import Profile from "./profile/index";
-import Widgets from "@/components/Widgets";
-import Head from "next/head";
-import UserContext from "../components/UserContext";
-import Input from "@/components/Input";
+import { useState, useContext, useEffect} from 'react';
+import { useRouter } from 'next/router';
+import { useUser } from '../components/FirebaseContext';
+import Sidebar from '@/components/Sidebar';
+import Feed from '@/components/Feed';
+import Profile from './profile/index';
+import Widgets from '@/components/Widgets';
+import Head from 'next/head';
+import UserContext from '../components/UserContext';
+import Input from '@/components/Input';
 import useUserToken from '@/components/useUserToken';
+import NewUserForm from '@/components/NewUserForm';
 
-
-export default function Home({newsResults}) {
+export default function Home({ newsResults }) {
   const currentContext = useContext(UserContext);
   console.log(currentContext);
   const token = useUserToken();
-  const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
+  const { user, loading, logout } = useUser();
   const router = useRouter();
   const [showProfile, setShowProfile] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(router && router.query && router.query.isNewUser === 'true');
 
+  const handleUserDetailsSubmit = (userId, tag) => {
+    // Save the userId and tag to the database
+    // ...
+
+    // Once the data is saved, set isNewUser to false
+    setIsNewUser(false);
+  };
 
   return (
     <>
-    <Head>
+      <Head>
         <title>Home</title>
         <meta name="description" content="CSCI3100 PROJECT" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/tertwit_T.ico" />
-    </Head>
-    <main className="flex min-h-screen max-w-7xl mx-auto ">
-          {/* <Sidebar /> */}
-          <Sidebar setShowProfile={setShowProfile}/> {/* Pass the setShowProfile and logout functions to the sidebar */}
-          {showProfile ? (
-            <Profile user={user} setShowProfile={setShowProfile} token={""} loading={false} />
-          ) : (
+      </Head>
+      <main className="flex min-h-screen max-w-7xl mx-auto ">
+        {isNewUser ? (
+          <NewUserForm user={user} onUserDetailsSubmit={handleUserDetailsSubmit} />
+        ) : (
           <>
-          <div className="flex-col justify-center w-full">
-          <Feed />
-          <Input />
-          </div>
+            <Sidebar setShowProfile={setShowProfile} />
+            {showProfile ? (
+              <Profile user={user} setShowProfile={setShowProfile} token={''} loading={false} />
+            ) : (
+              <>
+                <div className="flex-col justify-center w-full">
+                  <Feed />
+                  <Input />
+                </div>
+              </>
+            )}
+            <div className="right-section">
+              {/* <Chatlist /> */}
+              {/* Widgets */}
+              <Widgets newsResults={newsResults.articles} />
+            </div>
           </>
-
-          )}
-        
-          {/* <Feed />
-          <Input /> */}
-        
-
-        <div className="right-section">
-          {/* <Chatlist /> */}
-          {/* Widgets */}
-          <Widgets newsResults={newsResults.articles}/>
-        </div>
-     
-    </main>
+        )}
+      </main>
     </>
   );
 }

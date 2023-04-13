@@ -2,10 +2,11 @@ import React, { useState, useCallback, useContext } from "react";
 import styles from "../../styles/login.module.css";
 import { useRouter } from 'next/router';
 import { auth } from '../../components/firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAdditionalUserInfo, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../../components/firebase";
 import { storage } from '../../components/firebase';
+import { getDoc } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
 import axios from 'axios'; // or import fetch from 'node-fetch';
 const BACKEND_URL = 'http://localhost:3001'; // Replace with your actual backend URL
@@ -50,12 +51,28 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      router.push("/");
+
+      const user = result.user;
+
+      // Check if user already exists
+      const isNewUser = getAdditionalUserInfo(result).isNewUser;
+
+      console.log("isNewUser", isNewUser);
+
+      // Pass the isNewUser value to the Home component via a query parameter
+      router.push({
+        pathname: "/",
+        query: { isNewUser: isNewUser },
+      });
     } catch (error) {
       console.log(error);
       alert("Failed to sign in with Google.", error);
     }
   }, [router]);
+  
+  
+  
+  
 
   const handleLogin = useCallback(async event => {
     event.preventDefault();
@@ -84,6 +101,7 @@ const Login = () => {
 		
 		const response = await createUserWithEmailAndPassword(auth, signupEmail.value, signupPassword.value);
 
+
 		// Send form data to backend
 		const token = await response.user.getIdToken(); // Get the user's ID token
 
@@ -104,9 +122,9 @@ const Login = () => {
 			tag: signupTag.value,
 			avatar: avatarName,
 			uid: data.userId
-		});
+		  });
 		
-		console.log(user);
+		console.log(response.user);
 		router.push("/");
 	  } catch (error) {
 		console.log(error);
