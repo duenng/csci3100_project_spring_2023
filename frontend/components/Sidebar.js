@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import { useState,useEffect } from "react";
-import { useUser } from "../components/UserContext";
+import { useUser } from "../components/FirebaseContext";
 import { set } from "date-fns";
 import PopUpCreate from './PopUpCreatePost';
 

@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { useContext } from "react";
 import { useRouter } from "next/router";
-import { useUser } from "../components/UserContext";
+import { useUser } from "../components/FirebaseContext";
 import Sidebar from "@/components/Sidebar";
 import Feed from "@/components/Feed";
 import Profile from "./profile/index";
 import Widgets from "@/components/Widgets";
 import Head from "next/head";
+import UserContext from "../components/UserContext";
 import Input from "@/components/Input";
+import useUserToken from '@/components/useUserToken';
+
 
 export default function Home({newsResults}) {
+  const currentContext = useContext(UserContext);
+  console.log(currentContext);
+  const token = useUserToken();
   const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
   const router = useRouter();
   const [showProfile, setShowProfile] = useState(false);

@@ -3,13 +3,28 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import "../styles/globals.css";
 import '../styles/tailwind.css';
-import { AuthContextProvider } from "../components/UserContext"; // Import the UserProvider
-
+import { AuthContextProvider } from "../components/FirebaseContext"; // Import the UserProvider
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../components/firebase';
+import UserContext from "../components/UserContext";
 function MyApp({ Component, pageProps }: AppProps) {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
   return (
     <>
-      <AuthContextProvider> {/* Wrap the UserProvider around your Component */}
+      <AuthContextProvider value={{ user }}>
+      <UserContext.Provider value={{ user, setUser }}>
         <Component {...pageProps} />
+      </UserContext.Provider>
       </AuthContextProvider>
       <style jsx global>{`
         .container {
