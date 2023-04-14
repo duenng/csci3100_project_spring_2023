@@ -184,7 +184,7 @@ function Sidebar({setShowProfile }) {
       </button>
      
       {/* User Profile */}
-      <div className="flex items-center justify-center text-gray-700 hoverEffect xl:justify-start mt-auto">
+      <div className="flex items-center justify-center text-gray-700 hoverEffect xl:justify-start mt-auto" onClick={handleProfileClick}>
         <img
           src="/usericon.jpg"
           alt="Profile Picture"
