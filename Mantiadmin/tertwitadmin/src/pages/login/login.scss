@@ -1,0 +1,21 @@
+// src/component/admin-login/AdminLogin.scss
+.admin-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    h1 {
+      margin-bottom: 20px;
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  
+      input {
+        margin-bottom: 10px;
+      }
+    }
+  }
+  

@@ -15,8 +15,6 @@ const Home = () => {
             <Widget type="post"/>
             <Widget type="comment"/>
             <Widget type="balance"/>
-
-
         </div>
         <div className="listContainer">
             <div className="listTitle">Recent Users</div>

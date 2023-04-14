@@ -3,44 +3,31 @@ import Login from "./pages/login/Login";
 import List from "./pages/list/List";
 import New from "./pages/new/New";
 import Single from "./pages/single/Single";
-import { 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-   BrowserRouter,
-   Routes,
-   Route
-} from "react-router-dom";
-
-import "./style/dark.scss"
+import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 
-
 function App() {
+  const { darkMode } = useContext(DarkModeContext);
 
-  const {darkMode} = useContext(DarkModeContext);
-
- 
   return (
     <div className={darkMode ? "app dark" : "app"}>
-    <BrowserRouter>
-      <Routes>  
-    <Route path="/">
-      <Route index element={<Home/>} />
-      <Route path="login" element={<Login/>}/>
-      <Route path="users">
-        <Route index element={<List/>}/>
-        <Route path=":userId" element={<Single/>}/>
-        <Route path="new" element={<New/>}/>
-      </Route>
-      <Route path="product">
-        <Route index element={<List/>}/>
-        <Route path=":productId" element={<Single/>}/>
-        <Route path="new" element={<New/>}/>
-        </Route>
-      </Route>
-      </Routes>
-    </BrowserRouter>
-   
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Home />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/users" element={<List />} />
+          <Route path="/users/:userId" element={<Single />} />
+          <Route path="/users/new" element={<New />} />
+          <Route path="/product" element={<List />} />
+          <Route path="/product/:productId" element={<Single />} />
+          <Route path="/product/new" element={<New />} />
+          <Route path="/admin-login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
