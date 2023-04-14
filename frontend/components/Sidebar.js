@@ -14,36 +14,39 @@ import { useState,useEffect } from "react";
 import { useUser } from "../components/FirebaseContext";
 import { set } from "date-fns";
 import PopUpCreate from './PopUpCreatePost';
+import axios from "axios";
 
 
-function Sidebar({setShowProfile }) {
-  const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
+
+function Sidebar({setShowProfile}) {
   const [showPop,setShowPop] = useState(false)
+  const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
   const router = useRouter();
+  const [currentUser,setCurrentUser] = useState(null)
+
 
   //active variable
   const [isHomeActive, setIsHomeActive] = useState(true);
   const [isProfileActive, setIsProfileActive] = useState(false);
   const [isMessageActive, setIsMessageActive] = useState(false);
   const [isSettingActive, setIsSettingActive] = useState(false);
-
-
-
   
+
+  const handleUser = async (uid)=>{
+    let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
+    return data
+  }
+
   useEffect(() => {
-    if (!loading && !user) {
-      router.replace("/login");
+    if(user){
+      console.log(user.uid)
+      handleUser(user.uid).then((user)=>{
+        if(user){
+          setCurrentUser(user)
+        }
+      })
     }
   }, [user, loading, router]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    return null;
-  }
-
 
   const handleFront = () => {
     console.log("Front clicked!");
@@ -88,6 +91,7 @@ function Sidebar({setShowProfile }) {
   };
 
   return (
+  
     <>
       <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-12">
       <div className="px-1.5 hoverEffect p-4 hover:bg-purple-100 xl:px-4 xl:items-start" onClick={handleFront}>
@@ -121,13 +125,13 @@ function Sidebar({setShowProfile }) {
         />
         <div className="hidden xl:inline leading-5">
           {/* User Name, Need to import from database*/}
-          <h4 className="font-bold">Username</h4>
-          <p className="text-gray-500">@username</p>
+          <h4 className="font-bold">{currentUser?currentUser.username:"loading"}</h4>
+          <p className="text-gray-500">{currentUser?currentUser.tag:"loading"}</p>
         </div>
         <DotsHorizontalIcon className="h-5 xl:m1-8 xl:inline hidden" />
       </div>
     </div>
-     {showPop?<PopUpCreate user={user} url={""} handler={()=>setShowPop(false)}/>:null}
+     {showPop?<PopUpCreate user={currentUser} url={""} handler={()=>setShowPop(false)}/>:null}
     </>
     
 

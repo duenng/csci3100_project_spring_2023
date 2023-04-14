@@ -41,8 +41,8 @@ mongoose.connection.once("open",function(){
 
   const userSchema = new Schema({
     userId: { type: Number, required: true, unique: true },
-    username: { type: String, required: true , unique: true},
-    tag: { type: String, required: true, unique: true },
+    username: { type: String, required: true },
+    tag: { type: String, required: true },
     avatar: { type: String, default: null },
     following: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
     follower: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
@@ -385,19 +385,24 @@ mongoose.connection.once("open",function(){
 
 
     //get preview post info from following
-    app.get("/followingPosts", async (req,res)=>{
+    app.get("/followingPosts/:ID", async (req,res)=>{
       try {
-        const {userId} = req.body
+        //console.log(req)
+        const userId = Number(req.params["ID"])
         let user = await User.findOne({userId:userId})
         if(!user){
           return res.status(404).send("User not found");
         }
-        let folloing = user.folloing
-        let posts = Post.find({user:{$in:folloing}}).populate(['user',{path:'like',select:"userId"},"reposting"]).sort('-date').limit(feedLimit);
-        return res.status(200).json(posts)
-      } catch (error) {
+        let list = user.following
+        if(!list){
+          return res.status(200).json([])
+        }
+        let posts = await Post.find({user:{$in:list}}).populate(['user',{path:'like',select:"userId"},"reposting"]).sort('-date').limit(feedLimit);
+        //console.log(following)
+        return res.status(200).send(posts)
+      } catch (err) {
         console.log(err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).send({ error: "Internal server error" });
       }
     });
 

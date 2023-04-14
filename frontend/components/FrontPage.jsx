@@ -60,26 +60,48 @@ let testComment = [
   testData.fill(testPost)
 
 export default function FrontPage(){
-    const [user,setUser] = useState(null)
     const [posts,setPosts] = useState([])
     const [token, setToken] = useState(null);
+    const [currentUser,setCurrentUser] = useState(null)
     const router = useRouter()
     const topRef = useRef()
 
-    useEffect(()=>{
-        return()=>{
-            let uid = null
-            auth.onAuthStateChanged( async(user) => {
-            if (user) {
-                uid=user.uid
-                let {data} = axios.get(`http://${window.location.hostname}:3001/user/token/:token`)
-                console.log(data)
+    
+
+    // useEffect(()=>{
+    //     return()=>{
+    //         let uid = null
+    //         auth.onAuthStateChanged( async(user) => {
+    //         if (user) {
+    //             uid= await user.uid
+    //             setTimeout(async ()=>{
+    //                 try {
+    //                     //console.log(uid)
+    //                     while(!uid){
+
+    //                     }
+    //                     let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
+    //                     //console.log(data)
+    //                     while(!data){
+
+    //                     }
+    //                     //setUser(data)
+    //                     //console.log(currentUser)
+    //                     let postData = await axios.get(`http://${window.location.hostname}:3001/followingPosts/${data.userId}`)
+    //                     //console.log(postData)
+    //                     setUser(data)
+    //                     setPosts(postData)
+    //                 } catch (error) {
+    //                     //console.log(error)
+    //                 }
+    //             },50)
                 
-            } else {
-              router.push("/login")
-            }
-        })
-    }},[])
+                
+    //         } else {
+    //           router.push("/login")
+    //         }
+    //     })
+    // }},[])
     
 
     const handleTop = () =>{
@@ -93,13 +115,13 @@ export default function FrontPage(){
             <div  className= " rounded-sm sticky z-30 top-0 flex  h-12 items-center bg-opacity-75 backdrop-blur-sm bg-violet-500" onClick={()=>handleTop()}>
               <h1 className=" font-bold text-white text-2xl ml-6" >Home</h1>
             </div>
-            <div className="my-2">
-                <CreatePost user={testUser} url={""}/>
+            {currentUser?<><div className="my-2">
+                <CreatePost user={currentUser} url={""}/>
             </div>
             <hr className="mx-2 border-violet-500"></hr>
             {posts.length?posts.map((post,index)=>{
                 return <PreviewPost post={post} user={testUser} key={index}/>
-            }):null}
+            }):null}</>:null}
 
 
         </>
