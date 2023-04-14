@@ -42,6 +42,7 @@ const ChangePasswordPopup = () => {
                 </div>
                 {/* Popup container */}
                 <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                {/* <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 sm:max-w-lg sm:w-full"></div> */}
                 {/* Popup content */}
                 <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                     {/* Popup header */}
@@ -91,23 +92,11 @@ const ChangePasswordPopup = () => {
             </div>
         </div>
         )}
-          {/* ... Rest of the popup JSX */}
-          {/* Add logic to close the popup */}
           <button
             className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none"
             onClick={() => setIsOpen(false)} // Close the popup on close button click
           >
-            {/* Close button icon */}
 
-            {/* Example: */}
-            {/* <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"> */}
-            {/*   <path */}
-            {/*     strokeLinecap="round" */}
-            {/*     strokeLinejoin="round" */}
-            {/*     strokeWidth="2" */}
-            {/*     d="M6 18L18 6M6 6l12 12" */}
-            {/*   /> */}
-            {/* </svg> */}
             <svg
               className="h-6 w-6"
               xmlns="http://www.w3.org/2000/svg"
