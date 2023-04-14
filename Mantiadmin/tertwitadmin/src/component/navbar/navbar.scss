@@ -1,0 +1,57 @@
+.navbar {
+    height: 50px;
+    border-bottom: 0.5px solid whitesmoke;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: grey;
+
+ .wrapper{
+    width:100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .search{
+        display:flex;
+        align-items: center;
+        border: 0.5px solid lightgrey;
+        padding: 3px;
+
+
+        input{
+            border:none;
+            outline: none;
+            background: transparent;
+
+            &::placeholder{
+                font-size: 12px;
+            }
+
+        }
+    }
+
+
+    .items{
+        display: flex;
+
+        .item{
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+
+            .icon{
+                font-size: 20px;
+            }
+
+            .avatar{
+                width:30px;
+                height: 30px;
+                border-radius: 50%;
+            }
+        }
+    }
+ }
+
+}

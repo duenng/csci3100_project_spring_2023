@@ -8,13 +8,13 @@ import Widgets from '@/components/Widgets';
 import Head from 'next/head';
 import UserContext from '../components/UserContext';
 import Input from '@/components/Input';
-import useUserToken from '@/components/useUserToken';
+import {idToken} from '@/components/useUserToken';
 import NewUserForm from '@/components/NewUserForm';
 
 export default function Home({ newsResults }) {
+
   const currentContext = useContext(UserContext);
-  console.log(currentContext);
-  const token = useUserToken();
+  console.log(idToken);
   const { user, loading, logout } = useUser();
   const router = useRouter();
   const [showProfile, setShowProfile] = useState(false);
