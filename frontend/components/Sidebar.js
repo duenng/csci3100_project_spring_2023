@@ -24,6 +24,8 @@ import { useTheme } from 'next-themes';
 //end dark mode
 
 
+
+
 function Sidebar({setShowProfile }) {
   //dark mode
   const { systemTheme, theme, setTheme } = useTheme();
@@ -90,7 +92,6 @@ function Sidebar({setShowProfile }) {
     setTheme(currentTheme === 'dark' ? 'light' : 'dark');
   };
 
-  
   const handleFront = () => {
     console.log("Front clicked!");
     /* setIsHomeActive(true); // Set "Home" as active
@@ -156,7 +157,7 @@ function Sidebar({setShowProfile }) {
         <div onClick={handleFront}>
           <SideBarMenuItem text="Home" Icon={HomeIcon} active={isHomeActive}/>
         </div>
-        <SideBarMenuItem text="Notification" Icon={BellIcon} onClick={handleNotification} active={isNotificationActive}/>
+        <SideBarMenuItem text="Notification" Icon={BellIcon} />
         <SideBarMenuItem text="Messages" Icon={InboxIcon} onClick={handleMessagesClick} active={isMessageActive}/>
         <SideBarMenuItem text="Profile" Icon={UserIcon} onClick={handleProfileClick} active={isProfileActive} />
         <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon} onClick={handleSettingClick} active={isSettingActive}/>
@@ -179,7 +180,7 @@ function Sidebar({setShowProfile }) {
       </button>
      
       {/* User Profile */}
-      <div className="flex items-center justify-center text-gray-700 hoverEffect xl:justify-start mt-auto" onClick={handleProfileClick}>
+      <div className="flex items-center justify-center text-gray-700 hoverEffect xl:justify-start mt-auto">
         <img
           src="/usericon.jpg"
           alt="Profile Picture"
@@ -187,8 +188,8 @@ function Sidebar({setShowProfile }) {
         />
         <div className="hidden xl:inline leading-5">
           {/* User Name, Need to import from database*/}
-          <h4 className="font-bold">Username</h4>
-          <p className="text-gray-500">@username</p>
+          <h4 className="font-bold">{currentUser?currentUser.username:"loading"}</h4>
+          <p className="text-gray-500">{currentUser?currentUser.tag:"loading"}</p>
         </div>
         <DotsHorizontalIcon className="h-5 xl:m1-8 xl:inline hidden" />
       </div>
