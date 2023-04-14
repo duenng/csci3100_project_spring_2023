@@ -24,13 +24,12 @@ const reducer = (state, action) => {
 
 export const AuthContextProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setCurrentUser(user);
-        console.log(user);
+
+        //console.log(user);
         const token = user.uid; // Use user's uid as a unique token
         dispatch({ type: 'setUser', payload: { user, token } });
       } else {
@@ -45,7 +44,7 @@ export const AuthContextProvider = (props) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ ...state, currentUser, dispatch }}>
+    <AuthContext.Provider value={{ ...state,  dispatch }}>
       {props.children}
     </AuthContext.Provider>
   );

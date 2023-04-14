@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
 import PostContent from "./PostContent";
 import PostCommentSection from "./PostCommentSection";
+// import idToken from "./useUserToken"
 
 
 // shd use post id to fetch
@@ -30,13 +31,26 @@ let testComment = [
   }
 ]
 
+let testPost2 = {
+  postId:10,
+  user:testUser,
+  text:"here is the testing repost content.",
+  like:[1,3,12,4,9,17],
+  repost:[1,3,4],
+  reposting:null,
+  date: new Date(2023, 3, 10, 13, 0, 20),
+  images:["corgi.jpeg","doll.jpeg","golden.png","munchkin.png","persian.png","samoyed.png","shiba.jpeg"],
+  video: "catVideo.mp4",
+  comment: testComment,
+}
+
 let testPost = {
   postId:1,
   user:testUser,
   text:"here is the testing content.",
   like:[1,3,12,4,9,17],
   repost:[1,3,4],
-  reposting:null,
+  reposting:testPost2,
   date: new Date(2023, 3, 10, 13, 0, 20),
   images:["corgi.jpeg","doll.jpeg","golden.png","munchkin.png","persian.png","samoyed.png","shiba.jpeg"],
   video: "catVideo.mp4",
@@ -52,10 +66,12 @@ export default function Post(){
     const [post,setPost] = useState(null)
     const router = useRouter();
 
-    useEffect(()=>{
-      return()=>{
-        setPost(testPost)
-      }
+
+
+    useEffect( ()=>{
+      // let token = await idToken
+      // console.log(token)
+      setPost(testPost)
     },[])
       
 
@@ -69,7 +85,7 @@ export default function Post(){
             {
               post? <>
               {/* info text media ... */}
-              <PostContent owner={post.user} date={post.date} text={post.text} images={post.images} video= {post.video}/>
+              <PostContent owner={post.user} date={post.date} text={post.text} images={post.images} video= {post.video} reposting={post.reposting}/>
               
               {/* comment section */}
               <PostCommentSection user={testUser} tag={post.user.tag} like={post.like} repost={post.repost} comment={post.comment} postId={post.postId}/>

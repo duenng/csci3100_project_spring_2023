@@ -12,7 +12,7 @@ export default function VideoPlayer(props){
     fluid: true,
     playbackRates: [0.25,0.5, 1, 1.5, 2],
     sources: [{
-      src: "./video/"+props.filename,
+      src: "/video/"+props.filename,
       type: 'video/mp4'
     }]
   };
