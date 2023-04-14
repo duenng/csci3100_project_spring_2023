@@ -5,6 +5,8 @@ import CreatePost from "./CreatePost";
 import { auth } from './firebase';
 import { useRouter } from "next/router"; 
 import axios from "axios";
+import { useUser } from "../components/FirebaseContext";
+
 
 
 
@@ -61,47 +63,42 @@ let testComment = [
 
 export default function FrontPage(){
     const [posts,setPosts] = useState([])
-    const [token, setToken] = useState(null);
     const [currentUser,setCurrentUser] = useState(null)
+    const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
     const router = useRouter()
     const topRef = useRef()
 
     
+    const handleUser = async (uid)=>{
+        let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
+        return data
+      }
 
-    // useEffect(()=>{
-    //     return()=>{
-    //         let uid = null
-    //         auth.onAuthStateChanged( async(user) => {
-    //         if (user) {
-    //             uid= await user.uid
-    //             setTimeout(async ()=>{
-    //                 try {
-    //                     //console.log(uid)
-    //                     while(!uid){
-
-    //                     }
-    //                     let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
-    //                     //console.log(data)
-    //                     while(!data){
-
-    //                     }
-    //                     //setUser(data)
-    //                     //console.log(currentUser)
-    //                     let postData = await axios.get(`http://${window.location.hostname}:3001/followingPosts/${data.userId}`)
-    //                     //console.log(postData)
-    //                     setUser(data)
-    //                     setPosts(postData)
-    //                 } catch (error) {
-    //                     //console.log(error)
-    //                 }
-    //             },50)
-                
-                
-    //         } else {
-    //           router.push("/login")
-    //         }
-    //     })
-    // }},[])
+    const handlePosts = async (id)=>{
+        let {data} = await axios.get(`http://${window.location.hostname}:3001/followingPosts/${id}`)
+        return data
+    }
+    
+      useEffect(() => {
+        if(user){
+          console.log(user.uid)
+          handleUser(user.uid).then((user)=>{
+            if(user){
+                setCurrentUser(user)
+                return user.uerId
+            }
+                return null
+          }).then((id)=>{
+            if(!id){
+                return 
+            }
+            console.log(id)
+            handlePosts(id).then((posts)=>{
+                setPosts(posts)
+            })
+          })
+        }
+      }, [user, loading, router]);
     
 
     const handleTop = () =>{
