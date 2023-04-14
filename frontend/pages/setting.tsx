@@ -6,14 +6,16 @@ import Sidebar from '@/components/Sidebar'
 import Feed from "@/components/Feed";
 import Widgets from "@/components/Widgets";
 import SettingBar from "@/components/SettingBar";
+import SettingAll from '@/components/SettingAll';
 
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Setting({}) {
+export default function Setting({newsResults}) {
 
 
   return (
+
     <>
     <Head>
         <title>Setting</title>
@@ -21,16 +23,19 @@ export default function Setting({}) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/tertwit_T.ico" />
     </Head>
+            
     <main className="flex min-h-screen max-w-7xl mx-auto ">
         <Sidebar setShowProfile={undefined} logout={undefined} />
-        <SettingBar />
+        <SettingAll />
+        {/* <SettingBar /> */}
         
         {/* <Feed /> */} 
         
         <div className="right-section">
           
-        
-        {/* Widgets  */}
+        <div className="w-[200px] sm:block md:w-[400px] hidden space-y-5 lg:ml-8 ml-4 md:inline py-4"> 
+        <Widgets newsResults={newsResults.articles}/>
+        </div>
         {/* <Widgets newsResults={newsResults.articles}/> */}
 
           {/* <Trending />
