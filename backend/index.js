@@ -3,6 +3,7 @@ const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const routes = require('./routes');
 
 app.use(cors());
 app.use(express.json());
@@ -433,9 +434,9 @@ mongoose.connection.once("open",function(){
         return res.status(500).json({ error: "Internal server error" });
       }
     })
-
+    
     // admin get all users
-    app.get("/admin/users",async(req,res)=>{
+    app.get("/admin/user",async(req,res)=>{
       try {
         let users =  await User.find().select({ userId:1, username: 1, tag: 1, avatar:1,following:1,follower:1})
         return res.status(200).json(users)
@@ -474,6 +475,5 @@ mongoose.connection.once("open",function(){
     });
 
 });
-
-
+app.use(routes);
 app.listen(port, () => console.log(`Listening on port ${port}`));

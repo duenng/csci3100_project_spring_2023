@@ -11,6 +11,8 @@ import SettingBar from "@/components/SettingBar";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Setting({}) {
+
+
   return (
     <>
     <Head>
@@ -23,8 +25,11 @@ export default function Setting({}) {
         <Sidebar setShowProfile={undefined} logout={undefined} />
         <SettingBar />
         
-        {/* <Feed /> */}
+        {/* <Feed /> */} 
+        
         <div className="right-section">
+          
+        
         {/* Widgets  */}
         {/* <Widgets newsResults={newsResults.articles}/> */}
 

@@ -8,6 +8,9 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../components/firebase';
 import UserContext from "../components/UserContext";
+//dark mode
+import { ThemeProvider } from 'next-themes';
+
 function MyApp({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -21,11 +24,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
   return (
     <>
+      <ThemeProvider enableSystem={true} attribute="class">
       <AuthContextProvider value={{ user }}>
       <UserContext.Provider value={{ user, setUser }}>
         <Component {...pageProps} />
       </UserContext.Provider>
       </AuthContextProvider>
+      </ThemeProvider>
       <style jsx global>{`
         .container {
           max-width: 1200px;
