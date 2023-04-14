@@ -133,6 +133,7 @@ mongoose.connection.once("open",function(){
 
     //create post
     app.post("/post", async (req,res)=>{
+      console.log(req)
       try{
       let Id = await newPostId();
       let {userId, text, reposting,date,images,video} = req.body;
@@ -140,25 +141,26 @@ mongoose.connection.once("open",function(){
       if (!user) {
         return res.status(404).send("User not found");
       }
-      let repostedPost = null;
+      let repostedId= null;
       if(reposting){
-        repostedPost = await Post.findOne({postId:reposting});
-        if(!repostedPost){
-          return res.status(404).send("Repost target not found");
+        let repostedPost = await Post.findOne({postId:reposting});
+        if(repostedPost){
+          repostedId = repostedPost._id
         }
       }
       let option={
         postId:Id,
         user:user._id,
         text:text,
-        reposting:repostedPost._id,
+        reposting:repostedId,
         date:date,
         images:images,
         video:video
       }
+      console.log(option)
         let result = await Post.create(option)
-        if(repostedPost){
-          await Post.updateOne({_id:repostedPost._id},{$push:{repost:result._id}});
+        if(repostedId){
+          await Post.updateOne({_id:repostedId},{$push:{repost:result._id}});
         }
         return res.status(201).json(result)
       }catch(err){

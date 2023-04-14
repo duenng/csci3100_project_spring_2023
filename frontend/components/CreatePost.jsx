@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import axios from "axios";
 import { Icon } from "@iconify/react";
+import { useRouter } from "next/router";
 
 
-export default function CreatePost({user,url}){
+export default function CreatePost({user,url, handler}){
     const [text,setText] = useState("")
     const [images,setImages] = useState([])
     const [video,setVideo] = useState(null)
@@ -17,6 +18,7 @@ export default function CreatePost({user,url}){
 
     const textRef = useRef()
     const linkRef = useRef()
+    const router = useRouter()
 
     const handleShowLink=()=>{
         if(!showLink){
@@ -144,16 +146,24 @@ export default function CreatePost({user,url}){
             repostingId = Number(splited[2])
         }
         //todo ftech comment to sever
-        let  data = {
+        let body = {
             userId: user.userId,
             text:content,
-            like:[],
-            repost:[],
             reposting:repostingId,
             date: date,
             images:imageNames,
             video: videoName,
-            comment: [],
+          }
+        try {
+            console.log(body)
+            let {data} = await axios.post(`http://localhost:3001/post`,body)
+            console.log(data)
+            if(data){
+                router.push(`/post/${data.postId}`)
+                //router.reload()
+            }
+          } catch (error) {
+            console.log(error)
           }
         //console.log(data)
         // post request, if res.status not ok, return
