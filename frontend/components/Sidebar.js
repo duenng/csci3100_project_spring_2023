@@ -157,7 +157,7 @@ function Sidebar({setShowProfile }) {
         <div onClick={handleFront}>
           <SideBarMenuItem text="Home" Icon={HomeIcon} active={isHomeActive}/>
         </div>
-        <SideBarMenuItem text="Notification" Icon={BellIcon} />
+        <SideBarMenuItem text="Notification" Icon={BellIcon} onClick={handleNotification} active={isNotificationActive}/>
         <SideBarMenuItem text="Messages" Icon={InboxIcon} onClick={handleMessagesClick} active={isMessageActive}/>
         <SideBarMenuItem text="Profile" Icon={UserIcon} onClick={handleProfileClick} active={isProfileActive} />
         <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon} onClick={handleSettingClick} active={isSettingActive}/>
