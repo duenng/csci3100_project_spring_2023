@@ -83,7 +83,7 @@ export default function PostLike(props){
             :<div title="share" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center align-middle" onClick={()=>handleShare()}  >< Icon icon={iosShareRounded} width="32" height="32" /></div>}
             
             </div>
-            {showPop?<PopUpCreate user={props.current} url={window.location.href} handler={()=>setShowPop(false)}/>:null}
+            {showPop?<PopUpCreate user={props.current} url={window.location.href} handler={()=>setShowPop(false)} popUp={true}/>:null}
         </>
     )
 }

@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 
 
-export default function CreatePost({user,url, handler}){
+export default function CreatePost({user,url, popUp}){
     const [text,setText] = useState("")
     const [images,setImages] = useState([])
     const [video,setVideo] = useState(null)
@@ -159,8 +159,10 @@ export default function CreatePost({user,url, handler}){
             let {data} = await axios.post(`http://localhost:3001/post`,body)
             console.log(data)
             if(data){
-                router.push(`/post/${data.postId}`)
-                //router.reload()
+                router.replace(`/post/${data.postId}`)
+                if(popUp){
+                    router.reload()
+                }
             }
           } catch (error) {
             console.log(error)

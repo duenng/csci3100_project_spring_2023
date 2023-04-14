@@ -113,7 +113,7 @@ export default function FrontPage(){
               <h1 className=" font-bold dark:text-gray-800 text-white text-2xl ml-6" >Home</h1>
             </div>
             {currentUser?<><div className="my-2">
-                <CreatePost user={currentUser} url={""}/>
+                <CreatePost user={currentUser} url={""} popUp={false}/>
             </div>
             <hr className="mx-2 border-violet-500"></hr>
             {posts.length?posts.map((post,index)=>{

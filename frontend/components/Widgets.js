@@ -2,6 +2,7 @@ import { SearchIcon} from "@heroicons/react/outline"
 import News from "./News"
 import { useEffect, useRef, useState } from "react"
 import { Icon } from '@iconify/react';
+import axios from "axios";
 
 function Widgets({newsResults}) {
 
@@ -85,6 +86,11 @@ function Searchbar({show,click}){
   const searchRef = useRef()
 
 
+  const handleSearch= async()=>{
+    let {data} = await axios.get(`http://${window.location.hostname}:3001/searchUsers/${keyword}`)
+    setResult(data)
+  }
+
   useEffect(()=>{
       setResultNum(10)
       if(!keyword){
@@ -94,11 +100,9 @@ function Searchbar({show,click}){
       // todo: request search users
       
       // for test
-      let list = new Array(keyword.length)
-      list.fill(testUser)
-      setResult(list)
       //console.log(result)
   },[keyword])
+
 
 
   const addNum=()=>{
@@ -112,7 +116,7 @@ function Searchbar({show,click}){
   return(
       <>  
           <div className= "  rounded-sm sticky z-30 top-0 flex justify-center h-12 items-center bg-opacity-75 backdrop-blur-sm bg-violet-400" onClick={()=>click(true)}>
-              <Icon icon="ic:outline-search" color=" gray" />
+              <Icon icon="ic:outline-search" color=" gray" onClick={()=>handleSearch()}/>
               <input ref={searchRef}  placeholder="Search user.." className=" dark:placeholder:text-gray-800 text-gray-100 font-semibold placeholder-gray-200 bg-transparent w-3/5 h-3/5 mx-2" onChange={e=>setKeyword(e.target.value)}></input>
               <Icon icon="ic:round-clear" color="gray" onClick={()=>{
                   setKeyword("")
@@ -127,7 +131,7 @@ function Searchbar({show,click}){
                     return <>
                     {/* todo: add link */}
                     <div className="flex items-center dark:hover:bg-slate-800 hover:bg-slate-100 hover:bg-opacity-25 p-2 cursor-pointer rounded-lg" >
-                      <img className="h-4 round-full" src ={`avatar/${item.avatar?item.avatar:"user.png"}`}/>
+                      {/* <img className="h-4 round-full" src ={`avatar/${item.avatar?item.avatar:"user.png"}`}/> */}
                       <a className="text-white mx-3">{item.username} </a>
                           <a className="text-gray-500"> {item.tag}</a>
                           </div>
