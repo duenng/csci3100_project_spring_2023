@@ -181,9 +181,9 @@ export default function CreatePost({user,url}){
     return(
         <>
         <div className="flex mx-2 item-center text-base flex-wrap w-[99%] h-full">
-            <img className="h-8 round-full m-4 flex-none" src ={`/avatar/${user.avatar?user.avatar:"user.png"}`}/>
+            <img className="dark:bg-white h-8 round-full m-4 flex-none" src ={`/avatar/${user.avatar?user.avatar:"user.png"}`}/>
             <div className="flex-grow">
-                <textarea ref={textRef} className=" w-full border-none" placeholder="What's happening?" onChange={e=>setText(e.target.value)}/>
+                <textarea ref={textRef} className="dark:bg-gray-500 w-full border-none dark:placeholder:text-white " placeholder="What's happening?" onChange={e=>setText(e.target.value)}/>
                 {/* medias */}
                 <div className="flex mx-1 flex-wrap">
                     {images.length?

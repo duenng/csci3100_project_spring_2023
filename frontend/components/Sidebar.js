@@ -44,6 +44,7 @@ function Sidebar({setShowProfile }) {
 
   //active variable
   const [isHomeActive, setIsHomeActive] = useState(true);
+  const [isNotificationActive, setIsNotificationActive] = useState(false);
   const [isProfileActive, setIsProfileActive] = useState(false);
   const [isMessageActive, setIsMessageActive] = useState(false);
   const [isSettingActive, setIsSettingActive] = useState(false);
@@ -98,6 +99,15 @@ function Sidebar({setShowProfile }) {
     setIsProfileActive(false);
     setIsSettingActive(false); */
     router.push("/");
+  };
+
+  const handleNotification = () => {
+    console.log("Notification clicked!");
+    /* setIsNotificationActive(true); // Set "Noti" as active
+    setIsMessageActive(false);
+    setIsProfileActive(false);
+    setIsSettingActive(false); */
+    router.push("/notification");
   };
 
   const handleMessagesClick = () => {
