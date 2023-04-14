@@ -30,7 +30,7 @@ export const AuthContextProvider = (props) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setCurrentUser(user);
-        console.log(user);
+        //console.log(user);
         const token = user.uid; // Use user's uid as a unique token
         dispatch({ type: 'setUser', payload: { user, token } });
       } else {

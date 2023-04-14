@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import PreviewPost from "./PostPreview"
 import { Icon } from '@iconify/react';
 import CreatePost from "./CreatePost";
+import { auth } from './firebase';
 
 
 
@@ -58,12 +59,22 @@ let testComment = [
 
 export default function FrontPage(){
     const [posts,setPosts] = useState([])
+    const [token, setToken] = useState(null);
     const topRef = useRef()
 
-    useEffect(()=>{
-        // shd get pots by userId
-        setPosts(testData)
-    },[])
+    // useEffect( ()=>{
+    //    let uid = auth.currentUser.uid
+    //     console.log(uid)
+    //     setPosts(testData)
+    // },[])
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+          // User logged in already or has just logged in.
+          console.log(user.uid);
+        } else {
+          // User not logged in or has just logged out.
+        }
+      });
 
     const handleTop = () =>{
         topRef.current.scrollIntoView({ behavior: 'smooth', block: 'start'});

@@ -1,12 +1,12 @@
 import { useState, useContext, useEffect} from 'react';
 import { useRouter } from 'next/router';
-import { useUser } from '../components/FirebaseContext';
+import { useUser } from '../../components/FirebaseContext';
 import Sidebar from '@/components/Sidebar';
 import Feed from '@/components/Feed';
-import Profile from './profile/index';
+import Profile from '../profile/index';
 import Widgets from '@/components/Widgets';
 import Head from 'next/head';
-import UserContext from '../components/UserContext';
+import UserContext from '../../components/UserContext';
 import Input from '@/components/Input';
 import {idToken} from '@/components/useUserToken';
 import NewUserForm from '@/components/NewUserForm';

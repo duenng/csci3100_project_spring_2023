@@ -1,11 +1,15 @@
 import { Inter } from 'next/font/google'
 import Sidebar from '@/components/Sidebar'
-import FrontPage from '../../components/FrontPage';
-import Widgets from '../../components/Widgets';
+import FrontPage from '../components/FrontPage';
+import Widgets from '../components/Widgets';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({newsResults}) {
+
+  
+
   return (
 
     <div className='grid grid-cols-4  w-screen'>
