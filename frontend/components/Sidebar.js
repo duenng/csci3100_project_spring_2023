@@ -27,9 +27,7 @@ function Sidebar({setShowProfile }) {
   //dark mode
   const { systemTheme, theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    
-  }, []);
+
 /*   if (!mounted) return null;
   const currentTheme = theme === 'system' ? systemTheme : theme; */
   //end dark mode
@@ -134,7 +132,8 @@ function Sidebar({setShowProfile }) {
         <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon} onClick={handleSettingClick} active={isSettingActive}/>
         <SideBarMenuItem text="Logout" Icon={LogoutIcon} onClick={handleLogoutClick} />
         {/* dark mode */}
-        <SideBarMenuItem text="Dark Mode" Icon={MoonIcon} onClick={handleDarkMode} />
+        <SideBarMenuItem text={currentTheme === 'dark' ? "Light Mode" : "Dark Mode"}
+        Icon={currentTheme === 'dark' ? SunIcon : MoonIcon} onClick={handleDarkMode} />
         {/* dark mode */}
         
           

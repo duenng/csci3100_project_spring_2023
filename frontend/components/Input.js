@@ -9,7 +9,7 @@ function Input() {
         /> {/* xl:mr-2 */}
         <div className="w-full divide-y divide-purple-200 ">{/* hidden xl:inline leading-5 */}
             <div className="">
-                <textarea rows={2} className="text-lg tracking-wide min-h-[50px] placeholder-gray-400 w-full focus:ring-0 border-none " placeholder="What's happening?" />
+                <textarea rows={2} className="text-lg tracking-wide min-h-[50px] placeholder-gray-400 dark:placeholder-black dark:text-black w-full focus:ring-0 border-none " placeholder="What's happening?" />
             </div>
         <div className="flex pt-2.5 justify-between items-center">
             <div className="flex ">
