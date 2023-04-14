@@ -1,13 +1,15 @@
 import Image from "next/image";
 import SideBarMenuItem from "./SideBarMenuItem";
-import { HomeIcon } from "@heroicons/react/solid";
+import { HomeIcon  } from "@heroicons/react/solid";
 import {
   BellIcon,
   InboxIcon,
   UserIcon,
   DotsCircleHorizontalIcon,
   DotsHorizontalIcon,
-  LogoutIcon, // Import the LogoutIcon (replace with an appropriate icon)
+  LogoutIcon,
+  MoonIcon,
+  SunIcon, // Import the LogoutIcon (replace with an appropriate icon)
 } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import { useState,useEffect } from "react";
@@ -15,8 +17,24 @@ import { useUser } from "../components/FirebaseContext";
 import { set } from "date-fns";
 import PopUpCreate from './PopUpCreatePost';
 
+//dark mode
+//import { useState, useEffect } from 'react';
+import { useTheme } from 'next-themes';
+//end dark mode
+
 
 function Sidebar({setShowProfile }) {
+  //dark mode
+  const { systemTheme, theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    
+  }, []);
+/*   if (!mounted) return null;
+  const currentTheme = theme === 'system' ? systemTheme : theme; */
+  //end dark mode
+
+
   const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
   const [showPop,setShowPop] = useState(false)
   const router = useRouter();
@@ -31,11 +49,17 @@ function Sidebar({setShowProfile }) {
 
   
   useEffect(() => {
+    //dark mode
+    setMounted(true);
+    //dark mode
     if (!loading && !user) {
       router.replace("/login");
     }
   }, [user, loading, router]);
-
+  //dark mode
+  if (!mounted) return null;
+  const currentTheme = theme === 'system' ? systemTheme : theme;
+  //dark mode
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -44,6 +68,10 @@ function Sidebar({setShowProfile }) {
     return null;
   }
 
+  //dark Mode
+  const handleDarkMode = () => {
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  };
 
   const handleFront = () => {
     console.log("Front clicked!");
@@ -104,6 +132,14 @@ function Sidebar({setShowProfile }) {
         <SideBarMenuItem text="Profile" Icon={UserIcon} onClick={handleProfileClick} active={isProfileActive} />
         <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon} onClick={handleSettingClick} active={isSettingActive}/>
         <SideBarMenuItem text="Logout" Icon={LogoutIcon} onClick={handleLogoutClick} />
+        {/* dark mode */}
+        <SideBarMenuItem text="Dark Mode" Icon={MoonIcon} onClick={handleDarkMode} />
+        {/* dark mode */}
+        
+          
+     
+
+
       </div>
 
       {/* Tertwit Button */}
