@@ -102,12 +102,12 @@ function Sidebar({setShowProfile }) {
   };
 
   const handleNotification = () => {
-    console.log("Notification clicked!");
+    console.log("Notifications clicked!");
     /* setIsNotificationActive(true); // Set "Noti" as active
     setIsMessageActive(false);
     setIsProfileActive(false);
     setIsSettingActive(false); */
-    router.push("/notification");
+    router.push("/notifications");
   };
 
   const handleMessagesClick = () => {

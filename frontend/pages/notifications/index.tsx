@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import NotificationItem from '../../components/NotificationItem';
 import Head from 'next/head';
 import Sidebar from '@/components/Sidebar';
+import Widgets from '@/components/Widgets';
+import Notification from '@/components/Notification';
 
-const Notification = () => {
+export default function Notifications ({newsResults}){
   const [notifications, setNotifications] = useState([]);
+  
 
   useEffect(() => {
     // Fetch notifications from API or other data source
@@ -32,15 +35,34 @@ const Notification = () => {
     <main className="flex min-h-screen max-w-7xl mx-auto ">
     <Sidebar setShowProfile={undefined}/>
     <div>
-      <NotificationItem /> 
+      <Notification /> 
       {notifications.map(notification => (
         <NotificationItem key={notification.id} notification={notification} /> // Render each notification item using NotificationItem component
       ))}
     </div>
+    <div className="w-[200px] sm:block md:w-[400px] hidden space-y-5 lg:ml-8 ml-4 md:inline py-4"> 
+        <Widgets newsResults={newsResults.articles}/>
+      </div>
     </main>
+
+
     </>
   );
   
 };
 
-export default Notification;
+
+
+// Along with Widgets component
+//newsResults in props
+//https://saurav.tech/NewsAPI/everything/cnn.json
+
+export async function getServerSideProps() {
+    const newsResults = await fetch('https://saurav.tech/NewsAPI/everything/bbc-news.json').then(res => res.json())
+    return {
+      props: {
+        newsResults
+      }
+    }
+  }
+  //End of Widgetss
