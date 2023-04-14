@@ -56,7 +56,7 @@ function NewsBox({newsResults}){
 
   return(
     <>
-      <div className="text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 mt-3 ml-4 w-[90%] xl:w-[75%] ">
+      <div className="dark:text-gray-100  dark:bg-gray-700 text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 mt-3 ml-4 w-[90%] xl:w-[75%] ">
         <h2 className="px-4 text-xl font-bold">What's News</h2>
         {newsResults.slice(0,articleNum).map((article)=> (
         <News key={article.title} article={article} />
@@ -112,8 +112,8 @@ function Searchbar({show,click}){
   return(
       <>  
           <div className= "  rounded-sm sticky z-30 top-0 flex justify-center h-12 items-center bg-opacity-75 backdrop-blur-sm bg-violet-400" onClick={()=>click(true)}>
-              <Icon icon="ic:outline-search" color="gray" />
-              <input ref={searchRef}  placeholder="Search user.." className=" text-gray-100 font-semibold placeholder-gray-200 bg-transparent w-3/5 h-3/5 mx-2" onChange={e=>setKeyword(e.target.value)}></input>
+              <Icon icon="ic:outline-search" color=" gray" />
+              <input ref={searchRef}  placeholder="Search user.." className=" dark:placeholder:text-gray-800 text-gray-100 font-semibold placeholder-gray-200 bg-transparent w-3/5 h-3/5 mx-2" onChange={e=>setKeyword(e.target.value)}></input>
               <Icon icon="ic:round-clear" color="gray" onClick={()=>{
                   setKeyword("")
                   searchRef.current.value=""
@@ -122,11 +122,11 @@ function Searchbar({show,click}){
             
           {
             result.length&&show?
-            <div className="z-20 top-14 fixed bg-slate-500 bg-opacity-25 backdrop-blur-sm  justify-center rounded-xl py-2 px-1" style={{right:"9.5%"}} onClick={()=>click(true)}>
+            <div className="z-20 top-14 fixed  bg-slate-500 bg-opacity-25 backdrop-blur-sm  justify-center rounded-xl py-2 px-1" style={{right:"9.5%"}} onClick={()=>click(true)}>
                 {limitedResult.map((item,i)=>{
                     return <>
                     {/* todo: add link */}
-                    <div className="flex items-center hover:bg-slate-100 hover:bg-opacity-25 p-2 cursor-pointer rounded-lg" >
+                    <div className="flex items-center dark:hover:bg-slate-800 hover:bg-slate-100 hover:bg-opacity-25 p-2 cursor-pointer rounded-lg" >
                       <img className="h-4 round-full" src ={`avatar/${item.avatar?item.avatar:"user.png"}`}/>
                       <a className="text-white mx-3">{item.username} </a>
                           <a className="text-gray-500"> {item.tag}</a>

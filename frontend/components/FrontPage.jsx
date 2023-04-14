@@ -91,7 +91,7 @@ export default function FrontPage(){
             {/* home header */}
             <div ref={topRef}></div>
             <div  className= " rounded-sm sticky z-30 top-0 flex  h-12 items-center bg-opacity-75 backdrop-blur-sm bg-violet-500" onClick={()=>handleTop()}>
-              <h1 className=" font-bold text-white text-2xl ml-6" >Home</h1>
+              <h1 className=" font-bold dark:text-gray-800 text-white text-2xl ml-6" >Home</h1>
             </div>
             <div className="my-2">
                 <CreatePost user={testUser} url={""}/>

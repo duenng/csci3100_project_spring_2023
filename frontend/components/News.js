@@ -1,7 +1,7 @@
 function News({article}) {
   return (
     <a href={article.url} target="_blank" >
-        <div className="hover:bg-gray-200 px-4 py-2 transition duration-200 space-x-1 flex items-center justify-between ">
+        <div className="dark:hover:bg-gray-600 hover:bg-gray-200 px-4 py-2 transition duration-200 space-x-1 flex items-center justify-between ">
             <div className="space-y-1">
                 <h6 className="text-sm font-bold" >{article.title}</h6>
                 <p className="textt-xs font-medium text-gray-500" >{article.source.name}</p>

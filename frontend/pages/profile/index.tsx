@@ -14,8 +14,8 @@ let testUser ={
   username:"test",
   tag:"@test",
   avatar:null,
-  following:[],
-  follower:[],
+  following:[150],
+  follower:[220],
 }
 
 export default function Home({newsResults}) {
@@ -32,11 +32,11 @@ export default function Home({newsResults}) {
     {/* <div className='grid grid-cols-4  w-screen'>
       <div className=' overflow-y-scroll  h-screen'> */}
 
-        <Sidebar/>
+        <Sidebar setShowProfile={undefined}/>
       
       <div className="">
       
-       <Profile/>
+       <Profile users={testUser}/>
       
         {/* change to createpost afterwards */}
         <div className="flex pt-4 w-[600px] xl:ml-[370px] border-l border-r xl:min-w-[576px] sm:ml-[10%] max-w-xl ml-[px] flex-grow sm:pl-0 min-w-[15%]">

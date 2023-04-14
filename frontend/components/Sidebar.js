@@ -22,6 +22,15 @@ import PopUpCreate from './PopUpCreatePost';
 import { useTheme } from 'next-themes';
 //end dark mode
 
+let testUser ={
+  userId:1,
+  username:"test",
+  tag:"@test",
+  avatar:null,
+  following:[150],
+  follower:[220],
+}
+
 
 function Sidebar({setShowProfile }) {
   //dark mode
@@ -39,6 +48,7 @@ function Sidebar({setShowProfile }) {
 
   //active variable
   const [isHomeActive, setIsHomeActive] = useState(true);
+  const [isNotificationActive, setIsNotificationActive] = useState(false);
   const [isProfileActive, setIsProfileActive] = useState(false);
   const [isMessageActive, setIsMessageActive] = useState(false);
   const [isSettingActive, setIsSettingActive] = useState(false);
@@ -71,6 +81,7 @@ function Sidebar({setShowProfile }) {
     setTheme(currentTheme === 'dark' ? 'light' : 'dark');
   };
 
+  
   const handleFront = () => {
     console.log("Front clicked!");
     /* setIsHomeActive(true); // Set "Home" as active
@@ -78,6 +89,15 @@ function Sidebar({setShowProfile }) {
     setIsProfileActive(false);
     setIsSettingActive(false); */
     router.push("/");
+  };
+
+  const handleNotification = () => {
+    console.log("Notification clicked!");
+    /* setIsNotificationActive(true); // Set "Noti" as active
+    setIsMessageActive(false);
+    setIsProfileActive(false);
+    setIsSettingActive(false); */
+    router.push("/notification");
   };
 
   const handleMessagesClick = () => {
@@ -126,7 +146,7 @@ function Sidebar({setShowProfile }) {
         <div onClick={handleFront}>
           <SideBarMenuItem text="Home" Icon={HomeIcon} active={isHomeActive}/>
         </div>
-        <SideBarMenuItem text="Notification" Icon={BellIcon} />
+        <SideBarMenuItem text="Notification" Icon={BellIcon} onClick={handleNotification} active={isNotificationActive}/>
         <SideBarMenuItem text="Messages" Icon={InboxIcon} onClick={handleMessagesClick} active={isMessageActive}/>
         <SideBarMenuItem text="Profile" Icon={UserIcon} onClick={handleProfileClick} active={isProfileActive} />
         <SideBarMenuItem text="Setting" Icon={DotsCircleHorizontalIcon} onClick={handleSettingClick} active={isSettingActive}/>
@@ -149,7 +169,7 @@ function Sidebar({setShowProfile }) {
       </button>
      
       {/* User Profile */}
-      <div className="flex items-center justify-center text-gray-700 hoverEffect xl:justify-start mt-auto">
+      <div className="flex items-center justify-center text-gray-700 hoverEffect xl:justify-start mt-auto" onClick={handleProfileClick}>
         <img
           src="/usericon.jpg"
           alt="Profile Picture"
@@ -157,8 +177,8 @@ function Sidebar({setShowProfile }) {
         />
         <div className="hidden xl:inline leading-5">
           {/* User Name, Need to import from database*/}
-          <h4 className="font-bold">Username</h4>
-          <p className="text-gray-500">@username</p>
+          <h4 className="font-bold">{/* Username */}{testUser.username}</h4>
+          <p className="text-gray-500">{testUser.tag}</p>
         </div>
         <DotsHorizontalIcon className="h-5 xl:m1-8 xl:inline hidden" />
       </div>
