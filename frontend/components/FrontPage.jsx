@@ -3,6 +3,8 @@ import PreviewPost from "./PostPreview"
 import { Icon } from '@iconify/react';
 import CreatePost from "./CreatePost";
 import { auth } from './firebase';
+import { useRouter } from "next/router"; 
+import axios from "axios";
 
 
 
@@ -58,23 +60,27 @@ let testComment = [
   testData.fill(testPost)
 
 export default function FrontPage(){
+    const [user,setUser] = useState(null)
     const [posts,setPosts] = useState([])
     const [token, setToken] = useState(null);
+    const router = useRouter()
     const topRef = useRef()
 
-    // useEffect( ()=>{
-    //    let uid = auth.currentUser.uid
-    //     console.log(uid)
-    //     setPosts(testData)
-    // },[])
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-          // User logged in already or has just logged in.
-          console.log(user.uid);
-        } else {
-          // User not logged in or has just logged out.
-        }
-      });
+    useEffect(()=>{
+        return()=>{
+            let uid = null
+            auth.onAuthStateChanged( async(user) => {
+            if (user) {
+                uid=user.uid
+                let {data} = axios.get(`http://${window.location.hostname}:3001/user/token/:token`)
+                console.log(data)
+                
+            } else {
+              router.push("/login")
+            }
+        })
+    }},[])
+    
 
     const handleTop = () =>{
         topRef.current.scrollIntoView({ behavior: 'smooth', block: 'start'});

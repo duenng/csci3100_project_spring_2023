@@ -11,7 +11,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { db } from "@/components/firebase";
-import { AuthContext } from "@/components/FirebaseContext";
+import { AuthContext } from "@/components/ChatuserContext";
 
 
 const ChatSearch = () => {
@@ -27,7 +27,7 @@ const ChatSearch = () => {
           where("username", "==", username)
         );
         console.log(username);
-    
+        console.log(currentUser.username); 
         try {
           const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
