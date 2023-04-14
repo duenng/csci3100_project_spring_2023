@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import {
   collection,
   query,
@@ -12,14 +12,39 @@ import {
 } from "firebase/firestore";
 import { db } from "@/components/firebase";
 import { AuthContext } from "@/components/ChatuserContext";
-
+import { useUser } from "../components/FirebaseContext";
+import { useRouter } from 'next/router'
 
 const ChatSearch = () => {
     const [username, setUsername] = useState("");
     const [user, setUser] = useState(null);
     const [err, setErr] = useState(false);
+    const { user1, loading, logout } = useUser(); 
+    const router = useRouter();
+    const [currentUser,setCurrentUser] = useState(null)
 
-    
+    const handleUser = async (uid)=>{
+      let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
+      return data
+    }
+
+
+
+    useEffect(() => {
+      if(user1){
+        console.log(user1.uid)
+        handleUser(user1.uid).then((user)=>{
+          if(user1){
+              setCurrentUser(user1)
+              return user.uerId
+              console.log(user.uerId)
+          }
+              return null
+        })
+      }
+    }, [user1, loading, router]);
+
+      
 
     const handleSearch = async () => {
         const q = query(
@@ -27,6 +52,7 @@ const ChatSearch = () => {
           where("username", "==", username)
         );
         console.log(username);
+        
 
         try {
           const querySnapshot = await getDocs(q);
@@ -36,6 +62,7 @@ const ChatSearch = () => {
         } catch (err) {
           setErr(true);
         }
+        
     };
      
     const handleKey = (e) => {
