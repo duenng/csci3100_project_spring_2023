@@ -6,21 +6,44 @@ const ChangePasswordPopup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isOpen, setIsOpen] = useState(false); // State to track if the popup is open or closed
 
-  const handleChangePassword = () => {
+
+  //update the password
+  const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+    }
+    const response = await fetch("/api/change-password", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            currentPassword,
+            newPassword,
+        }),
+    });
+    const data = await response.json();
+    if (data.error) {
+        alert(data.error);
+    } else {
+        alert("Password changed successfully");
+        setIsOpen(false);
+    }
     // Add logic to handle password change
     // e.g., make API request to update password
     console.log("Password changed:", {
-      currentPassword,
-      newPassword,
-      confirmPassword,
-    });
-    // Reset form fields
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-    // Close the popup
-    setIsOpen(false);
-  };
+        currentPassword,
+        newPassword,
+        confirmPassword,
+      });
+      // Reset form fields
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      // Close the popup
+      setIsOpen(false);
+};
 
   return (
     <div>
@@ -164,6 +187,7 @@ const ChangePasswordPopup = () => {
 
       {/* ... Rest of the popup JSX */}
     </div>
+    
   );
 };
 
