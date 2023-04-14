@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import axios from "axios";
 import { Icon } from "@iconify/react";
+import { useRouter } from "next/router";
 
 
 export default function CommentPanel(props){
@@ -12,6 +13,7 @@ export default function CommentPanel(props){
     const [uploadingVideo,setUploadingV] = useState(false)
     const textRef = useRef()
     let user = props.user
+    const router = useRouter()
 
     const removeImage = (target) =>{
         setImages((prev)=>{
@@ -90,7 +92,7 @@ export default function CommentPanel(props){
             postId:props.postId,
             replying:props.tag,
             text:content,
-            image:imageNames,
+            images:imageNames,
             video:videoName,
             like:[],
             date:date
@@ -111,13 +113,14 @@ export default function CommentPanel(props){
             user:user,
             replying:props.tag,
             text:content,
-            image:imageNames,
+            images:imageNames,
             video:videoName,
             like:[],
             date:date
         }
         
-        props.handler(newComment)
+        //props.handler(newComment)
+        router.reload('')
            
         setText("")
         textRef.current.value=""

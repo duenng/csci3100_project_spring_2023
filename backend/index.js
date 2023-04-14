@@ -171,6 +171,7 @@ mongoose.connection.once("open",function(){
 
     //create comment 
     app.post("/comment", async (req,res)=>{
+      console.log(req.body)
       let {userId, postId,replying,text,images,video,date} = req.body;
       let user = await User.findOne({userId:userId});
       if (!user) {
@@ -429,11 +430,16 @@ mongoose.connection.once("open",function(){
     //get users by keyword
     app.get("/searchUsers/:keyword",async(req,res)=>{
       try {
+        console.log(req.params.keyword)
         let keyword = req.params.keyword;
-        let users =  await User.find({ username: { $regex: new RegExp(keyword), $options: "i" } }).limit(feedLimit).select({ username: 1, tag: 1, avatar:1})
+        let users =  await User.find({ username: { $regex: new RegExp(keyword), $options: "i" } }).select({ username: 1, tag: 1, avatar:1})
+        console.log(users,keyword)
+        if(!users.length){
+          return res.status(200).json([])
+        }
         return res.status(200).json(users)
       } catch (error) {
-        console.log(err);
+        console.log(error);
         return res.status(500).json({ error: "Internal server error" });
       }
     })

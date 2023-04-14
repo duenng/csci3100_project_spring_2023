@@ -5,12 +5,15 @@ const route = "/image/"
 
 export default function PostImage({ids}){
     const [index,setIndex] = useState(0)
+    useEffect(()=>{
+        console.log(ids)
+    },[])
 
     const n = ids.length
     return(
         <div className=" relative z-0">
             <img
-                src={`${route}${ids[index]}`}
+                src={`/image/${ids[index]}`}
                 alt={`${ids[index]}`}
                 className="rounded-lg"
                 onClick={(event) => {
@@ -22,6 +25,7 @@ export default function PostImage({ids}){
                 setIndex((index+1)%n);
                 }
             }}/>
+           
         </div>
         
     )

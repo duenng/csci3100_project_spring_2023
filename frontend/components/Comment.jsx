@@ -2,9 +2,14 @@ import { format } from 'date-fns';
 import PostImage from "./PostImage";
 import VideoPlayer from "./VideoPlayer";
 import CommentLikes from "./CommentLikes";
+import { useEffect } from 'react';
 
 
 export default function Comment({com,current}){
+
+    useEffect(()=>{
+      console.log(com)
+    },[])
 
     
 
@@ -23,7 +28,7 @@ export default function Comment({com,current}){
       <div className="m-2 text-base ">
         <p className="m-2">{com.text}</p>
         {/* media */}
-        {com.images?.length?<div className=" m-2"><PostImage ids={com.images}/></div>:null}
+        {com.images?<div className=" m-2"><PostImage ids={com.images}/></div>:null}
         {com.video?<div className="my-4 mx-4"><VideoPlayer filename={com.video}/></div>:null}
         
         <hr className=" mx-2"/>
