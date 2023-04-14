@@ -32,7 +32,7 @@ export default function PostContent(props){
             {/* repost */}
             {props.reposting?<div className="my-4 mx-3"><Repost post={props.reposting}/></div>:null}
             {/* medias */}
-            {props.images?.length?<div className="my-4 mx-3"><PostImage ids={props.images}/></div>:null}
+            {props.images?<div className="my-4 mx-3">hihi<PostImage ids={props.images}/></div>:null}
             {props.video?<div className="my-4 mx-4"><VideoPlayer filename={props.video}/></div>:null}
             <div className=" text-gray-500 text-sm my-4 mx-3">
               {formattedDate}
