@@ -1,93 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from "next/router";
+import { Inter } from 'next/font/google'
+import Sidebar from '@/components/Sidebar'
+import Profile from '../../components/Profile';
+import Widgets from '../../components/Widgets';
 
-interface User {
-  displayName: string;
-  // Add any other properties of the user object here
-}
+const inter = Inter({ subsets: ['latin'] })
 
-interface ProfileProps {
-  user: User;
-  token: string;
-  loading: boolean;
-  setShowProfile: (showProfile: boolean) => void;
-}
-
-export default function Profile({ user, token, loading, setShowProfile }: ProfileProps) {
-  const router = useRouter();
-  const [userData, setUserData] = useState(null);
-  const [userPosts, setUserPosts] = useState([]);
-
-  console.log("rendering Profile");
-
-  useEffect(() => {
-    async function fetchUserData() {
-      try {
-        const response = await fetch(`/api/userData?token=${token}`);
-        const data = await response.json();
-        setUserData(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    fetchUserData();
-  }, [token]);
-
-  useEffect(() => {
-    async function fetchUserPosts() {
-      try {
-        const response = await fetch(`/api/userPosts?token=${token}`);
-        const data = await response.json();
-        setUserPosts(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    fetchUserPosts();
-  }, [token]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    router.replace("/login");
-    return null;
-  }
-
+export default function Home({newsResults}) {
   return (
-    <>
-      <main className="flex min-h-screen max-w-7xl mx-auto ">
-        <div className="flex-grow">
-          <h1>Welcome, {user.displayName}</h1>
-          <p>This is your unique page with token: {token}</p>
-          {userData && (
-            <div>
-              <h2>User Information</h2>
-              <p>Name: {userData.name}</p>
-              <p>Email: {userData.email}</p>
-              <p>Location: {userData.location}</p>
-            </div>
-          )}
-        </div>
-        <div className="flex-none">
-          {user.icon && (
-            <img src={user.icon} alt="User Icon" className="w-16 h-16 rounded-full" />
-          )}
-        </div>
-      </main>
-      <div>
-        <h2>Your Posts</h2>
-        {userPosts.map((post) => (
-          <div key={post.id}>
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-          </div>
-        ))}
-        <button onClick={() => setShowProfile(false)}>Close Profile</button>
+
+    <div className='grid grid-cols-4  w-screen'>
+      <div className=' overflow-y-scroll  h-screen'>
+        <Sidebar/>
       </div>
-    </>
+
+      <div className='col-span-2   h-screen overflow-y-scroll overflow-x-hidden break-words'>
+       <Profile/>
+      </div>
+
+      <div className='col-span-1 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words  '>
+        <Widgets newsResults={newsResults.articles}/>
+      </div>
+    </div>
+
+    
   );
 }
+
+// Along with Widgets component
+//newsResults in props
+//https://saurav.tech/NewsAPI/everything/cnn.json
+
+export async function getServerSideProps() {
+  const newsResults = await fetch('https://saurav.tech/NewsAPI/everything/bbc-news.json').then(res => res.json())
+  return {
+    props: {
+      newsResults
+    }
+  }
+}
+//End of Widgets
