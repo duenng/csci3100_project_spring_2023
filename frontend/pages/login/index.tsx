@@ -29,10 +29,12 @@ const Login = () => {
   const uploadAvatar = async()=>{
 		setUploadingA(true);
         try {
+			console.log(avatar)
             const formData = new FormData();
             formData.append("myAvatar", avatar);
             const { data } = await axios.post("/api/avatar", formData);
 			setUploadingA(false);
+			console.log(data)
             return data.data["myAvatar"]["newFilename"]
         } catch (error) {
             console.log(error.response?.data);
@@ -107,22 +109,19 @@ const Login = () => {
 		// Send form data to backend
 		const token = await response.user.uid; // Get the user's ID token
 
-		let avatarName =""
-		if(token){
-			avatarName = await uploadAvatar()
-		}
+		console.log(avatar)
 		let {data} = await axios.post(`${BACKEND_URL}/user`, {
 		  username: signupUsername.value,
 		  token: token,
 		  tag: signupTag.value,
-		  avatar: avatarName
+		  avatar: avatar?await uploadAvatar():""
 		});
 
 		await setDoc(doc(db, "users", response.user.uid), {
 			email: signupEmail.value,
 			username: signupUsername.value,
 			tag: signupTag.value,
-			avatar: avatarName,
+			avatar: "",
 			uid: data.userId
 		  });
 		
@@ -196,7 +195,7 @@ const Login = () => {
 					<input id="signupPasswordConfirm" type="password" required />
 				</div>
 				<div className="flex justify-center m-4">
-				{previewAvatar?<img src={previewAvatar} alt="Preview" className="h-24 max-w-24 rounded-full" />:null}
+				{avatar?<img src={previewAvatar} alt="Preview" className="h-24 max-w-24 rounded-full" />:null}
 				</div>
 				<div className="flex justify-center">
 					<input id="signupAvatar" type="file" accept="image/*" hidden onChange={(e)=>handleAvatar(e)}/>

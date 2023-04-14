@@ -110,6 +110,7 @@ export default function CreatePost({user,url}){
     }
 
     const handleCreate = async(e) =>{
+        console.log(user)
         setMessage("")
         if(!text.length){
             setMessage("Text is required.")

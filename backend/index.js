@@ -3,6 +3,7 @@ const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const routes = require('./routes');
 
 app.use(cors());
 app.use(express.json());
@@ -41,8 +42,8 @@ mongoose.connection.once("open",function(){
 
   const userSchema = new Schema({
     userId: { type: Number, required: true, unique: true },
-    username: { type: String, required: true , unique: true},
-    tag: { type: String, required: true, unique: true },
+    username: { type: String, required: true },
+    tag: { type: String, required: true },
     avatar: { type: String, default: null },
     following: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
     follower: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
@@ -385,19 +386,25 @@ mongoose.connection.once("open",function(){
 
 
     //get preview post info from following
-    app.get("/followingPosts", async (req,res)=>{
+    app.get("/followingPosts/:ID", async (req,res)=>{
       try {
-        const {userId} = req.body
+        //console.log(req)
+        const userId = req.params["ID"]
+        console.log(userId)
         let user = await User.findOne({userId:userId})
         if(!user){
           return res.status(404).send("User not found");
         }
-        let folloing = user.folloing
-        let posts = Post.find({user:{$in:folloing}}).populate(['user',{path:'like',select:"userId"},"reposting"]).sort('-date').limit(feedLimit);
-        return res.status(200).json(posts)
-      } catch (error) {
+        let list = user.following
+        if(!list){
+          return res.status(200).json([])
+        }
+        let posts = await Post.find({user:{$in:list}}).populate(['user',{path:'like',select:"userId"},"reposting"]).sort('-date').limit(feedLimit);
+        //console.log(following)
+        return res.status(200).send(posts)
+      } catch (err) {
         console.log(err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).send({ error: "Internal server error" });
       }
     });
 
@@ -428,9 +435,9 @@ mongoose.connection.once("open",function(){
         return res.status(500).json({ error: "Internal server error" });
       }
     })
-
+    
     // admin get all users
-    app.get("/admin/users",async(req,res)=>{
+    app.get("/admin/user",async(req,res)=>{
       try {
         let users =  await User.find().select({ userId:1, username: 1, tag: 1, avatar:1,following:1,follower:1})
         return res.status(200).json(users)
@@ -469,6 +476,5 @@ mongoose.connection.once("open",function(){
     });
 
 });
-
-
+app.use(routes);
 app.listen(port, () => console.log(`Listening on port ${port}`));
