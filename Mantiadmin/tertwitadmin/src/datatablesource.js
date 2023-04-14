@@ -30,7 +30,7 @@ export default function UserTable() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('http://localhost:3001/admin/users');
+        const res = await fetch('http://localhost:3001/admin/user');
         const data = await res.json();
         console.log('Fetched data:', data); // Check if data is fetched correctly
         const formattedUserRows = data.map((user) => ({

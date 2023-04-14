@@ -9,7 +9,7 @@ const Datatable = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch('http://localhost:3001/admin/users');
+      const res = await fetch('http://localhost:3001/admin/user');
       const data = await res.json();
       const formattedUserRows = data.map((user) => ({
         id: user.userId,
