@@ -98,7 +98,8 @@ function Sidebar({setShowProfile }) {
     setIsHomeActive(false);
     setIsMessageActive(false);
     setIsSettingActive(false); */
-    setShowProfile(true);
+    //setShowProfile(true);
+    router.push('/profile')
   };
 
   const handleSettingClick = () => {

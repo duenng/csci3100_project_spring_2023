@@ -2,7 +2,7 @@ import { EmojiHappyIcon, PhotographIcon } from "@heroicons/react/outline"
 
 function Input() {
   return (
-    <div className="flex pt-4 xl:ml-[370px] border-l border-r xl:min-w-[576px] sm:ml-[10%] max-w-xl ml-[px] flex-grow sm:pl-0 min-w-[15%]">
+    <div className="flex pt-4 w-[600px] xl:ml-[370px] border-l border-r xl:min-w-[576px] sm:ml-[10%] max-w-xl ml-[px] flex-grow sm:pl-0 min-w-[15%]">
         <img src="/usericon.jpg" 
         alt="Profile Picture" 
         className="ml-2 mr-1 h-10 w-10 rounded-full " 

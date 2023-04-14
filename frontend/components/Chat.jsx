@@ -77,7 +77,7 @@ return (
 
             <div className="p-3 flex">
                 <input 
-                    className="p-2 w-10/12 bg-gray-200 text-xs focus:outline-none rounded-tl-md rounded-bl-md"
+                    className="p-2 w-10/12 border-l border-r bg-gray-200 text-xs focus:outline-none rounded-tl-md rounded-bl-md"
                     type="text"
                     placeholder="Search for users..."
                     onKeyDown={handlekey}
