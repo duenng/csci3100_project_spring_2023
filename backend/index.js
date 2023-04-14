@@ -389,7 +389,8 @@ mongoose.connection.once("open",function(){
     app.get("/followingPosts/:ID", async (req,res)=>{
       try {
         //console.log(req)
-        const userId = Number(req.params["ID"])
+        const userId = req.params["ID"]
+        console.log(userId)
         let user = await User.findOne({userId:userId})
         if(!user){
           return res.status(404).send("User not found");
