@@ -76,10 +76,6 @@ const Login = () => {
     }
   }, [router]);
   
-  
-  
-  
-
   const handleLogin = useCallback(async event => {
     event.preventDefault();
     const { loginEmail, loginPassword } = event.target.elements;
@@ -109,7 +105,7 @@ const Login = () => {
 
 
 		// Send form data to backend
-		const token = await response.user.getIdToken(); // Get the user's ID token
+		const token = await response.user.uid; // Get the user's ID token
 
 		let avatarName =""
 		if(token){

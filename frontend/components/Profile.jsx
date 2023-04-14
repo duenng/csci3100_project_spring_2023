@@ -60,10 +60,13 @@ export default function FrontPage(){
             {/* home header */}
             <div ref={topRef}></div>
             <div  className= " rounded-sm sticky z-30 top-0 flex  h-12 items-center bg-opacity-75 backdrop-blur-sm bg-violet-500" onClick={()=>handleTop()}>
-              <h1 className=" font-bold text-white text-2xl ml-6" >Home</h1>
+              <h1 className=" font-bold text-white text-2xl ml-6" >Profile</h1>
             </div>
             <div className="my-2">
-                <CreatePost user={testUser} url={""}/>
+                <h1 className=" text-black text-2xl ml-6" >Name:</h1>
+                <h1 className=" text-black text-2xl ml-6" >Follower:</h1>
+                <button className=" text-violet text-2xl ml-6" >Follow</button>
+                <button className=" text-violet text-2xl ml-6" >Unfollow</button>
             </div>
             <hr className="mx-2 border-violet-500"></hr>
             {posts.length?posts.map((post,index)=>{
