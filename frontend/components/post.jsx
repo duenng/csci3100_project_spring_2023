@@ -100,7 +100,7 @@ export default function Post(){
         setPost(post)
         console.log(post)
       })
-    })
+    },[])
 
 
       
