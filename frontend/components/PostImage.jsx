@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 
-const route = "image/"
+const route = "/image/"
 
 export default function PostImage({ids}){
     const [index,setIndex] = useState(0)

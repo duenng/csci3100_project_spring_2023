@@ -17,7 +17,7 @@ export default function Home({newsResults}) {
       </div>
 
       <div className='col-span-2 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words'>
-       <div>Nothing here</div>
+       <Post/>
       </div>
 
       <div className='col-span-1 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words  '>

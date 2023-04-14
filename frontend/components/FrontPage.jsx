@@ -25,13 +25,27 @@ let testComment = [
         date: new Date(1681145476102)
     }
   ]
-  
+    
+  let testRepost = {
+    postId:20,
+    user:testUser,
+    text:"here is the testing content.",
+    like:[1,3,12,4,9,17],
+    reposting:null,
+    repost:[1,3,4],
+    date: new Date(2023, 3, 10, 13, 0, 20),
+    images:[],
+    video: "catVideo.mp4",
+    comment: testComment,
+  }
+
+
   let testPost = {
     postId:1,
     user:testUser,
     text:"here is the testing content.",
     like:[1,3,12,4,9,17],
-    reposting:null,
+    reposting:testRepost,
     repost:[1,3,4],
     date: new Date(2023, 3, 10, 13, 0, 20),
     images:["corgi.jpeg","doll.jpeg","golden.png","munchkin.png","persian.png","samoyed.png","shiba.jpeg"],

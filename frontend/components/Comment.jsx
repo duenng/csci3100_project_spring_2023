@@ -12,7 +12,7 @@ export default function Comment({com,current}){
         <>
         <div className="flex item-center mx-2 text-base ">
           {/* info */}
-        <img className="h-8 round-full m-4" src ={`avatar/${com.avatar?com.avatar:"user.png"}`}/>
+        <img className="h-8 round-full m-4" src ={`/avatar/${com.avatar?com.avatar:"user.png"}`}/>
         <div className="flex-grow">
         <p className="m-2"><a>{com.user.username} </a><a className=" text-gray-500">{com.user.tag} { format( com.date , " · yyyy MMMM dd")}</a></p>
         <p className="m-2"> Replying <a className=" text-gray-500">{com.replying}</a></p>

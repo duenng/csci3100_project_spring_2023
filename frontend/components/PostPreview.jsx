@@ -12,6 +12,7 @@ import PostImage from "./PostImage";
 import VideoPlayer from "./VideoPlayer";
 import { useRouter } from 'next/router';
 import PopUpCreate from './PopUpCreatePost';
+import Repost from './Repost';
 
 function LikePanel(props){
     let post = props.post
@@ -163,6 +164,7 @@ export default function PreviewPost(props){
             {/* text */}
         <div className="m-2 text-base " onClick={(e)=>handleClick(e)}>
             <p className="m-2">{post.text}</p>
+            {post.reposting?<div className="my-4 mx-3"><Repost post={post.reposting}/></div>:null}
             {/* media */}
             {post?.images?.length?<div className=" m-2"><PostImage ids={post.images}/></div>:null}
             {post.video?<div className="my-4 mx-4"><VideoPlayer filename={post.video}/></div>:null}

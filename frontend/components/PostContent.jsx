@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import PostImage from './PostImage';
 import VideoPlayer from './VideoPlayer';
 import { DotsHorizontalIcon } from '@heroicons/react/outline';
+import Repost from './Repost'
 
 
 export default function PostContent(props){
@@ -13,7 +14,7 @@ export default function PostContent(props){
         {/* info */}
             <div className="my-4 flex items-center justify-left text-black-700 justify-start-onlarge mx-2">
               {/* User Profile Picture, Need to import from database*/}
-              <img className="h-12 round-full my-1" src ={`avatar/${owner.avatar?owner.avatar:"user.png"}`}/>
+              <img className="h-12 round-full my-1" src ={`/avatar/${owner.avatar?owner.avatar:"user.png"}`}/>
               <div className="mx-2 text-m flex-grow">
                 {/* User Name, Need to import from database*/}
                 <h4 style={{ padding: 0, margin: 0 }}>{owner.username}</h4>
@@ -27,6 +28,8 @@ export default function PostContent(props){
             <div className="text-l my-4 mx-3">
               <p>{props.text}</p>
             </div>
+            {/* repost */}
+            {props.reposting?<div className="my-4 mx-3"><Repost post={props.reposting}/></div>:null}
             {/* medias */}
             {props.images?.length?<div className="my-4 mx-3"><PostImage ids={props.images}/></div>:null}
             {props.video?<div className="my-4 mx-4"><VideoPlayer filename={props.video}/></div>:null}
