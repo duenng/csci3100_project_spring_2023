@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
 import PostContent from "./PostContent";
 import PostCommentSection from "./PostCommentSection";
+import axios from "axios";
+import { useUser } from "../components/FirebaseContext";
 // import idToken from "./useUserToken"
 
 
@@ -63,47 +65,44 @@ let testPost = {
 
 export default function Post(){
 
+    const [currentUser,setCurrentUser] = useState(null)
+    const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
     const [post,setPost] = useState(null)
-    const router = useRouter();
+    const router = useRouter()
+    const { postId } = router.query
 
+  const handleUser = async (uid)=>{
+      let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
+      return data
+    }
 
-
-    useEffect( ()=>{
-      return()=>{
-        useEffect(()=>{
-          return()=>{
-              let uid = null
-              auth.onAuthStateChanged( async(user) => {
-              if (user) {
-                  uid= await user.uid
-                  setTimeout(async ()=>{
-                      try {
-                          console.log(uid)
-                          while(!uid){
+  const handlePost = async (id)=>{
+      let {data} = await axios.get(`http://${window.location.hostname}:3001/post/${id}`)
+      return data
+  }
   
-                          }
-                          let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
-                          console.log(data)
-                          while(!data){
-  
-                          }
-                          //setUser(data)
-                          //console.log(currentUser)
-                          let postData = await axios.get(`http://${window.location.hostname}:3001/followingPosts/${data.userId}`)
-                          console.log(postData)
-                          setUser(data)
-                          setPosts(postData)
-                      } catch (error) {
-                          console.log(error)
-                      }
-                  },50)
-              } else {
-                router.push("/login")
-              }
-          })
-      }},[])
+    useEffect(() => {
+      if(user){
+        console.log(user.uid)
+        handleUser(user.uid).then((user)=>{
+          if(user){
+              setCurrentUser(user)
+              return user.uerId
+          }
+              return null
+        })
       }
-    },[])
+    }, [user, loading, router]);
+
+    useEffect(()=>{
+      console.log(postId)
+      handlePost(postId).then((post)=>{
+        setPost(post)
+        console.log(post)
+      })
+    })
+
+
       
 
     return(
@@ -114,12 +113,12 @@ export default function Post(){
               <a className="my-4 text-white font-semibold flex-grow">Posts</a>
             </div>
             {
-              post? <>
+              post&&currentUser? <>
               {/* info text media ... */}
               <PostContent owner={post.user} date={post.date} text={post.text} images={post.images} video= {post.video} reposting={post.reposting}/>
               
               {/* comment section */}
-              <PostCommentSection user={testUser} tag={post.user.tag} like={post.like} repost={post.repost} comment={post.comment} postId={post.postId}/>
+              <PostCommentSection user={currentUser} tag={post.user.tag} like={post.like} repost={post.repost} comment={post.comment} postId={post.postId}/>
   
               
               {/* pop up message */}

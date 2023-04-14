@@ -156,10 +156,10 @@ export default function CreatePost({user,url}){
           }
         try {
             console.log(body)
-            let {data} = await axios.post(`http://localhost:3001/comment`,body)
+            let {data} = await axios.post(`http://localhost:3001/post`,body)
             console.log(data)
             if(data){
-                return router.replace(`/post/${data.postId}`)
+                return router.push(`/post/${data.postId}`)
             }
           } catch (error) {
             console.log(error)

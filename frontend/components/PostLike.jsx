@@ -13,7 +13,7 @@ import PopUpCreate from "./PopUpCreatePost";
 export default function PostLike(props){
     const [repost,setRepost] = useState(props.repost)
     const [like,setLike] = useState(props.like)
-    const [liked,setLiked] = useState(like.includes(props.current.userID))
+    const [liked,setLiked] = useState(like.includes(props.current.userId))
     const [copy,setCopy] = useState(false)
     const [showPop,setShowPop] = useState(false)
     

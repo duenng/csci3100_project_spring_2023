@@ -133,7 +133,7 @@ mongoose.connection.once("open",function(){
 
     //create post
     app.post("/post", async (req,res)=>{
-      console.log(req.body)
+      console.log(req)
       try{
       let Id = await newPostId();
       let {userId, text, reposting,date,images,video} = req.body;

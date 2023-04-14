@@ -6,7 +6,8 @@ import Repost from './Repost'
 
 
 export default function PostContent(props){
-    const formattedDate = format(props.date, "pp · yyyy MMMM dd");
+    //const formattedDate = format(props.date, "pp · yyyy MMMM dd");
+    const formattedDate = props.date
     let owner = props.owner
 
     return(
