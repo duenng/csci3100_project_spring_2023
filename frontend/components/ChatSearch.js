@@ -19,15 +19,15 @@ const ChatSearch = () => {
     const [user, setUser] = useState(null);
     const [err, setErr] = useState(false);
 
-    const { currentUser } = useContext(AuthContext);
     
+
     const handleSearch = async () => {
         const q = query(
           collection(db, "users"),
           where("username", "==", username)
         );
         console.log(username);
-        console.log(currentUser.username); 
+
         try {
           const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
@@ -103,6 +103,7 @@ const ChatSearch = () => {
                   <img className="w-10 h-10 rounded-full" src={ `avatar/${user.avatar?user.avatar:"user.png"}`} alt="" />
                   <div className="userChatInfo text-gary-500 text-xs pt-1 text-center">
                       <span>{user.username}</span>
+                      <span>{user.userid}</span>
                   </div>
                   </div>
                 </div>

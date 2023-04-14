@@ -69,9 +69,40 @@ export default function Post(){
 
 
     useEffect( ()=>{
-      // let token = await idToken
-      // console.log(token)
-      setPost(testPost)
+      return()=>{
+        useEffect(()=>{
+          return()=>{
+              let uid = null
+              auth.onAuthStateChanged( async(user) => {
+              if (user) {
+                  uid= await user.uid
+                  setTimeout(async ()=>{
+                      try {
+                          console.log(uid)
+                          while(!uid){
+  
+                          }
+                          let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
+                          console.log(data)
+                          while(!data){
+  
+                          }
+                          //setUser(data)
+                          //console.log(currentUser)
+                          let postData = await axios.get(`http://${window.location.hostname}:3001/followingPosts/${data.userId}`)
+                          console.log(postData)
+                          setUser(data)
+                          setPosts(postData)
+                      } catch (error) {
+                          console.log(error)
+                      }
+                  },50)
+              } else {
+                router.push("/login")
+              }
+          })
+      }},[])
+      }
     },[])
       
 

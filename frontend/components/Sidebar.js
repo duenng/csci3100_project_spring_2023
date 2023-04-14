@@ -16,11 +16,14 @@ import { useState,useEffect } from "react";
 import { useUser } from "../components/FirebaseContext";
 import { set } from "date-fns";
 import PopUpCreate from './PopUpCreatePost';
+import axios from "axios";
 
 //dark mode
 //import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 //end dark mode
+
+
 
 
 function Sidebar({setShowProfile }) {
@@ -33,20 +36,36 @@ function Sidebar({setShowProfile }) {
   //end dark mode
 
 
-  const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
   const [showPop,setShowPop] = useState(false)
+  const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
   const router = useRouter();
+  const [currentUser,setCurrentUser] = useState(null)
+
 
   //active variable
   const [isHomeActive, setIsHomeActive] = useState(true);
   const [isProfileActive, setIsProfileActive] = useState(false);
   const [isMessageActive, setIsMessageActive] = useState(false);
   const [isSettingActive, setIsSettingActive] = useState(false);
-
-
-
   
+
+  const handleUser = async (uid)=>{
+    console.log(uid)
+    let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
+    console.log(data)
+    return data
+  }
+
   useEffect(() => {
+    if(user){
+      console.log(user.uid)
+      handleUser(user.uid).then((user)=>{
+        if(user){
+          console.log(user)
+          setCurrentUser(user)
+        }
+      })
+    }
     //dark mode
     setMounted(true);
     //dark mode
@@ -54,6 +73,7 @@ function Sidebar({setShowProfile }) {
       router.replace("/login");
     }
   }, [user, loading, router]);
+    
   //dark mode
   if (!mounted) return null;
   const currentTheme = theme === 'system' ? systemTheme : theme;
@@ -115,6 +135,7 @@ function Sidebar({setShowProfile }) {
   };
 
   return (
+  
     <>
       <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-12">
       <div className="px-1.5 hoverEffect p-4 hover:bg-purple-100 xl:px-4 xl:items-start" onClick={handleFront}>
@@ -157,13 +178,13 @@ function Sidebar({setShowProfile }) {
         />
         <div className="hidden xl:inline leading-5">
           {/* User Name, Need to import from database*/}
-          <h4 className="font-bold">Username</h4>
-          <p className="text-gray-500">@username</p>
+          <h4 className="font-bold">{currentUser?currentUser.username:"loading"}</h4>
+          <p className="text-gray-500">{currentUser?currentUser.tag:"loading"}</p>
         </div>
         <DotsHorizontalIcon className="h-5 xl:m1-8 xl:inline hidden" />
       </div>
     </div>
-     {showPop?<PopUpCreate user={user} url={""} handler={()=>setShowPop(false)}/>:null}
+     {showPop?<PopUpCreate user={currentUser} url={""} handler={()=>setShowPop(false)}/>:null}
     </>
     
 

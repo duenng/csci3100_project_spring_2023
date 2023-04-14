@@ -5,6 +5,8 @@ import CreatePost from "./CreatePost";
 import { auth } from './firebase';
 import { useRouter } from "next/router"; 
 import axios from "axios";
+import { useUser } from "../components/FirebaseContext";
+
 
 
 
@@ -60,26 +62,43 @@ let testComment = [
   testData.fill(testPost)
 
 export default function FrontPage(){
-    const [user,setUser] = useState(null)
     const [posts,setPosts] = useState([])
-    const [token, setToken] = useState(null);
+    const [currentUser,setCurrentUser] = useState(null)
+    const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
     const router = useRouter()
     const topRef = useRef()
 
-    useEffect(()=>{
-        return()=>{
-            let uid = null
-            auth.onAuthStateChanged( async(user) => {
-            if (user) {
-                uid=user.uid
-                let {data} = axios.get(`http://${window.location.hostname}:3001/user/token/:token`)
-                console.log(data)
-                
-            } else {
-              router.push("/login")
+    
+    const handleUser = async (uid)=>{
+        let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
+        return data
+      }
+
+    const handlePosts = async (id)=>{
+        let {data} = await axios.get(`http://${window.location.hostname}:3001/followingPosts/${id}`)
+        return data
+    }
+    
+      useEffect(() => {
+        if(user){
+          console.log(user.uid)
+          handleUser(user.uid).then((user)=>{
+            if(user){
+                setCurrentUser(user)
+                return user.uerId
             }
-        })
-    }},[])
+                return null
+          }).then((id)=>{
+            if(!id){
+                return 
+            }
+            console.log(id)
+            handlePosts(id).then((posts)=>{
+                setPosts(posts)
+            })
+          })
+        }
+      }, [user, loading, router]);
     
 
     const handleTop = () =>{
@@ -93,13 +112,13 @@ export default function FrontPage(){
             <div  className= " rounded-sm sticky z-30 top-0 flex  h-12 items-center bg-opacity-75 backdrop-blur-sm bg-violet-500" onClick={()=>handleTop()}>
               <h1 className=" font-bold text-white text-2xl ml-6" >Home</h1>
             </div>
-            <div className="my-2">
-                <CreatePost user={testUser} url={""}/>
+            {currentUser?<><div className="my-2">
+                <CreatePost user={currentUser} url={""}/>
             </div>
             <hr className="mx-2 border-violet-500"></hr>
             {posts.length?posts.map((post,index)=>{
                 return <PreviewPost post={post} user={testUser} key={index}/>
-            }):null}
+            }):null}</>:null}
 
 
         </>
