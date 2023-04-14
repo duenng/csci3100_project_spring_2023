@@ -9,21 +9,24 @@ import Trending from "@/components/Trending";
 import Suggestions from "@/components/Suggestions";
 import {AuthContextProvider} from '@/components/UserContext';
 import Chat from "@/components/Chat.js";
+import {idToken} from '@/components/useUserToken'
 
 const inter = Inter({ subsets: ['latin'] })
 
+
 export default function Home() {
   return (
-    <div className=" h-screen">
-    <div className='grid grid-cols-10 w-screen h-screen'>
-      <div className=' col-span-2 h-screen'>
-        <Sidebar />
-      </div>
+      
+      <div className=" h-screen">
+      <div className='grid grid-cols-10 w-screen h-screen'>
+        <div className=' col-span-2 h-screen'>
+          <Sidebar />
+        </div>
 
-      <div className='col-span-8 h-screen '>
-        <Chat/>
+        <div className='col-span-8 h-screen '>
+          <Chat/>
+        </div>
       </div>
-    </div>
-    </div>
+      </div>
   );
 }

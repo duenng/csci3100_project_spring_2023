@@ -8,7 +8,7 @@ import {
   DotsCircleHorizontalIcon,
   DotsHorizontalIcon,
 } from "@heroicons/react/outline";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect,useState } from "react";
 import {
   collection,
   query,
@@ -20,8 +20,12 @@ import {
   serverTimestamp,
   getDoc,
 } from "firebase/firestore";
-import { db } from "@/components/firebase";
 import ChatSearch from "@/components/ChatSearch";
+import { db } from "@/components/firebase";
+import { AuthContext } from "@/components/ChatuserContext";
+import {idToken} from  "@/components/useUserToken";
+import { auth } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const user = {
     username: function(){
@@ -60,14 +64,32 @@ let testUser2 ={
     isAdmin:false
   }
 
-
 function Chat() {
 
+const { currentUser } = useContext(AuthContext);
+
+const [token, setToken] = useState(null);
+
+
+useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const  idToken = await user.getIdToken();
+          console.log('ID Token fetched (Message):', idToken); // Add this line
+          setToken(idToken);
+        } else {
+          setToken(null);
+        }
+      });
+    console.log(idToken)
+}, []);
+  
+
+
+
+
+
 return (
- 
-
-
-
 
 <div className="flex">
 
@@ -79,7 +101,7 @@ return (
         <div className="flex m-3 overflow-auto">
             <div className="p-2 flex justify-center items-center flex-col">
                 <img className="w-10 h-10 rounded-full" src="./usericon.jpg"/>
-                <div className="text-gary-500 text-xs pt-1 text-center">Username</div>
+                <div className="text-gary-500 text-xs pt-1 text-center">currentUser.uid</div>
             </div>
             <div className="p-2 flex justify-center items-center flex-col">
                 <img className="w-10 h-10 rounded-full" src="./usericon.jpg"/>
@@ -200,8 +222,8 @@ return (
                             <div className="text-xs text-gray-100">Oh Yeah! Come onUse overflow-auto to add scrollbars to an element in the event that its content overflows the bounds of that element. Unlike overflow-scroll, which always shows scrollbars, this utility will only show them if scrolling is necessary.!</div>
                             <div className=" flex items-end text-xs text-gray-200"> 8 minutes ago</div>
                         </div>     
-                        <img className="w-10 h-10 rounded-full m-6" src={user.usericon.call(CurrentUser)} alt="" />
-    
+                        <img className="w-10 h-10 rounded-full m-6" src="./usericon.jpg" alt="" />
+                        
                     </div>
                 </div>
 
@@ -223,6 +245,6 @@ return (
 
 
 );
-}
+};
 
 export default Chat;
