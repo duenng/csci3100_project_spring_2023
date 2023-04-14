@@ -74,7 +74,7 @@ function SettingAll() {
               />
             </div>
             <hr className="my-2" /> {/* Horizontal line */}
-            <DeleteAccountConfirmation />
+            {/* <DeleteAccountConfirmation /> */}
             {/* <div>I confirm that all data will be deleted permanently and cannot be recovered.</div> */}
             {/* <button className="mt-6 items-center text-purple-500  hover:brightness-60 rounded-full font-bold text-base " onClick={handleDeleteAccount}>Delete Account</button> */}
           </div>

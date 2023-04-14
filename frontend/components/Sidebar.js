@@ -103,39 +103,43 @@ function Sidebar({setShowProfile }) {
 
   const handleNotification = () => {
     console.log("Notifications clicked!");
-    /* setIsNotificationActive(true); // Set "Noti" as active
+    setIsHomeActive(false);
+    setIsNotificationActive(true); // Set "Noti" as active
     setIsMessageActive(false);
     setIsProfileActive(false);
-    setIsSettingActive(false); */
+    setIsSettingActive(false);
     router.push("/notifications");
   };
 
   const handleMessagesClick = () => {
     console.log("Messages clicked!");
-    /* setIsMessageActive(true); // Set "Messages" as active
+    setIsNotificationActive(false);
+    setIsMessageActive(true); // Set "Messages" as active
     setIsHomeActive(false);
     setIsProfileActive(false);
-    setIsSettingActive(false); */
+    setIsSettingActive(false);
     router.push('/chat')
   };
 
 
   const handleProfileClick = () => {
     console.log("Profile clicked!");
-   /*  setIsProfileActive(true); // Set "Profile" as active
+    setIsNotificationActive(false);
+    setIsProfileActive(true); // Set "Profile" as active
     setIsHomeActive(false);
     setIsMessageActive(false);
-    setIsSettingActive(false); */
+    setIsSettingActive(false);
     //setShowProfile(true);
     router.push('/profile')
   };
 
   const handleSettingClick = () => {
     console.log("Setting clicked!");
-    /* setIsSettingActive(true); // Set "Setting" as active
+    setIsNotificationActive(false);
+    setIsSettingActive(true); // Set "Setting" as active
     setIsHomeActive(false);
     setIsMessageActive(false);
-    setIsProfileActive(false); */
+    setIsProfileActive(false);
     router.push('/setting')
   };
 
