@@ -14,7 +14,7 @@ export default function Comment({com,current}){
           {/* info */}
         <img className="h-8 round-full m-4" src ={`/avatar/${com.avatar?com.avatar:"user.png"}`}/>
         <div className="flex-grow">
-        <p className="m-2"><a>{com.user.username} </a><a className=" text-gray-500">{com.user.tag} { format( com.date , " · yyyy MMMM dd")}</a></p>
+        <p className="m-2"><a>{com.user.username} </a><a className=" text-gray-500">{com.user.tag}   {com.date}</a></p>
         <p className="m-2"> Replying <a className=" text-gray-500">{com.replying}</a></p>
         </div>
         <CommentLikes like={com.like} current={current}/>

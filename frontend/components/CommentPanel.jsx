@@ -85,7 +85,7 @@ export default function CommentPanel(props){
         let date = new Date()
         let content = text
         //todo ftech comment to sever
-        let data={
+        let body={
             userId:user.userId,
             postId:props.postId,
             replying:props.tag,
@@ -95,7 +95,14 @@ export default function CommentPanel(props){
             like:[],
             date:date
         }
-        console.log(data)
+        console.log(body)
+        try {
+            console.log(body)
+            let {data} = await axios.post(`http://localhost:3001/comment`,body)
+            console.log(data)
+          } catch (error) {
+            console.log(error)
+          }
 
         // post request, if res.status not ok, return
 

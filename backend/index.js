@@ -66,7 +66,7 @@ mongoose.connection.once("open",function(){
     const commentSchema = new Schema({
           belong:{type:Schema.Types.ObjectId, ref: 'Post',required: true},
           user:{type:Schema.Types.ObjectId, ref: 'User',required: true},
-          replying: {type:Schema.Types.ObjectId, ref: 'User',required: true},
+          replying: {type:String,required: true},
           text: { type: String, required: true },
           date: { type: Date, default: Date.now },
           like: { type: [Schema.Types.ObjectId], ref:"User",default: [] },
