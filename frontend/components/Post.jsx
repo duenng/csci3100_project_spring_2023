@@ -5,6 +5,8 @@ import PostContent from "./PostContent";
 import PostCommentSection from "./PostCommentSection";
 import axios from "axios";
 import { useUser } from "../components/FirebaseContext";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 // import idToken from "./useUserToken"
 
 
@@ -66,43 +68,41 @@ let testPost = {
 export default function Post(){
 
     const [currentUser,setCurrentUser] = useState(null)
-    const { user, loading, logout } = useUser(); // Destructure user, loading, and logout function
     const [post,setPost] = useState(null)
     const router = useRouter()
-    const { postId } = router.query
+    let { postId } = router.query
 
-  const handleUser = async (uid)=>{
-      let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
-      return data
+  
+    const init = (uid)=>{
+      return new Promise(async (reslove,reject)=>{
+        try{
+          let getUser = await axios.get(`http://${process.env.NEXT_PUBLIC_DB }/user/token/${uid}`)
+          let getPost = await axios.get(`http://${process.env.NEXT_PUBLIC_DB }/post/${postId}`)
+          setCurrentUser(getUser.data)
+          getPost.data.like = getPost.data.like.map((obj=>obj.userId))
+          setPost(getPost.data)
+          //console.log(getPost.data.like)
+          reslove()
+        }
+        catch(err){
+          reject(err)
+        }
+      })
     }
 
-  const handlePost = async (id)=>{
-      let {data} = await axios.get(`http://${window.location.hostname}:3001/post/${id}`)
-      return data
-  }
-  
-    useEffect(() => {
-      if(user){
-        console.log(user.uid)
-        handleUser(user.uid).then((user)=>{
-          if(user){
-              setCurrentUser(user)
-              return user.uerId
-          }
-              return null
-        })
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user&&!currentUser&&!post) {
+         const uid = user.uid;
+         init(uid);
+      } 
+      });
+
+      if(!currentUser||!post){
+        return(
+          <h2>Loading...</h2>
+        )
       }
-    }, [user, loading, router]);
-
-    useEffect(()=>{
-      console.log(postId)
-      handlePost(postId).then((post)=>{
-        setPost(post)
-        console.log(post)
-      })
-    },[])
-
-
       
 
     return(

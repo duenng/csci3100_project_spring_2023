@@ -61,17 +61,30 @@ const Login = () => {
       const result = await signInWithPopup(auth, provider);
 
       const user = result.user;
-
+		
       // Check if user already exists
-      const isNewUser = getAdditionalUserInfo(result).isNewUser;
+	  //   const isNewUser = getAdditionalUserInfo(result).isNewUser;
+	  //   console.log("isNewUser", isNewUser);
+	  //   // Pass the isNewUser value to the Home component via a query parameter
+	  //   router.push({
+		 //     pathname: "/",
+		 //     query: { isNewUser: isNewUser },
+		 //   });
+		 
+	//check user in backend
+	let res = await axios.get(`http://${process.env.NEXT_PUBLIC_DB}/user/token/${user.uid}`)
+	// console.log(user,user.uid,{data})
+	if ("notfound" in res.data && res.data.notfound){
+		console.log(user)
+		let signup = await axios.post(`${BACKEND_URL}/user`, {
+			username: user.displayName,
+			token: user.uid,
+			tag: user.displayName,
+			avatar:""
+		  });
+	}
+	router.push("/")
 
-      console.log("isNewUser", isNewUser);
-
-      // Pass the isNewUser value to the Home component via a query parameter
-      router.push({
-        pathname: "/",
-        query: { isNewUser: isNewUser },
-      });
     } catch (error) {
       console.log(error);
       alert("Failed to sign in with Google.", error);

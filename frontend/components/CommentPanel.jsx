@@ -99,9 +99,9 @@ export default function CommentPanel(props){
         }
         console.log(body)
         try {
-            console.log(body)
-            let {data} = await axios.post(`http://localhost:3001/comment`,body)
-            console.log(data)
+            //console.log(body)
+            let {data} = await axios.post(`http://${process.env.NEXT_PUBLIC_DB}/comment`,body)
+            //console.log(data)
           } catch (error) {
             console.log(error)
           }

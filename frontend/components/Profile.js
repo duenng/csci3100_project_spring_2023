@@ -1,4 +1,5 @@
-function Profile({users}) {
+
+function Profile({users,current}) {
   return (
     <div className="pr-[00px] xl:ml-[370px] border-l border-r xl:min-w-[576px] sm:ml-[15%] max-w-xl ml-[px] flex-grow sm:pl-0 min-w-[15%]">
         <div className= " rounded-sm sticky z-30 top-0 flex  h-14 items-center bg-opacity-75 backdrop-blur-sm bg-violet-500" onClick={()=>handleTop()}>
@@ -17,14 +18,21 @@ function Profile({users}) {
             <h4 className="font-bold text-gray-500">{users.tag}</h4>
         </div>
         <div className="flex mt-2">
-            <p className="pr-10">Follower: {users.follower}</p>
-            <p>Following: {users.following}</p>
+            <p className="pr-10">Follower: {users.follower.length}</p>
+            <p>Following: {users.following.length}</p>
         </div>
-        <div className="flex mt-2">
+             {/* follow */}
+        {/* {users._id!==current._id?
+        <div className="mt-3">
+           { users.following.includes(current._id)?"abc":"efg"}
+        </div>
+        :null} */}
+         {/* <div className="flex mt-2">
             <p className="pr-10">Caption</p>
             
-            </div>
-        </div>
+            </div> */}
+        </div> 
+       
         </div>        
             
         

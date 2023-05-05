@@ -7,13 +7,14 @@ import repostIcon from '@iconify/icons-zondicons/repost';
 import outlineComment from '@iconify/icons-ic/outline-comment';
 import iosShareRounded from '@iconify/icons-material-symbols/ios-share-rounded';
 import PopUpCreate from "./PopUpCreatePost";
+import axios from "axios";
 
 
 
 export default function PostLike(props){
     const [repost,setRepost] = useState(props.repost)
     const [like,setLike] = useState(props.like)
-    const [liked,setLiked] = useState(like.includes(props.current.userId))
+    const [liked,setLiked] = useState(props.like.includes(props.current.userId))
     const [copy,setCopy] = useState(false)
     const [showPop,setShowPop] = useState(false)
     
@@ -27,17 +28,24 @@ export default function PostLike(props){
         setShowPop(true)
       }
 
-      const handleUnlike=(e)=>{
+      const handleUnlike= async (e)=>{
         setLiked(false)
         if(like.includes(props.current.userId)){
           let filtered = like.filter(id=>id!==props.current.userId)
           setLike([...filtered])
           //fetch
+          try {
+            let {data} = await axios.post(`http://${process.env.NEXT_PUBLIC_DB}/dislike/${props.postId}`,{userId:props.current.userId})
+            //console.log(data)
+          } catch (error) {
+            console.log(error)
+          }
+          
         }
         
       }
 
-      const handleLike=(e)=>{
+      const handleLike= async(e)=>{
         setLiked(true);
         //console.log(like,props.current)
         if(!like.includes(props.current.userId)){
@@ -45,6 +53,12 @@ export default function PostLike(props){
           setLike(prev=>{
             return [...prev,props.current.userId]})
           //fetch
+          try {
+            let {data} = await axios.post(`http://${process.env.NEXT_PUBLIC_DB}/like/${props.postId}`,{userId:props.current.userId})
+            //console.log(data)
+          } catch (error) {
+            console.log(error)
+          }
         }
       }
 

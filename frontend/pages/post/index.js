@@ -5,10 +5,19 @@ import styles from '@/styles/Home.module.css'
 import Sidebar from '@/components/Sidebar'
 import Post from "@/components/Post"
 import Widgets from '@/components/Widgets'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({newsResults}) {
+  const router = useRouter()
+
+  useEffect(()=>{
+    return router.push("/")
+  })
+
+
   return (
 
     <div className='grid grid-cols-4  w-screen'>
@@ -17,7 +26,7 @@ export default function Home({newsResults}) {
       </div>
 
       <div className='col-span-2 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words'>
-       <div>Nothing here</div>
+       <h2>Check your route.</h2>
       </div>
 
       <div className='col-span-1 border-x-4  h-screen overflow-y-scroll overflow-x-hidden break-words  '>

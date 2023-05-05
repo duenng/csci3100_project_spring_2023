@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Icon } from '@iconify/react';
 import cardsHeartOutline from '@iconify/icons-mdi/cards-heart-outline';
 import cardsHeart from '@iconify/icons-mdi/cards-heart';
+import axios from "axios";
 
 export default function CommentLikes(props){
     const [like,setLike] = useState(props.like)
@@ -17,12 +18,17 @@ export default function CommentLikes(props){
         
     }
 
-    const handleLike=(e)=>{
+    const handleLike= async(e)=>{
         setLiked(true);
         if(!like.includes(props.current)){
           setLike(prev=>{
             return [...prev,props.current]})
           //fetch
+          try {
+            let {data} = await axios.post
+          } catch (error) {
+            
+          }
         }
     }
 

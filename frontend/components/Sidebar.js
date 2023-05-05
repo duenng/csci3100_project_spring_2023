@@ -51,18 +51,18 @@ function Sidebar({setShowProfile }) {
   
 
   const handleUser = async (uid)=>{
-    console.log(uid)
+    //console.log(uid)
     let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
-    console.log(data)
+    //console.log(data)
     return data
   }
 
   useEffect(() => {
     if(user){
-      console.log(user.uid)
+      //console.log(user.uid)
       handleUser(user.uid).then((user)=>{
         if(user){
-          console.log(user)
+          //console.log(user)
           setCurrentUser(user)
         }
       })
@@ -130,7 +130,7 @@ function Sidebar({setShowProfile }) {
     setIsMessageActive(false);
     setIsSettingActive(false);
     //setShowProfile(true);
-    router.push('/profile')
+    window.open(`/profile/${currentUser.userId}`,"_self")
   };
 
   const handleSettingClick = () => {

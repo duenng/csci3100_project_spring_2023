@@ -29,7 +29,7 @@ export default function PostCommentSection(props){
 
     return(
         <>
-            <PostLike current={props.user} repost={props.repost} like={props.like} handler={()=>handleShowAddComment()}/>
+            <PostLike current={props.user} postId={props.postId} repost={props.repost} like={props.like} handler={()=>handleShowAddComment()}/>
             <hr className="mx-2 border-violet-500"></hr>
             {/* comment section */}
             <div className="mx-2" ref={commentRef}>

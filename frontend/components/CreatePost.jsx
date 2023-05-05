@@ -47,12 +47,12 @@ export default function CreatePost({user,url, popUp}){
             return
         }
         let splited = link.split("/")
-        if(splited.length!==3||
-            splited[0]!==window.location.host||
-            splited[1]!=="post"||
-            isNaN(splited[2])){
+        if(!splited.length|
+            splited[splited.length-3]!==window.location.host||
+            splited[splited.length-2]!=="post"||
+            isNaN(splited[splited.length-1])){
                 setMessage("Your link is not a valid link of Tertwit post.")
-                //console.log(splited,isNaN(splited[2]))
+                console.log(splited)
                 setVerifyingUrl(false)
                 return
         }
@@ -140,10 +140,7 @@ export default function CreatePost({user,url, popUp}){
         //console.log(reposting)
         if(reposting){
             let splited = reposting.split("/")
-            if(splited.length!==3||isNaN(splited[2])){
-                return
-            }
-            repostingId = Number(splited[2])
+            repostingId = Number(splited[splited.length-1])
         }
         //todo ftech comment to sever
         let body = {
@@ -155,14 +152,11 @@ export default function CreatePost({user,url, popUp}){
             video: videoName,
           }
         try {
-            console.log(body)
-            let {data} = await axios.post(`http://localhost:3001/post`,body)
-            console.log(data)
+            // console.log(body)
+            let {data} = await axios.post(`http://${process.env.NEXT_PUBLIC_DB }/post`,body)
+            //console.log(data)
             if(data){
-                router.replace(`/post/${data.postId}`)
-                if(popUp){
-                    router.reload()
-                }
+                window.open(`/post/${data.postId}`,"_self")
             }
           } catch (error) {
             console.log(error)

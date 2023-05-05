@@ -9,10 +9,11 @@ export default function Repost(props){
 
     const handleClick = (e)=>{
       let tag = e.target.tagName
+      console.log(tag)
       if(tag==="IMG"||tag==="VIDEO"||tag==="A"||window.getSelection().toString().length){
         return
       }
-      router.push(`/post/${post.postId}`)
+      window.open(`/post/${post.postId}`,"_self")
     }
 
     
@@ -24,7 +25,7 @@ export default function Repost(props){
             <img className="h-8 round-full m-4" src ={`/avatar/${owner.avatar?owner.avatar:"user.png"}`}/>
                 <div className="flex-grow">
                     <p className="m-2"><a>{owner.username} </a><a className=" text-gray-500">{owner.tag} </a></p>
-                    <p className="m-2 text-gray-500 text-sm">{ format(post.date, "pp · yyyy MMMM dd")}</p>
+                    <p className="m-2 text-gray-500 text-sm">{ post.date}</p>
                 </div>
         </div>
             {/* text */}

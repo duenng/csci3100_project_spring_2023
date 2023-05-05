@@ -3,11 +3,11 @@ import Sidebar from '@/components/Sidebar'
 import FrontPage from '../components/FrontPage';
 import Widgets from '../components/Widgets';
 import Head from 'next/head'
+import { useEffect } from 'react';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({newsResults}) {
-
   
 
   return (

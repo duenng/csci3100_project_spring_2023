@@ -133,7 +133,7 @@ mongoose.connection.once("open",function(){
 
     //create post
     app.post("/post", async (req,res)=>{
-      console.log(req)
+      //console.log(req)
       try{
       let Id = await newPostId();
       let {userId, text, reposting,date,images,video} = req.body;
@@ -171,7 +171,7 @@ mongoose.connection.once("open",function(){
 
     //create comment 
     app.post("/comment", async (req,res)=>{
-      console.log(req.body)
+      //console.log(req.body)
       let {userId, postId,replying,text,images,video,date} = req.body;
       let user = await User.findOne({userId:userId});
       if (!user) {
@@ -230,10 +230,29 @@ mongoose.connection.once("open",function(){
     // Get user by token
     app.get("/user/token/:token", async (req, res) => {
       let token = req.params.token;
+      //console.log(token)
       try {
         let user = await User.findOne({ token: token });
-        if (!user) {
-          return res.status(404).send("User not found");
+       // console.log(user)
+        if(!user){
+          return res.status(200).json({notfound:true});
+        }
+        return res.status(200).json(user);
+      } catch (err) {
+        console.log(err);
+        return res.status(400).send(err);
+      }
+    });
+
+    //get user by userId
+    app.get("/user/id/:id", async (req, res) => {
+      let id = req.params.id;
+      //console.log(token)
+      try {
+        let user = await User.findOne({ userId: id });
+       // console.log(user)
+        if(!user){
+          return res.status(200).json({notfound:true});
         }
         return res.status(200).json(user);
       } catch (err) {
@@ -292,6 +311,7 @@ mongoose.connection.once("open",function(){
       try {
         const { userId } = req.body;
         const postId  = req.params.ID;
+        //console.log(userId,postId)
     
         const user = await User.findOne({ userId:userId });
         if (!user) {
@@ -430,10 +450,10 @@ mongoose.connection.once("open",function(){
     //get users by keyword
     app.get("/searchUsers/:keyword",async(req,res)=>{
       try {
-        console.log(req.params.keyword)
+        //console.log(req.params.keyword)
         let keyword = req.params.keyword;
         let users =  await User.find({ username: { $regex: new RegExp(keyword), $options: "i" } }).select({ username: 1, tag: 1, avatar:1})
-        console.log(users,keyword)
+        // console.log(users,keyword)
         if(!users.length){
           return res.status(200).json([])
         }
