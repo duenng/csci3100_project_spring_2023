@@ -35,18 +35,18 @@ Tertwit allows users to start private conversations with any other user. Users c
 
 ## To start
 
-`cd frontend
+`cd frontend'
 
-npm install
+'npm install'
 
-npm run dev
+'npm run dev'
 
-cd backend
+'cd backend'
 
-npm install
+'npm install'
 
-npm start
+'npm start'
 
-cd tertwitadmin
+'cd tertwitadmin'
 
-cd npmstart`
+'cd npmstart`
