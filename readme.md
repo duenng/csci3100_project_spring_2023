@@ -1,7 +1,11 @@
 [![Node.js version](https://img.shields.io/badge/Node.js-v14.x-blue)](https://nodejs.org/)
 [![Express.js version](https://img.shields.io/badge/Express.js-v4.18.2-green)](https://expressjs.com/)
 [![Next.js version](https://img.shields.io/badge/Next.js-v13.3.0-blue)](https://nextjs.org/)
-[![license](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
+[![React.js version](https://img.shields.io/badge/React.js-v18.0.33-blue)](https://reactjs.org/)
+[![Firebase version](https://img.shields.io/badge/Firebase-v9.19.1-orange)](https://firebase.google.com/)
+[![Firebase Admin SDK version](https://img.shields.io/badge/Firebase_Admin_SDK-v11.6.0-orange)](https://firebase.google.com/docs/admin/setup)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Database-green)](https://www.mongodb.com/)
+[![Mongoose version](https://img.shields.io/badge/Mongoose-v7.0.3-blue)](https://mongoosejs.com/)
 
 # Tertwit
 
