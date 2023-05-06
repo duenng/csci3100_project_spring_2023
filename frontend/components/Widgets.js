@@ -87,6 +87,9 @@ function Searchbar({show,click}){
 
 
   const handleSearch= async()=>{
+    if (keyword==""){
+      return
+    }
     let {data} = await axios.get(`http://${window.location.hostname}:3001/searchUsers/${keyword}`)
     setResult(data)
   }
@@ -97,10 +100,6 @@ function Searchbar({show,click}){
           setResult([])
           return
       }
-      // todo: request search users
-      
-      // for test
-      //console.log(result)
   },[keyword])
 
 
