@@ -46,10 +46,6 @@ export default function FrontPage(){
     const [posts,setPosts] = useState([])
     const topRef = useRef()
 
-    useEffect(()=>{
-        // shd get pots by userId
-        setPosts(testData)
-    },[])
 
     const handleTop = () =>{
         topRef.current.scrollIntoView({ behavior: 'smooth', block: 'start'});
@@ -69,10 +65,6 @@ export default function FrontPage(){
                 <button className=" text-violet text-2xl ml-6" >Unfollow</button>
             </div>
             <hr className="mx-2 border-violet-500"></hr>
-            {posts.length?posts.map((post,index)=>{
-                return <PreviewPost post={post} user={testUser} key={index}/>
-            }):null}
-
 
         </>
     )

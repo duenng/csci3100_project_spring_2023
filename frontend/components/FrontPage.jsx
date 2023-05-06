@@ -68,12 +68,12 @@ export default function FrontPage(){
     const router = useRouter()
     const topRef = useRef()
 
-    
+    //get user info
     const handleUser = async (uid)=>{
         let {data} = await axios.get(`http://${window.location.hostname}:3001/user/token/${uid}`)
         return data
       }
-
+    //get posts by following
     const handlePosts = async (id)=>{
         let {data} = await axios.get(`http://${window.location.hostname}:3001/followingPosts/${id}`)
         return data

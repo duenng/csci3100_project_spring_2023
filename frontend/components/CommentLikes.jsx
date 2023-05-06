@@ -13,7 +13,6 @@ export default function CommentLikes(props){
         if(like.includes(props.current)){
           let filtered = like.filter(id=>id!==props.current)
           setLike([...filtered])
-          //fetch
         }
         
     }
@@ -23,12 +22,7 @@ export default function CommentLikes(props){
         if(!like.includes(props.current)){
           setLike(prev=>{
             return [...prev,props.current]})
-          //fetch
-          try {
-            let {data} = await axios.post
-          } catch (error) {
-            
-          }
+
         }
     }
 

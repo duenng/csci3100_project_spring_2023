@@ -25,6 +25,7 @@ export default function CommentPanel(props){
         setUploadingI(true);
         let names = []
         try {
+            // upload images and get file names
             const formData = new FormData();
             images.forEach((file,i)=>{
                 formData.append("myImage_"+i, file);
@@ -49,6 +50,7 @@ export default function CommentPanel(props){
     const handleVideo = async()=>{
         setUploadingV(true);
         try {
+            //upload videos
             const formData = new FormData();
             formData.append("myVideo", video);
             const { data } = await axios.post("/api/video", formData);
@@ -68,6 +70,7 @@ export default function CommentPanel(props){
             setMessage("Text is required.")
             return
         }
+        //get images names
         let imageNames = []
         if(images.length){
            imageNames= await handleImage()
@@ -76,6 +79,7 @@ export default function CommentPanel(props){
            }
             //console.log(images)
         }
+        //get video names
         let videoName = ""
         if(video){
             videoName = await handleVideo()
@@ -97,29 +101,18 @@ export default function CommentPanel(props){
             like:[],
             date:date
         }
-        console.log(body)
+        //console.log(body)
         try {
             //console.log(body)
+            //fetching new comment to backend
             let {data} = await axios.post(`http://${process.env.NEXT_PUBLIC_DB}/comment`,body)
             //console.log(data)
           } catch (error) {
             console.log(error)
           }
 
-        // post request, if res.status not ok, return
 
-        //need change to current user info
-        let newComment={
-            user:user,
-            replying:props.tag,
-            text:content,
-            images:imageNames,
-            video:videoName,
-            like:[],
-            date:date
-        }
-        
-        //props.handler(newComment)
+        //reload to show new comment
         router.reload('')
            
         setText("")
@@ -155,7 +148,7 @@ export default function CommentPanel(props){
                 </div>
                 <p className="w-full text-red-600 font-semibold text-sm">{message?message:null}</p>
                 <div className="flex m-2 flex-warp">
-                    {/* image */}
+                    {/* add image */}
                     <label>
                         <input type="file" hidden multiple
                         onChange={({ target }) => {
@@ -183,7 +176,7 @@ export default function CommentPanel(props){
                         />
                         <Icon icon="mdi:picture-360" width="34"/>
                     </label>
-                    {/* video */}
+                    {/* add video */}
                     <label className="px-12">
                         <input type="file" hidden 
                         onChange={({ target }) => {

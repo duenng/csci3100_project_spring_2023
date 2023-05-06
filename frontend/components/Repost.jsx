@@ -7,6 +7,7 @@ export default function Repost(props){
     let owner = post.user
     const router = useRouter()
 
+    //goto the post if clicked
     const handleClick = (e)=>{
       let tag = e.target.tagName
       console.log(tag)

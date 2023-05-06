@@ -7,10 +7,6 @@ import { useEffect } from 'react';
 
 export default function Comment({com,current}){
 
-    // useEffect(()=>{
-    //   console.log(com)
-    // },[])
-
     
 
     return(
@@ -22,7 +18,6 @@ export default function Comment({com,current}){
         <p className="m-2"><a>{com.user.username} </a><a className=" text-gray-500">{com.user.tag}   {com.date.split("T")[0]}</a></p>
         <p className="m-2"> Replying <a className=" text-gray-500">{com.replying}</a></p>
         </div>
-        {/* <CommentLikes like={com.like} current={current} target={com.user.userId}/> */}
       </div>
       {/* text */}
       <div className="m-2 text-base ">

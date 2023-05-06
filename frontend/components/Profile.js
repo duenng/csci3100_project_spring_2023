@@ -21,16 +21,6 @@ function Profile({users,current}) {
             <p className="pr-10">Follower: {users.follower.length}</p>
             <p>Following: {users.following.length}</p>
         </div>
-             {/* follow */}
-        {/* {users._id!==current._id?
-        <div className="mt-3">
-           { users.following.includes(current._id)?"abc":"efg"}
-        </div>
-        :null} */}
-         {/* <div className="flex mt-2">
-            <p className="pr-10">Caption</p>
-            
-            </div> */}
         </div> 
        
         </div>        

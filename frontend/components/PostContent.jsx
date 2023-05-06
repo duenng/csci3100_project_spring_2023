@@ -17,7 +17,6 @@ export default function PostContent(props){
               {/* User Profile Picture, Need to import from database*/}
               <img className="h-12 round-full my-1" src ={`/avatar/${owner.avatar?owner.avatar:"user.png"}`}/>
               <div className="mx-2 text-m flex-grow">
-                {/* User Name, Need to import from database*/}
                 <h4 style={{ padding: 0, margin: 0 }}>{owner.username}</h4>
                 <p style={{ padding: 0, margin: 0 }} className="text-gray-500">
                   {owner.tag}

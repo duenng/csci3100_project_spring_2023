@@ -76,6 +76,7 @@ export default function Post(){
     const init = (uid)=>{
       return new Promise(async (reslove,reject)=>{
         try{
+          //get ciurrent user info and get the post info from backend
           let getUser = await axios.get(`http://${process.env.NEXT_PUBLIC_DB }/user/token/${uid}`)
           let getPost = await axios.get(`http://${process.env.NEXT_PUBLIC_DB }/post/${postId}`)
           setCurrentUser(getUser.data)
@@ -121,8 +122,6 @@ export default function Post(){
               <PostCommentSection user={currentUser} tag={post.user.tag} like={post.like} repost={post.repost} comment={post.comment} postId={post.postId}/>
   
               
-              {/* pop up message */}
-              {/* <PopUp message={"test"}/> */}
               </>:null
             }
            

@@ -44,7 +44,6 @@ function LikePanel(props){
       }
 
       const handleRepost = (pop)=>{
-        //todo
         setRepostPanel(pop)
       }
 
@@ -53,7 +52,6 @@ function LikePanel(props){
         if(like.includes(props.currentUser.userId)){
           let filtered = like.filter(id=>id!==props.currentUser.userId)
           setLike([...filtered])
-          //fetch
         }
         
       }
@@ -65,7 +63,6 @@ function LikePanel(props){
             //console.log("here")
           setLike(prev=>{
             return [...prev,props.currentUser.userId]})
-          //fetch
         }
       }
 
@@ -116,6 +113,7 @@ function LikePanel(props){
             :<div title="share" className="flex rounded-lg hover:bg-gray-300 h-8 w-8 justify-center " onClick={()=>handleShare()}  >< Icon icon={iosShareRounded} width="32" height="32" /></div>}
             
             </div>
+            {/* add comment */}
             <div ref={commentRef}>
                 {showPanel?
                     <>
@@ -126,7 +124,7 @@ function LikePanel(props){
                     </>
                 :null}
             </div>
-
+            {/* create new post */}
             {repostPanel?<PopUpCreate handler={()=>handleRepost(false)} user={props.currentUser} url={`${window.location.host}/post/${post.postId}`}/>:null}
             
             

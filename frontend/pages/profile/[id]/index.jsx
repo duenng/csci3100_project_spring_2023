@@ -25,6 +25,7 @@ export default function Home({newsResults}) {
     }
     return new Promise(async(resolve,reject)=>{
       try {
+        //get post from backend
         let {data} = await axios.get(`http://${process.env.NEXT_PUBLIC_DB }/user/id/${id}`)
         //console.log(data)
           if(data&&!data?.notfound){
@@ -32,6 +33,7 @@ export default function Home({newsResults}) {
             resolve()
           }
           else{
+            // redirect to front if unexist postId
             window.open(`/`,"_self")
           }
       } catch (error) {
@@ -45,7 +47,7 @@ export default function Home({newsResults}) {
     init()
   },[])
 
-
+  //get current user
   const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
       if (user&&!currentUser) {

@@ -40,6 +40,8 @@ mongoose.connection.on('error', (err) => {
 mongoose.connection.once("open",function(){
   console.log("Connection is open...");
 
+  // schemas
+
   const userSchema = new Schema({
     userId: { type: Number, required: true, unique: true },
     username: { type: String, required: true },

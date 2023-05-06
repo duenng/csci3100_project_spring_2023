@@ -8,6 +8,7 @@ export default function PostCommentSection(props){
     const [comment,setComment] = useState(props.comment)
     const commentRef = useRef()
 
+    //toggle show comment panel
     const handleShowAddComment = ()=>{
       if (commentRef.current) {
         let area = commentRef.current.children[0].children[1].children[1]
@@ -20,7 +21,7 @@ export default function PostCommentSection(props){
     }
 
     const addHandler=(newComment)=>{
-      console.log(2,newComment)
+      //console.log(2,newComment)
       setComment(prev=>{
             return [...prev,newComment]
       })
@@ -29,12 +30,15 @@ export default function PostCommentSection(props){
 
     return(
         <>
+            {/* like, repost etc. */}
             <PostLike current={props.user} postId={props.postId} repost={props.repost} like={props.like} handler={()=>handleShowAddComment()}/>
             <hr className="mx-2 border-violet-500"></hr>
             {/* comment section */}
             <div className="mx-2" ref={commentRef}>
+              {/* add new comment */}
               <CommentPanel  user = {props.user} tag={props.tag} postId={props.postId} handler={addHandler}/>
             </div>
+            {/* existing comments */}
             <hr className="mx-2 border-violet-500"></hr>
             {
               comment.map((com,index)=>{

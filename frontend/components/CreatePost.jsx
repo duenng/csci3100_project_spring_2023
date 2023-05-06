@@ -21,6 +21,7 @@ export default function CreatePost({user,url, popUp}){
     const router = useRouter()
 
     const handleShowLink=()=>{
+        //toggle the reposting link input
         if(!showLink){
             setShowLink(true)
             setEditingLink(true)
@@ -36,6 +37,7 @@ export default function CreatePost({user,url, popUp}){
         }
     }
 
+    //verigy whther it is a valid link to repost
     const verifyLink=()=>{
         setVerifyingUrl(true)
         setMessage("")
@@ -47,6 +49,7 @@ export default function CreatePost({user,url, popUp}){
             return
         }
         let splited = link.split("/")
+        // check if empty link or it is not from the website or it is about a valid post
         if(!splited.length|
             splited[splited.length-3]!==window.location.host||
             splited[splited.length-2]!=="post"||
@@ -70,6 +73,7 @@ export default function CreatePost({user,url, popUp}){
         })
     }
 
+    //upload image
     const handleImage = async()=>{
         setUploadingI(true);
         let names = []
@@ -95,6 +99,7 @@ export default function CreatePost({user,url, popUp}){
         }
     }
 
+    //upload video
     const handleVideo = async()=>{
         setUploadingV(true);
         try {
@@ -111,14 +116,17 @@ export default function CreatePost({user,url, popUp}){
         }
     }
 
+    //add new post
     const handleCreate = async(e) =>{
         console.log(user)
         setMessage("")
+        // reject empty body
         if(!text.length){
             setMessage("Text is required.")
             return
         }
         let imageNames = []
+        //upload images and get names
         if(images.length){
            imageNames= await handleImage()
            if(!imageNames.length){
@@ -126,6 +134,7 @@ export default function CreatePost({user,url, popUp}){
            }
             //console.log(images)
         }
+        //upload video and get name
         let videoName = ""
         if(video){
             videoName = await handleVideo()
@@ -138,11 +147,11 @@ export default function CreatePost({user,url, popUp}){
         let content = text
         let repostingId = null
         //console.log(reposting)
+        //get the postId or the reposting link
         if(reposting){
             let splited = reposting.split("/")
             repostingId = Number(splited[splited.length-1])
         }
-        //todo ftech comment to sever
         let body = {
             userId: user.userId,
             text:content,
@@ -151,26 +160,23 @@ export default function CreatePost({user,url, popUp}){
             images:imageNames,
             video: videoName,
           }
+        //fetching backend
         try {
             // console.log(body)
             let {data} = await axios.post(`http://${process.env.NEXT_PUBLIC_DB }/post`,body)
             //console.log(data)
             if(data){
+                //redirect to the new post
                 window.open(`/post/${data.postId}`,"_self")
             }
           } catch (error) {
             console.log(error)
           }
-        //console.log(data)
-        // post request, if res.status not ok, return
-
-        //need change to current user info
            
         setText("")
         textRef.current.value=""
         setImages([])
         setVideo(null)
-        //todo: fetch
     }
     
     
@@ -180,8 +186,8 @@ export default function CreatePost({user,url, popUp}){
         <div className="flex mx-2 item-center text-base flex-wrap w-[99%] h-full">
             <img className="dark:bg-white h-8 round-full m-4 flex-none" src ={`/avatar/${user.avatar?user.avatar:"user.png"}`}/>
             <div className="flex-grow">
+                {/* text body */}
                 <textarea ref={textRef} className="dark:bg-gray-500 w-full border-none dark:placeholder:text-white " placeholder="What's happening?" onChange={e=>setText(e.target.value)}/>
-                {/* medias */}
                 <div className="flex mx-1 flex-wrap">
                     {images.length?
                         images.map((file,index)=>{
@@ -196,6 +202,7 @@ export default function CreatePost({user,url, popUp}){
                          <div className=" align-middle flex-shrink-0 flex m-1 px-3 py-2 bg-green-400 text-sm font-semibold rounded-md items-center"><a>{video.name>10?video.name.slice(0,11)+"...":video.name}</a> <Icon className="ml-1" onClick={()=>setVideo(null)} width="16" icon="material-symbols:scan-delete" /></div>
                         :null}
                 </div>
+                {/* reposting */}
                 <div className="flex mx-1 ">
                 {showLink?editingLink?
                     <div className=" align-middle flex-grow-0 flex m-1 text-sm items-center w-4/6">
@@ -274,7 +281,7 @@ export default function CreatePost({user,url, popUp}){
                         />
                         <Icon icon="icon-park-solid:video-two" width="34" />
                     </label>
-
+                    {/* toggle repost link */}
                     <label className="" onClick={handleShowLink}>
                         <Icon icon="mdi:link-plus" width="34"/>
                     </label>

@@ -5,9 +5,9 @@ const route = "/image/"
 
 export default function PostImage({ids}){
     const [index,setIndex] = useState(0)
-    useEffect(()=>{
-        console.log(ids)
-    },[])
+    // useEffect(()=>{
+    //     console.log(ids)
+    // },[])
 
     const n = ids.length
     return(
@@ -16,6 +16,7 @@ export default function PostImage({ids}){
                 src={`/image/${ids[index]}`}
                 alt={`${ids[index]}`}
                 className="rounded-lg"
+                //go previous by clicking lef side, go next by clicking right
                 onClick={(event) => {
                 const x = event.nativeEvent.offsetX;
                 const width = event.target.clientWidth;
