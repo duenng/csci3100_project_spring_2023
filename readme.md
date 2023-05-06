@@ -49,4 +49,4 @@ Tertwit allows users to start private conversations with any other user. Users c
 
 `cd tertwitadmin`
 
-`cd npmstart`
+`npm start`
