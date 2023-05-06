@@ -139,6 +139,9 @@ mongoose.connection.once("open",function(){
       try{
       let Id = await newPostId();
       let {userId, text, reposting,date,images,video} = req.body;
+      if(!userId|| !text) {
+        return res.status(422).send("Missing required data in request body");
+      }
       let user = await User.findOne({userId:userId});
       if (!user) {
         return res.status(404).send("User not found");
@@ -175,13 +178,16 @@ mongoose.connection.once("open",function(){
     app.post("/comment", async (req,res)=>{
       //console.log(req.body)
       let {userId, postId,replying,text,images,video,date} = req.body;
+      if(!userId|| !text||!postId||!replying) {
+        return res.status(422).send("Missing required data in request body");
+      }
       let user = await User.findOne({userId:userId});
       if (!user) {
         return res.status(404).send("User not found");
       }
       let post = await Post.findOne({postId:postId});
       if (!post) {
-        return res.status(404).send("User not found");
+        return res.status(404).send("Post not found");
       }
       
       let option={
@@ -278,20 +284,6 @@ mongoose.connection.once("open",function(){
       }
     });
 
-    //validate post ID
-    app.get("/post/validate/:ID", async (req, res) => {
-      let ID = req.params.ID;
-      try {
-        let post = await Post.findOne({ postId:ID});
-        if (!post) {
-          return res.status(404).send("Post not found");
-        }
-        return res.status(200).json(post);
-      } catch (err) {
-        console.log(err);
-        return res.status(400).send(err);
-      }
-    });
 
     //admin login
     app.get("/admin/login", async (req, res) => {
