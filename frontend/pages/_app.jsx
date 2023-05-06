@@ -1,6 +1,5 @@
 // pages/_app.js
 import '@/styles/globals.css';
-import type { AppProps } from 'next/app';
 import "../styles/globals.css";
 import '../styles/tailwind.css';
 import { AuthContextProvider } from "../components/FirebaseContext"; // Import the UserProvider
@@ -11,7 +10,7 @@ import UserContext from "../components/UserContext";
 //dark mode
 import { ThemeProvider } from 'next-themes';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

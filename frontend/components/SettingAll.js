@@ -1,4 +1,3 @@
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/outline";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import ChangePasswordPopup from "./ChangePasswordPopup";
@@ -60,18 +59,12 @@ function SettingAll() {
               <p className="pl-8">{showPassword ? password : "**********"}</p>
               <button
                 className="  text-purple-500 hover:brightness-60   font-bold text-base "
-                Icon={EyeSlashIcon}
                 onClick={handlePasswordToggle}
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
               {/* <button className="text-purple-500  hover:brightness-60 rounded-full font-bold text-base " onClick={handlePasswordEdit}>Edit</button> */}
               <ChangePasswordPopup />
-              <Icon
-                Icon={showPassword ? EyeSlashIcon : EyeIcon}
-                className="h-5 w-5 ml-2"
-                onClick={handlePasswordToggle}
-              />
             </div>
             <hr className="my-2" /> {/* Horizontal line */}
             {/* <DeleteAccountConfirmation /> */}

@@ -39,7 +39,7 @@ Tertwit allows users to start private conversations with any other user. Users c
 
 `npm install`
 
-`npm run dev`
+`npm start`
 
 `cd backend`
 
