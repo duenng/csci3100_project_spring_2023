@@ -1,4 +1,5 @@
-[![npm version](https://img.shields.io/npm/v/YOUR_PACKAGE_NAME.svg?style=flat)](https://www.npmjs.com/package/YOUR_PACKAGE_NAME)
+[![Node.js version](https://img.shields.io/badge/Node.js-v14.x-blue)](https://nodejs.org/)
+[![Express.js version](https://img.shields.io/badge/Express.js-v4.18.2-green)](https://expressjs.com/)
 [![Next.js version](https://img.shields.io/badge/Next.js-v13.3.0-blue)](https://nextjs.org/)
 [![license](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
 
