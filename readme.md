@@ -33,6 +33,6 @@ Tertwit allows users to start private conversations with any other user. Users c
 - Li Wing Lok 1155158024 
 - Tsang Wai Choi Richard 1155177404
 
-## Updates
+## To start
 
-No updates as of now.
+`d`
