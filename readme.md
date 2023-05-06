@@ -1,30 +1,29 @@
 # Tertwit
 
-This is the project of CSCI3100 Group D6 in the 2022-2023 2nd semester: Tertwit.
-
-## Overview
-Twitter performs as a social networking media platform. It provides a microblogging service that allows users to post ‘tweets’ containing texts, photos, emojis and links. Additionally, users can send instant messages to interact with their friends or even strangers. Twitter is designed for people to communicate and connect one another neglecting space, time and ethnicity.
+Tertwit is a social networking media platform designed to connect people from all around the world. It provides a microblogging service that allows users to post ‘tweets’ containing texts, photos, emojis, and links. Additionally, users can send instant messages to interact with their friends or even strangers. 
 
 ## Key Features
 
-Third-party Account Registration
+### Third-party Account Registration
 
-For flexibility and simplicity, we allow users to register their accounts by email, Google account, GitHub account as well as Facebook account. For convenience, third-party users do not need to type password again if they have already logged in their accounts on the corresponding third-party platforms.
+For flexibility and simplicity, Tertwit allows users to register their accounts using email, Google, GitHub, and Facebook accounts. Users who have already logged in their accounts on the corresponding third-party platforms do not need to type their passwords again.
 
-Administrator Accounts
+### Administrator Accounts
 
-There will be administrator accounts. They can view all user information, excluding passwords for privacy. Administrators shall remove users who have violated some rules, and add users if needed. A customized, separated authentication portal and a control dashboard will be set up for administrators for convenient management.
+Tertwit has administrator accounts that can view all user information, excluding passwords for privacy. Administrators have the power to remove users who have violated rules, and add users if needed. A customized, separated authentication portal, and a control dashboard will be set up for administrators for convenient management.
 
-Private chat
+### Private Chat
 
-Users can start private conversations with any users. Users can enable or disable this feature in user settings, users cannot send any messages to others who have disabled this feature.
-
+Tertwit allows users to start private conversations with any other user. Users can enable or disable this feature in user settings. Users cannot send any messages to others who have disabled this feature.
 
 ## Groupmates / Collaborators
-Ng Sui Yat 1155159112
-Shum Ching Chit 1155159019
-Sze Siu Hong 1155159235
-Li Wing Lok 1155158024
-Tsang Wai Choi Richard 1155177404
+
+- Ng Sui Yat 1155159112 
+- Shum Ching Chit 1155159019 
+- Sze Siu Hong 1155159235 
+- Li Wing Lok 1155158024 
+- Tsang Wai Choi Richard 1155177404
 
 ## Updates
+
+No updates as of now.
