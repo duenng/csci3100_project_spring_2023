@@ -18,12 +18,10 @@ Tertwit allows users to start private conversations with any other user. Users c
 
 ## Groupmates / Collaborators
 
-- Ng Sui Yat 1155159112 
-- Shum Ching Chit 1155159019 
-- Sze Siu Hong 1155159235 
-- Li Wing Lok 1155158024 
-- Tsang Wai Choi Richard 1155177404
+- 1155159112 Ng Sui Yat 
+- 1155159019 Shum Ching Chit 
+- 1155159235 Sze Siu Hong 
+- 1155158024 Li Wing Lok 
+- 1155177404 Tsang Wai Choi Richard 
 
 ## Updates
-
-No updates as of now.
